@@ -1,0 +1,49 @@
+<div class="filters">
+    <label>Categoria:</label>
+    <select [(ngModel)]="filtros.categoria">
+        <option value="">Todas</option>
+        <option *ngFor="let categoria of categorias" [value]="categoria">{{ categoria }}</option>
+    </select>
+
+    <label>Tipo de Lançamento:</label>
+    <select [(ngModel)]="filtros.tipoLancamento">
+        <option value="">Todos</option>
+        <option *ngFor="let tipo of tiposLancamento" [value]="tipo">{{ tipo }}</option>
+    </select>
+
+    <label>Forma de Pagamento:</label>
+    <select [(ngModel)]="filtros.tipoPagamento">
+        <option value="">Todas</option>
+        <option *ngFor="let pagamento of tiposPagamento" [value]="pagamento">{{ pagamento }}</option>
+    </select>
+
+    <label>Status:</label>
+    <select [(ngModel)]="filtros.status">
+        <option value="">Todos</option>
+        <option *ngFor="let status of statusLancamento" [value]="status">{{ status }}</option>
+    </select>
+
+    <label>Conta:</label>
+    <select [(ngModel)]="filtros.conta">
+        <option value="">Todas</option>
+        <option *ngFor="let conta of contas" [value]="conta.banco">{{ conta.banco }}</option>
+    </select>
+
+    <label>Data de:</label>
+    <input type="date" [(ngModel)]="filtros.dtInicio">
+
+    <label>Até:</label>
+    <input type="date" [(ngModel)]="filtros.dtFim">
+
+    <div class="coluna">
+        <label>Somente lançamentos:</label>
+        <label class="toggle">
+            <input type="checkbox" [checked]="show" (change)="onToggle()">
+            <span class="slider"></span>
+        </label>
+    </div>
+
+    <button class="btn btn-secondary apply-filters-btn" (click)="onApply()">
+        Aplicar Filtros
+    </button>
+</div>

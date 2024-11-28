@@ -1,0 +1,42 @@
+<div class="lancamento-info">
+    <div class="info-group">
+        <label>Description:</label>
+        <p>{{ lancamento.descricao }}</p>
+    </div>
+    <div class="info-group">
+        <label>Value:</label>
+        <p>{{ lancamento.valor | currency }}</p>
+    </div>
+    <div class="info-group">
+        <label>Category:</label>
+        <p>{{ lancamento.categoriaLancamento }}</p>
+    </div>
+    <div class="info-group">
+        <label>Type:</label>
+        <p>{{ lancamento.tipoLancamento }}</p>
+    </div>
+    <div class="info-group">
+        <label>Payment Type:</label>
+        <p>{{ lancamento.tipoPagamento }}</p>
+    </div>
+    <div class="info-group">
+        <label>Account:</label>
+        <p>{{ lancamento.conta }}</p>
+    </div>
+    <div class="info-group">
+        <label>Bank:</label>
+        <p>{{ lancamento.banco }}</p>
+    </div>
+    <div class="info-group">
+        <label>Creation Date:</label>
+        <p>{{ lancamento.dtCriacao }}</p>
+    </div>
+    <div class="info-group">
+        <label>Installments:</label>
+        <p>{{ lancamento.parcelas }}</p>
+    </div>
+    <div class="info-group">
+        <label>Status:</label>
+        <p>{{ lancamento.status }}</p>
+    </div>
+</div>

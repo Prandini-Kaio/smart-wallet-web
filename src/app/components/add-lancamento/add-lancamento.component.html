@@ -1,0 +1,142 @@
+<div class="form-container">
+    <h1 class="form-title">Adicionar Lançamento</h1>
+
+    <form [formGroup]="form" (ngSubmit)="onSubmit()" (cancel)="onCancel()" class="launch-form">
+        
+        <div class="form-group">
+            <label for="descricao" class="form-label">Descrição</label>
+            <div class="input-container">
+                <i class="fas fa-file-alt input-icon"></i>
+                <input id="descricao" formControlName="descricao" type="text" class="form-input"
+                    placeholder="Digite a descrição">
+            </div>
+            <div class="error-message"
+                *ngIf="form.get('descricao')?.invalid && (form.get('descricao')?.dirty || form.get('descricao')?.touched)">
+                <i class="fas fa-exclamation-circle"></i>
+                <span *ngIf="form.get('descricao')?.hasError('required')">Campo obrigatório</span>
+            </div>
+        </div>
+
+        <!-- Conta -->
+        <div class="form-group">
+            <label for="conta" class="form-label">Conta</label>
+            <div class="input-container">
+                <i class="fas fa-wallet input-icon"></i>
+                <select id="conta" formControlName="conta" class="form-input">
+                    <option value="">Selecione uma conta</option>
+                    <option *ngFor="let c of contas" [value]="c.banco">{{ c.banco }}</option>
+                </select>
+            </div>
+            <div class="error-message"
+                *ngIf="form.get('conta')?.invalid && (form.get('conta')?.dirty || form.get('conta')?.touched)">
+                <i class="fas fa-exclamation-circle"></i>
+                <span *ngIf="form.get('conta')?.hasError('required')">Campo obrigatório</span>
+            </div>
+        </div>
+
+        <!-- Tipo Lançamento -->
+        <div class="form-group">
+            <label for="tipoLancamento" class="form-label">Tipo de Lançamento</label>
+            <div class="input-container">
+                <i class="fas fa-exchange-alt input-icon"></i>
+                <select id="tipoLancamento" formControlName="tipoLancamento" class="form-input">
+                    <option value="">Selecione o tipo</option>
+                    <option value="ENTRADA">Entrada</option>
+                    <option value="SAIDA">Saída</option>
+                </select>
+            </div>
+            <div class="error-message"
+                *ngIf="form.get('tipoLancamento')?.invalid && (form.get('tipoLancamento')?.dirty || form.get('tipoLancamento')?.touched)">
+                <i class="fas fa-exclamation-circle"></i>
+                <span *ngIf="form.get('tipoLancamento')?.hasError('required')">Campo obrigatório</span>
+            </div>
+        </div>
+
+        <!-- Tipo Pagamento -->
+        <div class="form-group">
+            <label for="tipoPagamento" class="form-label">Forma de Pagamento</label>
+            <div class="input-container">
+                <i class="fas fa-credit-card input-icon"></i>
+                <select id="tipoPagamento" formControlName="tipoPagamento" class="form-input">
+                    <option value="">Selecione a forma de pagamento</option>
+                    <option value="CREDITO">Crédito</option>
+                    <option value="DEBITO">Débito</option>
+                </select>
+            </div>
+            <div class="error-message"
+                *ngIf="form.get('tipoPagamento')?.invalid && (form.get('tipoPagamento')?.dirty || form.get('tipoPagamento')?.touched)">
+                <i class="fas fa-exclamation-circle"></i>
+                <span *ngIf="form.get('tipoP agemento')?.hasError('required')">Campo obrigatório</span>
+            </div>
+        </div>
+
+        <!-- Categoria Lançamento -->
+        <div class="form-group">
+            <label for="categoriaLancamento" class="form-label">Categoria do Lançamento</label>
+            <div class="input-container">
+                <i class="fas fa-folder-open input-icon"></i>
+                <select id="categoriaLancamento" formControlName="categoriaLancamento" class="form-input">
+                    <option value="">Selecione a categoria</option>
+                    <option *ngFor="let c of categorias" [value]="c">{{ c.toString() }}</option>
+                </select>
+            </div>
+            <div class="error-message"
+                *ngIf="form.get('categoriaLancamento')?.invalid && (form.get('categoriaLancamento')?.dirty || form.get('categoriaLancamento')?.touched)">
+                <i class="fas fa-exclamation-circle"></i>
+                <span *ngIf="form.get('categoriaLancamento')?.hasError('required')">Campo obrigatório</span>
+            </div>
+        </div>
+
+        <!-- Parcelas -->
+        <div class="form-group">
+            <label for="parcelas" class="form-label">Parcelas</label>
+            <div class="input-container">
+                <i class="fas fa-list-ol input-icon"></i>
+                <input id="parcelas" formControlName="parcelas" type="number" class="form-input" placeholder="0">
+            </div>
+            <div class="error-message"
+                *ngIf="form.get('parcelas')?.invalid && (form.get('parcelas')?.dirty || form.get('parcelas')?.touched)">
+                <i class="fas fa-exclamation-circle"></i>
+                <span *ngIf="form.get('parcelas')?.hasError('required')">Campo obrigatório</span>
+            </div>
+        </div>
+
+        <!-- Data de Criação -->
+        <div class="form-group">
+            <label for="dtCriacao" class="form-label">Data de Criação</label>
+            <div class="input-container">
+                <i class="fas fa-calendar-alt input-icon"></i>
+                <input id="dtCriacao" formControlName="dtCriacao" type="date" class="form-input">
+            </div>
+            <div class="error-message"
+                *ngIf="form.get('dtCriacao')?.invalid && (form.get('dtCriacao')?.dirty || form.get('dtCriacao')?.touched)">
+                <i class="fas fa-exclamation-circle"></i>
+                <span *ngIf="form.get('dtCriacao')?.hasError('required')">Campo obrigatório</span>
+            </div>
+        </div>
+
+        <!-- Valor -->
+        <div class="form-group">
+            <label for="valor" class="form-label">Valor</label>
+            <div class="input-container">
+                <i class="fas fa-dollar-sign input-icon"></i>
+                <input id="valor" formControlName="valor" type="text" class="form-input" placeholder="0,00"
+                    mask="separator.2" thousandSeparator="." decimalMarker="," prefix="R$ ">
+            </div>
+            <div class="error-message"
+                *ngIf="form.get('valor')?.invalid && (form.get('valor')?.dirty || form.get('valor')?.touched)">
+                <i class="fas fa-exclamation-circle"></i>
+                <span *ngIf="form.get('valor')?.hasError('required')">Campo obrigatório</span>
+            </div>
+        </div>
+
+        <div class="form-actions">
+            <button type="button" class="btn btn-secondary">
+                <i class="fas fa-times"></i> Cancelar
+            </button>
+            <button type="submit" class="btn btn-primary" [disabled]="form.invalid">
+                <i class="fas fa-save"></i> Criar
+            </button>
+        </div>
+    </form>
+</div>

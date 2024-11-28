@@ -1,0 +1,258 @@
+// Variables
+$dark-blue: #151F48;
+$medium-blue: #256DD3;
+$light-blue: #5AA5F4;
+$grey-blue: #536889;
+$pale-blue: #AFC5E8;
+
+// Mixins for reusability
+@mixin flex-center {
+  display: flex;
+  align-items: center;
+}
+
+@mixin input-focus {
+  outline: none;
+  border-color: $medium-blue;
+  box-shadow: 0 0 0 3px rgba($medium-blue, 0.1);
+}
+
+@mixin transition-ease {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+// Enhanced styles
+.form-container {
+  max-width: 800px;
+  margin: 2rem auto;
+  padding: 2.5rem;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba($dark-blue, 0.08);
+  animation: slideIn 0.5s ease-out;
+}
+
+.form-title {
+  color: $dark-blue;
+  margin-bottom: 2.5rem;
+  font-size: 2rem;
+  font-weight: 600;
+  position: relative;
+  padding-bottom: 0.5rem;
+  
+  &::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 60px;
+    height: 3px;
+    background: $medium-blue;
+    border-radius: 2px;
+  }
+}
+
+.launch-form {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1.5rem;
+
+  .form-group {
+    margin-bottom: 1.5rem;
+    opacity: 0;
+    animation: fadeIn 0.5s ease-out forwards;
+
+    @for $i from 1 through 10 {
+      &:nth-child(#{$i}) {
+        animation-delay: #{$i * 0.1}s;
+      }
+    }
+  }
+
+  .form-label {
+    display: block;
+    color: $grey-blue;
+    font-size: 0.95rem;
+    font-weight: 500;
+    margin-bottom: 0.75rem;
+    letter-spacing: 0.3px;
+  }
+
+  .input-container {
+    position: relative;
+    @include flex-center;
+
+    .input-icon {
+      position: absolute;
+      left: 12px;
+      color: $grey-blue;
+      font-size: 1.1rem;
+      pointer-events: none;
+      @include transition-ease;
+    }
+  }
+
+  .form-input {
+    width: 100%;
+    padding: 1rem 1rem 1rem 2.8rem;
+    border: 2px solid $pale-blue;
+    border-radius: 8px;
+    font-size: 1rem;
+    @include transition-ease;
+    background-color: white;
+
+    &:hover {
+      border-color: darken($pale-blue, 10%);
+    }
+
+    &:focus {
+      @include input-focus;
+      
+      & + .input-icon {
+        color: $medium-blue;
+      }
+    }
+
+    &::placeholder {
+      color: lighten($grey-blue, 20%);
+      font-size: 0.9rem;
+    }
+  }
+
+  select.form-input {
+    appearance: none;
+    background-image: url("data:image/svg+xml,..."); // Add your custom dropdown arrow
+    background-repeat: no-repeat;
+    background-position: right 1rem center;
+    padding-right: 2.5rem;
+  }
+
+  .error-message {
+    @include flex-center;
+    color: #dc3545 ;
+    font-size: 0.85rem;
+    margin-top: 0.5rem;
+    animation: shake 0.3s ease-out;
+
+    i {
+      margin-right: 0.5rem;
+    }
+  }
+
+  .form-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 1.5rem;
+    margin-top: 2.5rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid $pale-blue;
+  }
+
+  .btn {
+    @include flex-center;
+    padding: 0.75rem 1.5rem;
+    border-radius: 8px;
+    font-weight: 500;
+    cursor: pointer;
+    @include transition-ease;
+
+    i {
+      margin-right: 0.5rem;
+    }
+
+    &:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+  }
+
+  .btn-primary {
+    background-color: $medium-blue;
+    color: white;
+    border: none;
+
+    &:hover:not(:disabled) {
+      background-color: darken($medium-blue, 10%);
+    }
+  }
+
+  .btn-secondary {
+    background-color: transparent;
+    color: $grey-blue;
+    border: 1px solid $pale-blue;
+
+    &:hover {
+      background-color: $pale-blue;
+      color: $dark-blue;
+    }
+  }
+}
+
+// Responsive adjustments
+@media (max-width: 768px) {
+  .form-container {
+    margin: 1rem;
+    padding: 1.5rem;
+  }
+
+  .launch-form {
+    grid-template-columns: 1fr;
+  }
+
+  .form-actions {
+    flex-direction: column;
+
+    .btn {
+      width: 100%;
+    }
+  }
+}
+
+// Animations
+@keyframes slideIn {
+  from {
+    transform: translateY(-100%);
+    opacity: 0;
+  }
+
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes shake {
+  0% {
+    transform: translateX(0);
+  }
+
+  20% {
+    transform: translateX(-2px);
+  }
+
+  40% {
+    transform: translateX(2px);
+  }
+
+  60% {
+    transform: translateX(-2px);
+  }
+
+  80% {
+    transform: translateX(2px);
+  }
+
+  100% {
+    transform: translateX(0);
+  }
+}

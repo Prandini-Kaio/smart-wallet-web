@@ -1,0 +1,137 @@
+$colors: (
+    "ABERTO": #1E88E5,
+    "PENDENTE": #1E88E5,
+    "PAGO": #00FF00
+);
+
+
+.item {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 12px;
+    align-items: center;
+    padding: 12px;
+    text-align: left;
+    position: relative;
+}
+
+.item {
+    background-color: #ffffff;
+    border-left: 4px solid transparent;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.05);
+
+    &:not(:last-child) {
+        border-bottom: 1px solid #e0e0e0;
+    }
+
+    &:hover {
+        background-color: #f8f8f8;
+    }
+}
+
+.item>* {
+    padding: 0 10px;
+
+    &:not(:last-child)::after {
+        content: '';
+        position: absolute;
+        top: 10%;
+        right: 0;
+        height: 80%;
+        width: 1px;
+        background: linear-gradient(to bottom, transparent, #ddd, transparent);
+    }
+}
+
+.details {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    gap: 4px;
+    font-size: 14px;
+    color: #555;
+}
+
+.title {
+    font-weight: bold;
+    color: #333;
+}
+
+.value {
+    color: #1E88E5;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.date {
+    font-size: 14px;
+    color: #888;
+}
+
+/* Coluna: Ações */
+.actions {
+    display: flex;
+    justify-content: flex;
+    gap: 12px;
+}
+
+.edit-btn,
+.delete-btn {
+    font-size: 18px;
+    color: #666;
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    transition: color 0.2s;
+}
+
+.edit-btn:hover {
+    color: #4CAF50;
+}
+
+.delete-btn:hover {
+    color: #E53935;
+}
+
+@function get-status-color($status) {
+    @if map-has-key($colors, $status) {
+        @return map-get($colors, $status);
+    }
+
+    @return #CCCCCC;
+}
+
+.status {
+
+    &--atrasado {
+        color: #e7b719;
+        font-weight: bold;
+    }
+
+    &--cancelado {
+        color: #b12319;
+        font-weight: bold;
+    }
+
+    &--pendente {
+        color: #1E88E5;
+        font-weight: bold;
+    }
+
+    &--pago {
+        color: #1ee56a;
+        font-weight: bold;
+    }
+}
+
+
+@media (max-width: 768px) {
+    .item {
+        grid-template-columns: 1fr;
+        gap: 8px;
+    }
+
+    .actions {
+        justify-content: center;
+    }
+}

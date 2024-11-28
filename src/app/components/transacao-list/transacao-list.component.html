@@ -1,0 +1,14 @@
+<div class="container">
+    <div class="list">
+        <div class="header">
+            <span class="col-info">Descrição</span>
+            <span class="col-details">Valor</span>
+            <span class="col-details">Status</span>
+            <span class="col-details">Vencimento</span>
+            <span class="col-actions">Ações</span>
+        </div>
+    </div>
+
+    <app-transacao-item *ngFor="let transacao of transacoes" [transacao]="transacao"
+        (edit)="editTransacao($event)" (delete)="deleteTransacao($event)"></app-transacao-item>
+</div>

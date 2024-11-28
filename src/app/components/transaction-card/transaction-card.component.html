@@ -1,0 +1,22 @@
+<div class="transaction-item">
+    <div class="info-group">
+      <label>Value:</label>
+      <p>{{ transaction.valor | currency }}</p>
+    </div>
+    <div class="info-group">
+      <label>Status:</label>
+      <p>{{ transaction.status }}</p>
+    </div>
+    <div class="info-group">
+      <label>Due Date:</label>
+      <p>{{ transaction.dtVencimento }}</p>
+    </div>
+    <div class="info-group">
+      <label>Payment Date:</label>
+      <p>{{ transaction.dtPagamento ? (transaction.dtPagamento) : 'Not paid' }}</p>
+    </div>
+    <div class="info-group">
+      <label>Description:</label>
+      <p>{{ transaction.descricao }}</p>
+    </div>
+  </div>

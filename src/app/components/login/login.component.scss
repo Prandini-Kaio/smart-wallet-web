@@ -1,0 +1,61 @@
+/* Container principal do login */
+.login-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh; /* Ocupa toda a altura da tela */
+    background-color: #f0f0f0; /* Cor de fundo suave */
+}
+
+/* Estilo para o título do login */
+h2 {
+    margin-bottom: 20px;
+    font-size: 2rem; /* Tamanho do texto */
+    color: #333; /* Cor do texto */
+}
+
+/* Estilo do formulário */
+form {
+    background-color: white; /* Fundo branco para o formulário */
+    padding: 20px; /* Espaçamento interno */
+    border-radius: 5px; /* Cantos arredondados */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Sombra suave */
+    width: 300px; /* Largura do formulário */
+}
+
+/* Estilo para os campos do formulário */
+input[type="text"],
+input[type="password"] {
+    width: 100%; /* Largura total */
+    padding: 10px; /* Espaçamento interno */
+    margin: 10px 0; /* Margem acima e abaixo */
+    border: 1px solid #ccc; /* Borda suave */
+    border-radius: 4px; /* Cantos arredondados */
+    font-size: 1rem; /* Tamanho da fonte */
+}
+
+/* Estilo para o botão de login */
+button {
+    background-color: #007bff; /* Cor do botão */
+    color: white; /* Cor do texto do botão */
+    padding: 10px; /* Espaçamento interno */
+    border: none; /* Sem borda */
+    border-radius: 4px; /* Cantos arredondados */
+    cursor: pointer; /* Cursor em forma de mão */
+    width: 100%; /* Largura total */
+    font-size: 1rem; /* Tamanho da fonte do botão */
+    transition: background-color 0.3s; /* Transição suave */
+}
+
+/* Efeito ao passar o mouse sobre o botão */
+button:hover {
+    background-color: #0056b3; /* Cor do botão ao passar o mouse */
+}
+
+/* Estilo para mensagens de erro */
+.error-message {
+    color: red; /* Cor do texto de erro */
+    margin-top: 10px; /* Margem acima */
+    font-size: 0.9rem; /* Tamanho do texto de erro */
+}

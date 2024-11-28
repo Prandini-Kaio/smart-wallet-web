@@ -1,0 +1,33 @@
+<div class="item">
+    <!-- Descricao -->
+    <div class="details">
+        <span class="title">{{ transacao.descricaoLancamento }}</span>
+        <span class="value">{{ transacao.descricao }}</span>
+    </div>
+
+    <!-- Valor e status -->
+    <div class="details">
+        <span class="value">R{{ transacao.valor | currency }}</span>
+    </div>
+
+    <!-- status -->
+    <div class="details">
+        <span [ngClass]="getStatusClass(transacao.status)">{{ transacao.status }}</span>
+        <span class="date">{{ transacao.dtPagamento }}</span>
+    </div>
+
+    <!-- Data pagamento -->
+    <div class="details">
+        <span class="date">{{ transacao.dtVencimento }}</span>
+    </div>
+
+    <!-- Botao de acao -->
+    <div class="actions">
+        <button class="btn btn-link edit-btn" (click)="onEdit()">
+            <i class="fas fa-edit"></i>
+        </button>
+        <button class="btn btn-link delete-btn" (click)="onDelete()">
+            <i class="fas fa-trash"></i>
+        </button>
+    </div>
+</div>

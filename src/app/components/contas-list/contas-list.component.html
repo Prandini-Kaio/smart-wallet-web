@@ -1,0 +1,158 @@
+<div class="container">
+  <header class="header">
+    <h2 class="list-title"> Contas </h2>
+    <button class="btn btn-primary create-btn" (click)="createNew()">
+      <i class="fas fa-plus"></i> Nova conta
+    </button>
+  </header>
+
+  <div *ngIf="loading" class="loading-spinner">
+    <i class="fas fa-spinner fa-spin"></i> Carregando...
+  </div>
+
+  <div *ngIf="error" class="error-message">
+    <i class="fas fa-exclamation-triangle"></i> {{ error }}
+    <button class="btn btn-danger reload-btn" (click)="reloadPage()">
+      <i class="fas fa-sync-alt"></i> Recarregar
+    </button>
+  </div>
+
+  <div *ngIf="!loading && !error && contas.length > 0" class="contas-list">
+    <!-- TITULOS COLUNAS -->
+    <div class="contas-header">
+      <span class="col-info">Banco</span>
+      <span class="col-info">Vencimento</span>
+      <span class="col-actions">Ações</span>
+    </div>
+
+    <!-- ITENS COLUNAS -->
+    <div class="conta-item" *ngFor="let conta of contas" [ngClass]="{'colored': true}" [style.--conta-color]="conta.color">
+      <div class="conta-details">
+        <span class="conta-value">{{ conta.banco }}</span>
+        <span class="conta-date">{{ conta.nome }}</span>
+      </div>
+
+      <div class="conta-details">
+        <span class="conta-value">{{ conta.dtVencimento }}</span>
+      </div>
+
+      <div class="conta-actions">
+        <button class="btn btn-link edit-btn" (click)="editConta(conta)">
+          <i class="fas fa-edit"></i>
+        </button>
+        <button class="btn btn-link delete-btn" (click)="deleteConta(conta)">
+          <i class="fas fa-trash"></i>
+        </button>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Mensagem de ausência de contas -->
+  <div *ngIf="contas.length === 0 && !loading" class="no-results">
+    Nenhuma conta encontrada.
+  </div>
+</div>
+
+<!-- CREATE MODAL -->
+<div class="modal" *ngIf="showModal">
+  <div class="modal-content">
+    <h2>Adicionar Nova Conta</h2>
+
+    <form [formGroup]="form" (ngSubmit)="onSubmit()" (cancel)="closeModal()">
+      <div class="form-group">
+        <label for="banco">Banco</label>
+        <input type="text" id="banco" formControlName="banco">
+        <div *ngIf="form.get('banco')?.invalid && form.get('banco')?.touched" class="error-message">
+          Campo obrigatório
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="saldoParcial">Nome</label>
+        <input type="text" id="nome" formControlName="nome">
+        <div *ngIf="form.get('nome')?.invalid && form.get('nome')?.touched" class="error-message">
+          Campo obrigatório
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="saldoParcial">Tipo Conta</label>
+        <input type="text" id="tipoConta" formControlName="tipoConta">
+        <div *ngIf="form.get('tipoConta')?.invalid && form.get('tipoConta')?.touched" class="error-message">
+          Campo obrigatório
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="saldoParcial">Dia vencimento</label>
+        <input type="number" id="diaVencimento" formControlName="diaVencimento">
+        <div *ngIf="form.get('diaVencimento')?.invalid && form.get('diaVencimento')?.touched" class="error-message">
+          Campo obrigatório
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="color">Cor:</label>
+        <input type="color" id="color" formControlName="color">
+      </div>
+
+      <div class="form-actions">
+        <button type="submit" [disabled]="!form.valid" class="btn-primary">Salvar</button>
+        <button type="button" class="btn-secondary" (click)="closeModal()">Cancelar</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- EDIT MODAL -->
+
+<div class="modal" *ngIf="showEditModal">
+  <div class="modal-content">
+    <h2>Editar Conta</h2>
+
+    <form [formGroup]="editForm" (ngSubmit)="onEditSubmit()">
+      <div class="form-group">
+        <label for="editBanco">Banco</label>
+        <input type="text" id="editBanco" formControlName="banco">
+        <div *ngIf="editForm.get('banco')?.invalid && editForm.get('banco')?.touched" class="error-message">
+          Campo obrigatório
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="editNome">Nome</label>
+        <input type="text" id="editNome" formControlName="nome">
+        <div *ngIf="editForm.get('nome')?.invalid && editForm.get('nome')?.touched" class="error-message">
+          Campo obrigatório
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="editTipoConta">Tipo Conta</label>
+        <input type="text" id="editTipoConta" formControlName="tipoConta">
+        <div *ngIf="editForm.get('tipoConta')?.invalid && editForm.get('tipoConta')?.touched" class="error-message">
+          Campo obrigatório
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="editDiaVencimento">Dia vencimento</label>
+        <input type="number" id="editDiaVencimento" formControlName="diaVencimento">
+        <div *ngIf="editForm.get('diaVencimento')?.invalid && editForm.get('diaVencimento')?.touched" class="error-message">
+          Campo obrigatório
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="editColor">Cor:</label>
+        <input type="color" id="editColor" formControlName="color">
+      </div>
+
+      <div class="form-actions">
+        <button type="submit" [disabled]="!editForm.valid" class="btn-primary">Salvar</button>
+        <button type="button" class="btn-secondary" (click)="closeEditModal()">Cancelar</button>
+      </div>
+    </form>
+  </div>
+</div>

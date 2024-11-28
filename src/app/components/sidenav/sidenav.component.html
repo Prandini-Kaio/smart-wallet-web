@@ -1,0 +1,19 @@
+<div class="sidenav-container">
+    <div class="sidenav" [@sidenavAnimation]="isClosed ? 'closed' : 'open'">
+        <div class="sidenav-header">
+            <img src="assets/logo.png" alt="Logo" class="logo" [ngClass]="{'small': isClosed}">
+            <button class="toggle-btn" (click)="toggleSidenav()">
+                <i class="fas" [ngClass]="{'fa-bars': isClosed, 'fa-times': !isClosed}"></i>
+            </button>
+        </div>
+        <nav>
+            <a *ngFor="let item of navItems" [routerLink]="item.path" class="nav-item">
+                <i class="fas" [ngClass]="item.icon"></i>
+                <span [ngClass]="{'hidden': isClosed}">{{ item.title }}</span>
+            </a>
+        </nav>
+    </div>
+    <div class="main-content" [ngClass]="{'main-content-expanded': isClosed}">
+        <router-outlet></router-outlet>
+    </div>
+</div>

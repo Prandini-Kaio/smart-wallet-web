@@ -1,31 +1,32 @@
-import { Component } from '@angular/core';
-import { bootstrapApplication } from '@angular/platform-browser';
-import { RouterModule, provideRouter } from '@angular/router';
-import { provideAnimations } from '@angular/platform-browser/animations';
-import { CommonModule } from '@angular/common';
-import { MatListModule } from '@angular/material/list';
-import { MatIconModule } from '@angular/material/icon';
+import { NgFor, NgIf } from "@angular/common";
+import { Component, OnInit } from "@angular/core";
+import { ApiService } from "../../services/api.service";
+import { HttpParams } from "@angular/common/http";
 
 @Component({
-  selector: 'app-sidenav',
+  selector: 'app-home',
   standalone: true,
-  imports: [CommonModule, RouterModule, MatListModule, MatIconModule],
+  imports: [NgFor, NgIf],
   template: `
-    <mat-nav-list>
-      <a mat-list-item *ngFor="let item of menuItems" [routerLink]="item.route">
-        <mat-icon>{{item.icon}}</mat-icon>
-        <span>{{item.label}}</span>
-      </a>
-    </mat-nav-list>
-  `,
-  styles: [`
-    .mat-nav-list {
-      padding-top: 0;
-    }
-  `]
+    <h1>Pagina inicial</h1>
+    <div *ngIf="data">
+      {{ data }}
+    </div>
+  `
 })
-export class HomeComponent {
-  menuItems = [
-    { label: 'Home', icon: 'home', route: '/' }
-  ];
+export class HomeComponent implements OnInit{
+  data: any;
+
+  constructor(private apiContext: ApiService) { }
+
+  ngOnInit(): void {
+
+    const params = new HttpParams()
+    .set('id', '1')
+
+    this.apiContext.getLancamento(params).subscribe(response => {
+      console.log(response);
+      this.data = response;
+    })
+  }
 }

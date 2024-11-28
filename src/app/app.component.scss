@@ -1,16 +1,37 @@
-.sidenav-container {
-    height: 100%;
+/* Estilo da área principal */
+
+body {
+  font-family: 'Roboto', sans-serif;
+}
+
+.content {
+  padding: 20px;
+  font-family: 'Arial', sans-serif;
+}
+
+h1 {
+  color: #343a40;
+}
+
+p {
+  font-size: 18px;
+  color: #555;
+}
+
+/* Responsividade */
+@media screen and (max-width: 768px) {
+  .sidenav {
+    width: 100%;
+    height: auto;
+    position: relative;
   }
-  
-  mat-sidenav {
-    width: 250px;
+
+  .sidenav-closed {
+    width: 100%;
   }
-  
-  mat-sidenav-content {
-    padding: 20px;
+
+  .main-content,
+  .main-content-closed {
+    margin-left: 0;
   }
-  
-  .content {
-    margin-top: 20px;
-  }
-  
+}

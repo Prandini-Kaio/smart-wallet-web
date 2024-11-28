@@ -1,0 +1,48 @@
+<!--  -->
+
+<div class="item">
+    <!-- Icone e Descricao -->
+    <div class="info">
+        <i [class]="'fas fa-' + (lancamento.icone || 'file-alt')"></i>
+        <span class="lancamento-title">{{ lancamento.descricao }}</span>
+    </div>
+
+    <!-- Valor e Data criacao -->
+    <div class="lancamento-details">
+        <span class="lancamento-value">R{{ lancamento.valor | currency }}<span class="lancamento-date">/{{
+                lancamento.parcelas }}</span></span>
+        <span class="lancamento-date">{{ lancamento.dtCriacao | date:'dd/MM/yyyy' }}</span>
+    </div>
+
+    <!-- Conta e status -->
+    <div class="lancamento-details">
+        <span class="lancamento-value">{{ lancamento.conta }}</span>
+        <span class="lancamento-date">{{ lancamento.status }}</span>
+    </div>
+
+    <!-- Tipos pagamento e lancamento -->
+    <div class="lancamento-details">
+        <span class="lancamento-value">{{ lancamento.tipoLancamento }}</span>
+        <span class="lancamento-date">{{ lancamento.tipoPagamento }}</span>
+    </div>
+
+    <!-- Botao de acao -->
+    <div class="lancamento-actions">
+        <button class="btn btn-link edit-btn" (click)="onEdit()">
+            <i class="fas fa-edit"></i>
+        </button>
+        <button class="btn btn-link delete-btn" (click)="onDelete()">
+            <i class="fas fa-trash"></i>
+        </button>
+        <!-- Dentro do lancamento-item, após lancamento-actions -->
+        <button class="btn btn-link expand-btn" (click)="lancamento.expanded = !lancamento.expanded">
+            <i class="fas"
+                [ngClass]="{'fa-chevron-down': !lancamento.expanded, 'fa-chevron-up': lancamento.expanded}"></i>
+        </button>
+    </div>
+
+    <div class="lancamento-list">
+        <app-transacao-list *ngIf="lancamento.expanded" [transacoes]="lancamento.transacoes">
+        </app-transacao-list>
+    </div>
+</div>
