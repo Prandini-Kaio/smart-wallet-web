@@ -7,3 +7,8 @@ export interface ContaOutput {
     saldoParcial: number;
     color: string;
 }
+
+export interface TipoContaOutput {
+    nome: string;
+    descricao: string;
+}

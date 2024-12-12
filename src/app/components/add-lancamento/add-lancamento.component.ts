@@ -89,6 +89,8 @@ export class AddLancamentoComponent implements OnInit {
         this.showError();
       });
     }
+
+    this._route.navigate(['/lancamentos/view'])
   }
 
   onCancel() : void {

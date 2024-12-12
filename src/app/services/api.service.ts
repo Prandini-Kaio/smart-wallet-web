@@ -2,7 +2,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from '../../environments/environment.development';
-import { ContaOutput } from '../shared/conta/conta.model';
+import { ContaOutput, TipoContaOutput } from '../shared/conta/conta.model';
 
 @Injectable({
   providedIn: 'root',
@@ -77,6 +77,10 @@ export class ApiService {
 
   getAllContas(): Observable<ContaOutput[]> {
     return this.http.get<any[]>(`${this.apiUrl}/conta`);
+  }
+
+  getTipoConta(): Observable<TipoContaOutput[]> {
+    return this.http.get<TipoContaOutput[]>(`${this.apiUrl}/conta/tipo`);
   }
   
 }

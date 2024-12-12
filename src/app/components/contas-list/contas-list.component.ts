@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ContaOutput } from '../../shared/conta/conta.model';
+import { ContaOutput, TipoContaOutput } from '../../shared/conta/conta.model';
 import { ApiService } from '../../services/api.service';
 import { FormControl, FormGroup, FormsModule, Validators, ReactiveFormsModule } from '@angular/forms';
 
@@ -15,6 +15,7 @@ export class ContasListComponent {
   contas: ContaOutput[] = [];
   loading: boolean = false;
   error: string | null = null;
+  tipoContas: TipoContaOutput[] = [];
 
 
   selectedAccount: ContaOutput | null = null;
@@ -45,6 +46,8 @@ export class ContasListComponent {
       diaVencimento: new FormControl(0, Validators.required),
       color: new FormControl('#000000', Validators.required)
     });
+
+    this.getTipoContas();
 
   }
 
@@ -107,6 +110,13 @@ export class ContasListComponent {
     );
 
     return [];
+  }
+
+  getTipoContas(){
+    this._api.getTipoConta().subscribe((data) => {
+      console.log(data);
+      this.tipoContas = data;
+    });
   }
 
   calculateTotalBalance(): void {

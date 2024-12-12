@@ -77,9 +77,14 @@
       </div>
 
       <div class="form-group">
-        <label for="saldoParcial">Tipo Conta</label>
-        <input type="text" id="tipoConta" formControlName="tipoConta">
-        <div *ngIf="form.get('tipoConta')?.invalid && form.get('tipoConta')?.touched" class="error-message">
+        <label for="tipoConta">Tipo Conta</label>
+        <select id="tipoConta" formControlName="tipoConta" class="form-control">
+          <option value="">Select an option</option>
+          <option *ngFor="let tipoConta of tipoContas" [value]="tipoConta.nome">
+            {{ tipoConta.descricao }}
+          </option>
+        </select>
+        <div *ngIf="editForm.get('tipoConta')?.invalid && editForm.get('tipoConta')?.touched" class="error-message">
           Campo obrigatório
         </div>
       </div>
@@ -130,7 +135,12 @@
 
       <div class="form-group">
         <label for="editTipoConta">Tipo Conta</label>
-        <input type="text" id="editTipoConta" formControlName="tipoConta">
+        <select id="editTipoConta" formControlName="tipoConta" class="form-control">
+          <option value="">Select an option</option>
+          <option *ngFor="let tipoConta of tipoContas" [value]="tipoConta">
+            {{ tipoConta }}
+          </option>
+        </select>
         <div *ngIf="editForm.get('tipoConta')?.invalid && editForm.get('tipoConta')?.touched" class="error-message">
           Campo obrigatório
         </div>
