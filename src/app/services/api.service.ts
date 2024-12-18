@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from '../../environments/environment.development';
 import { ContaOutput, TipoContaOutput } from '../shared/conta/conta.model';
+import { ErrorLog } from '../shared/monitor-erros/model/monitor-erros.model';
 
 @Injectable({
   providedIn: 'root',
@@ -81,6 +82,10 @@ export class ApiService {
 
   getTipoConta(): Observable<TipoContaOutput[]> {
     return this.http.get<TipoContaOutput[]>(`${this.apiUrl}/conta/tipo`);
+  }
+
+  getErrors(): Observable<ErrorLog[]> {
+    return this.http.get<ErrorLog[]>(`${this.apiUrl}/errors`)
   }
   
 }

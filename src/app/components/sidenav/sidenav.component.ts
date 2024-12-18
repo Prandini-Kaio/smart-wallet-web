@@ -40,6 +40,7 @@ export class SidenavComponent implements OnInit {
     { title: 'Home', icon: 'fa-home', path: '/home' },
     { title: 'Contas', icon: 'fa-piggy-bank', path: '/contas/view' },
     { title: 'Lancamento', icon: 'fa-table', path: '/lancamentos/view' },
+    { title: 'Monitor de erros', icon: 'fa-bug', path: '/monitor-erros' },
     { title: 'Settings', icon: 'fa-cog', path: '/settings' },
   ];
 

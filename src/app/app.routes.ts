@@ -27,4 +27,8 @@ export const routes: Routes = [
         path: 'lancamentos/details/:id',
         loadComponent: () => import('./components/lancamento-details/lancamento-details.component').then(m => m.LancamentoDetailsComponent)
     },
+    { 
+        path: 'monitor-erros',
+        loadComponent: () => import('./components/monitor-erros/monitor-erros.component').then(m => m.MonitorErrosComponent)
+    },
 ];

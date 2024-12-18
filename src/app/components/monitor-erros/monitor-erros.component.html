@@ -1,0 +1,46 @@
+<div class="container">
+  <h2>Monitor de erros</h2>
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Data/Hora</th>
+        <th>Operador</th>
+        <th>Mensagem de Erro</th>
+        <th>Ações</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let registro of errors">
+        <td>{{ registro.timestamp }}</td>
+        <td>{{ registro.operador }}</td>
+        <td>{{ registro.errorMessage }}</td>
+        <td class="actions">
+          <button class="icon-button" (click)="openModal(registro)">
+            <i class="material-icons">search</i>
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- Modal -->
+<div id="modal" class="modal" *ngIf="selectedLog">
+  <div class="modal-content">
+    <!-- Cabeçalho -->
+    <div class="modal-header">
+      <span class="modal-title">Visualizar log</span>
+      <button class="close-button" (click)="closeModal()">&#10005;</button>
+    </div>
+
+    <!-- Corpo -->
+    <div class="modal-body">
+      <pre>{{ selectedLog.stacktrace }}</pre>
+    </div>
+
+    <!-- Rodapé -->
+    <div class="modal-footer">
+      <button class="close-footer-button" (click)="closeModal()">Fechar</button>
+    </div>
+  </div>
+</div>
