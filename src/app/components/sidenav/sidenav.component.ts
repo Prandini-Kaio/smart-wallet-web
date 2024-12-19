@@ -41,7 +41,6 @@ export class SidenavComponent implements OnInit {
     { title: 'Contas', icon: 'fa-piggy-bank', path: '/contas/view' },
     { title: 'Lancamento', icon: 'fa-table', path: '/lancamentos/view' },
     { title: 'Monitor de erros', icon: 'fa-bug', path: '/monitor-erros' },
-    { title: 'Settings', icon: 'fa-cog', path: '/settings' },
   ];
 
   constructor(@Inject(PLATFORM_ID) private platformId: Object) {}
