@@ -1,374 +1,638 @@
-<div class="lancamento-list-container">
-  <!-- Header com título e botão para novo lançamento -->
-  <header class="header">
-    <h2 class="list-title">Visão Geral dos Lançamentos</h2>
-    <button class="btn btn-primary create-btn" (click)="createNew()">
-      <i class="fas fa-plus"></i> Novo Lançamento
-    </button>
-  </header>
-
+<div class="container">
   <!-- Filtros -->
-  <app-lancamento-filter [show]="showLancamentoList" (apply)="applyFilters($event)" (toggle)="toggle($event)">
+  <app-lancamento-filter
+    [show]="showLancamentoList"
+    (apply)="applyFilters($event)"
+    (toggle)="toggle($event)"
+  >
   </app-lancamento-filter>
 
-  <div class="totalizadores">
-    <div class="total-item total-entrada">
-      <i class="fas fa-arrow-circle-up"></i>
-      <span class="total-label">Entradas</span>
-      <span class="total-value">{{ totalizador.totalEntrada| currency:'BRL':'symbol':'1.2-2' }}</span>
+  <div class="lancamento-list-container">
+    <!-- Header com título e botão para novo lançamento -->
+    <header class="header">
+      <h2 class="list-title">Visão Geral dos Lançamentos</h2>
+      <button class="btn btn-primary create-btn" (click)="createNew()">
+        <i class="fas fa-plus"></i> Novo Lançamento
+      </button>
+    </header>
+
+    <div class="totalizadores">
+      <div class="total-item total-entrada">
+        <i class="fas fa-arrow-circle-up"></i>
+        <span class="total-label">Entradas</span>
+        <span class="total-value">{{
+          totalizador.totalEntrada | currency : "BRL" : "symbol" : "1.2-2"
+        }}</span>
+      </div>
+
+      <div class="total-item total-saldo">
+        <i class="fas fa-balance-scale"></i>
+        <span class="total-label">Saldo</span>
+        <span
+          class="total-value"
+          [ngClass]="{
+            positive: totalizador.total >= 0,
+            negative: totalizador.total < 0
+          }"
+        >
+          {{ totalizador.total | currency : "BRL" : "symbol" : "1.2-2" }}
+        </span>
+      </div>
+
+      <div class="total-item total-saida">
+        <i class="fas fa-arrow-circle-down"></i>
+        <span class="total-label">Saídas</span>
+        <span class="total-value">{{
+          totalizador.totalSaida | currency : "BRL" : "symbol" : "1.2-2"
+        }}</span>
+      </div>
     </div>
 
-    <div class="total-item total-saldo">
-      <i class="fas fa-balance-scale"></i>
-      <span class="total-label">Saldo</span>
-      <span class="total-value" [ngClass]="{'positive': totalizador.total >= 0, 'negative': totalizador.total < 0}">
-        {{ totalizador.total |  currency:'BRL':'symbol':'1.2-2' }}
-      </span>
+    <!-- Exibindo estado de carregamento e erro -->
+    <div *ngIf="loading" class="loading-spinner">
+      <i class="fas fa-spinner fa-spin"></i> Carregando...
     </div>
 
-    <div class="total-item total-saida">
-      <i class="fas fa-arrow-circle-down"></i>
-      <span class="total-label">Saídas</span>
-      <span class="total-value">{{ totalizador.totalSaida| currency:'BRL':'symbol':'1.2-2' }}</span>
+    <div *ngIf="error" class="error-message">
+      <i class="fas fa-exclamation-triangle"></i> {{ error }}
+      <button class="btn btn-danger reload-btn" (click)="reloadPage()">
+        <i class="fas fa-sync-alt"></i> Recarregar
+      </button>
+    </div>
+
+    <!-- Tabela de Lançamentos -->
+    <div
+      *ngIf="!loading && !error && transacoes.length > 0 && showLancamentoList"
+      class="lancamento-list"
+    >
+      <!-- Cabeçalhos de Coluna -->
+      <div class="lancamento-header">
+        <span class="col-info">Descrição</span>
+        <span class="col-details">Valor e Data</span>
+        <span class="col-details">Pagamento</span>
+        <span class="col-details">Pagamento</span>
+        <span class="col-actions">Ações</span>
+      </div>
+
+      <app-lancamento-item
+        *ngFor="let lancamento of lancamentos"
+        [lancamento]="lancamento"
+        (edit)="editLancamento($event)"
+        (delete)="deleteLancamento($event)"
+      >
+      </app-lancamento-item>
+    </div>
+
+    <div *ngIf="!showLancamentoList" class="lancamento-list">
+      <app-transacao-list [transacoes]="transacoes"> </app-transacao-list>
     </div>
   </div>
 
-  <!-- Exibindo estado de carregamento e erro -->
-  <div *ngIf="loading" class="loading-spinner">
-    <i class="fas fa-spinner fa-spin"></i> Carregando...
+  <!-- Mensagem de ausência de lançamentos -->
+  <div *ngIf="transacoes.length === 0 && !loading" class="no-results">
+    Nenhum lançamento encontrado.
   </div>
 
-  <div *ngIf="error" class="error-message">
-    <i class="fas fa-exclamation-triangle"></i> {{ error }}
-    <button class="btn btn-danger reload-btn" (click)="reloadPage()">
-      <i class="fas fa-sync-alt"></i> Recarregar
-    </button>
-  </div>
+  <!-- EDIT MODAL -->
 
-  <!-- Tabela de Lançamentos -->
-  <div *ngIf="!loading && !error && transacoes.length > 0 && showLancamentoList" class="lancamento-list">
-    <!-- Cabeçalhos de Coluna -->
-    <div class="lancamento-header">
-      <span class="col-info">Descrição</span>
-      <span class="col-details">Valor e Data</span>
-      <span class="col-details">Pagamento</span>
-      <span class="col-details">Pagamento</span>
-      <span class="col-actions">Ações</span>
+  <div class="modal" *ngIf="showEditModalLancamento">
+    <div class="modal-content">
+      <h2>Editar Conta</h2>
+
+      <form
+        [formGroup]="editForm"
+        (ngSubmit)="onEditSubmit()"
+        (cancel)="closeEditModal()"
+        class="launch-form"
+      >
+        <div class="form-group">
+          <label for="descricao" class="form-label">Descrição</label>
+          <div class="input-container">
+            <i class="fas fa-file-alt input-icon"></i>
+            <input
+              id="descricao"
+              formControlName="descricao"
+              type="text"
+              class="form-input"
+              placeholder="Digite a descrição"
+            />
+          </div>
+          <div
+            class="error-message"
+            *ngIf="
+              editForm.get('descricao')?.invalid &&
+              (editForm.get('descricao')?.dirty ||
+                editForm.get('descricao')?.touched)
+            "
+          >
+            <i class="fas fa-exclamation-circle"></i>
+            <span *ngIf="editForm.get('descricao')?.hasError('required')"
+              >Campo obrigatório</span
+            >
+          </div>
+        </div>
+
+        <!-- Conta -->
+        <div class="form-group">
+          <label for="conta" class="form-label">Conta</label>
+          <div class="input-container">
+            <i class="fas fa-wallet input-icon"></i>
+            <select id="conta" formControlName="conta" class="form-input">
+              <option value="">Selecione uma conta</option>
+              <option *ngFor="let c of contas" [value]="c">
+                {{ c.banco }}
+              </option>
+            </select>
+          </div>
+          <div
+            class="error-message"
+            *ngIf="
+              editForm.get('conta')?.invalid &&
+              (editForm.get('conta')?.dirty || editForm.get('conta')?.touched)
+            "
+          >
+            <i class="fas fa-exclamation-circle"></i>
+            <span *ngIf="editForm.get('conta')?.hasError('required')"
+              >Campo obrigatório</span
+            >
+          </div>
+        </div>
+
+        <!-- Tipo Lançamento -->
+        <div class="form-group">
+          <label for="tipoLancamento" class="form-label"
+            >Tipo de Lançamento</label
+          >
+          <div class="input-container">
+            <i class="fas fa-exchange-alt input-icon"></i>
+            <select
+              id="tipoLancamento"
+              formControlName="tipoLancamento"
+              class="form-input"
+            >
+              <option value="">Selecione o tipo</option>
+              <option value="ENTRADA">Entrada</option>
+              <option value="SAIDA">Saída</option>
+            </select>
+          </div>
+          <div
+            class="error-message"
+            *ngIf="
+              editForm.get('tipoLancamento')?.invalid &&
+              (editForm.get('tipoLancamento')?.dirty ||
+                editForm.get('tipoLancamento')?.touched)
+            "
+          >
+            <i class="fas fa-exclamation-circle"></i>
+            <span *ngIf="editForm.get('tipoLancamento')?.hasError('required')"
+              >Campo obrigatório</span
+            >
+          </div>
+        </div>
+
+        <!-- Tipo Pagamento -->
+        <div class="form-group">
+          <label for="tipoPagamento" class="form-label"
+            >Forma de Pagamento</label
+          >
+          <div class="input-container">
+            <i class="fas fa-credit-card input-icon"></i>
+            <select
+              id="tipoPagamento"
+              formControlName="tipoPagamento"
+              class="form-input"
+            >
+              <option value="">Selecione a forma de pagamento</option>
+              <option value="CREDITO">Crédito</option>
+              <option value="DEBITO">Débito</option>
+            </select>
+          </div>
+          <div
+            class="error-message"
+            *ngIf="
+              editForm.get('tipoPagamento')?.invalid &&
+              (editForm.get('tipoPagamento')?.dirty ||
+                editForm.get('tipoPagamento')?.touched)
+            "
+          >
+            <i class="fas fa-exclamation-circle"></i>
+            <span *ngIf="editForm.get('tipoP agemento')?.hasError('required')"
+              >Campo obrigatório</span
+            >
+          </div>
+        </div>
+
+        <!-- Categoria Lançamento -->
+        <div class="form-group">
+          <label for="categoriaLancamento" class="form-label"
+            >Categoria do Lançamento</label
+          >
+          <div class="input-container">
+            <i class="fas fa-folder-open input-icon"></i>
+            <select
+              id="categoriaLancamento"
+              formControlName="categoriaLancamento"
+              class="form-input"
+            >
+              <option value="">Selecione a categoria</option>
+              <option *ngFor="let c of categorias" [value]="c">
+                {{ c.toString() }}
+              </option>
+            </select>
+          </div>
+          <div
+            class="error-message"
+            *ngIf="
+              editForm.get('categoriaLancamento')?.invalid &&
+              (editForm.get('categoriaLancamento')?.dirty ||
+                editForm.get('categoriaLancamento')?.touched)
+            "
+          >
+            <i class="fas fa-exclamation-circle"></i>
+            <span
+              *ngIf="editForm.get('categoriaLancamento')?.hasError('required')"
+              >Campo obrigatório</span
+            >
+          </div>
+        </div>
+
+        <!-- Parcelas -->
+        <div class="form-group">
+          <label for="parcelas" class="form-label">Parcelas</label>
+          <div class="input-container">
+            <i class="fas fa-list-ol input-icon"></i>
+            <input
+              id="parcelas"
+              formControlName="parcelas"
+              type="number"
+              class="form-input"
+              placeholder="0"
+            />
+          </div>
+          <div
+            class="error-message"
+            *ngIf="
+              editForm.get('parcelas')?.invalid &&
+              (editForm.get('parcelas')?.dirty ||
+                editForm.get('parcelas')?.touched)
+            "
+          >
+            <i class="fas fa-exclamation-circle"></i>
+            <span *ngIf="editForm.get('parcelas')?.hasError('required')"
+              >Campo obrigatório</span
+            >
+          </div>
+        </div>
+
+        <!-- Data de Criação -->
+        <div class="form-group">
+          <label for="dtCriacao" class="form-label">Data de Criação</label>
+          <div class="input-container">
+            <i class="fas fa-calendar-alt input-icon"></i>
+            <input
+              id="dtCriacao"
+              formControlName="dtCriacao"
+              type="date"
+              class="form-input"
+            />
+          </div>
+          <div
+            class="error-message"
+            *ngIf="
+              editForm.get('dtCriacao')?.invalid &&
+              (editForm.get('dtCriacao')?.dirty ||
+                editForm.get('dtCriacao')?.touched)
+            "
+          >
+            <i class="fas fa-exclamation-circle"></i>
+            <span *ngIf="editForm.get('dtCriacao')?.hasError('required')"
+              >Campo obrigatório</span
+            >
+          </div>
+        </div>
+
+        <!-- Valor -->
+        <div class="form-group">
+          <label for="valor" class="form-label">Valor</label>
+          <div class="input-container">
+            <i class="fas fa-dollar-sign input-icon"></i>
+            <input
+              id="valor"
+              formControlName="valor"
+              type="text"
+              class="form-input"
+              placeholder="0,00"
+              mask="separator.2"
+              thousandSeparator="."
+              decimalMarker=","
+              prefix="R$ "
+            />
+          </div>
+          <div
+            class="error-message"
+            *ngIf="
+              editForm.get('valor')?.invalid &&
+              (editForm.get('valor')?.dirty || editForm.get('valor')?.touched)
+            "
+          >
+            <i class="fas fa-exclamation-circle"></i>
+            <span *ngIf="editForm.get('valor')?.hasError('required')"
+              >Campo obrigatório</span
+            >
+          </div>
+        </div>
+
+        <div class="form-actions">
+          <button
+            type="button"
+            class="btn btn-secondary"
+            (click)="closeEditModal()"
+          >
+            <i class="fas fa-times"></i> Cancelar
+          </button>
+          <button
+            type="submit"
+            class="btn btn-primary"
+            [disabled]="editForm.invalid"
+          >
+            <i class="fas fa-save"></i> Criar
+          </button>
+        </div>
+      </form>
     </div>
-
-    <app-lancamento-item *ngFor="let lancamento of lancamentos" [lancamento]="lancamento"
-      (edit)="editLancamento($event)" (delete)="deleteLancamento($event)">
-    </app-lancamento-item>
   </div>
 
-  <div *ngIf="!showLancamentoList" class="lancamento-list">
-    <app-transacao-list [transacoes]="transacoes">
-
-    </app-transacao-list>
+  <!-- Mensagem de ausência de lançamentos -->
+  <div *ngIf="transacoes.length === 0 && !loading" class="no-results">
+    Nenhum lançamento encontrado.
   </div>
 
-</div>
+  <!-- EDIT MODAL -->
 
-<!-- Mensagem de ausência de lançamentos -->
-<div *ngIf="transacoes.length === 0 && !loading" class="no-results">
-  Nenhum lançamento encontrado.
-</div>
+  <div class="modal" *ngIf="showEditModalLancamento">
+    <div class="modal-content">
+      <h2>Editar Conta</h2>
 
-<!-- EDIT MODAL -->
+      <form
+        [formGroup]="editForm"
+        (ngSubmit)="onEditSubmit()"
+        (cancel)="closeEditModal()"
+        class="launch-form"
+      >
+        <div class="form-group">
+          <label for="descricao" class="form-label">Descrição</label>
+          <div class="input-container">
+            <i class="fas fa-file-alt input-icon"></i>
+            <input
+              id="descricao"
+              formControlName="descricao"
+              type="text"
+              class="form-input"
+              placeholder="Digite a descrição"
+            />
+          </div>
+          <div
+            class="error-message"
+            *ngIf="
+              editForm.get('descricao')?.invalid &&
+              (editForm.get('descricao')?.dirty ||
+                editForm.get('descricao')?.touched)
+            "
+          >
+            <i class="fas fa-exclamation-circle"></i>
+            <span *ngIf="editForm.get('descricao')?.hasError('required')"
+              >Campo obrigatório</span
+            >
+          </div>
+        </div>
 
-<div class="modal" *ngIf="showEditModalLancamento">
-  <div class="modal-content">
-    <h2>Editar Conta</h2>
+        <!-- Conta -->
+        <div class="form-group">
+          <label for="conta" class="form-label">Conta</label>
+          <div class="input-container">
+            <i class="fas fa-wallet input-icon"></i>
+            <select id="conta" formControlName="conta" class="form-input">
+              <option value="">Selecione uma conta</option>
+              <option *ngFor="let c of contas" [value]="c.banco">
+                {{ c.banco }}
+              </option>
+            </select>
+          </div>
+          <div
+            class="error-message"
+            *ngIf="
+              editForm.get('conta')?.invalid &&
+              (editForm.get('conta')?.dirty || editForm.get('conta')?.touched)
+            "
+          >
+            <i class="fas fa-exclamation-circle"></i>
+            <span *ngIf="editForm.get('conta')?.hasError('required')"
+              >Campo obrigatório</span
+            >
+          </div>
+        </div>
 
-    <form [formGroup]="editForm" (ngSubmit)="onEditSubmit()" (cancel)="closeEditModal()" class="launch-form">
+        <!-- Tipo Lançamento -->
+        <div class="form-group">
+          <label for="tipoLancamento" class="form-label"
+            >Tipo de Lançamento</label
+          >
+          <div class="input-container">
+            <i class="fas fa-exchange-alt input-icon"></i>
+            <select
+              id="tipoLancamento"
+              formControlName="tipoLancamento"
+              class="form-input"
+            >
+              <option value="">Selecione o tipo</option>
+              <option value="ENTRADA">Entrada</option>
+              <option value="SAIDA">Saída</option>
+            </select>
+          </div>
+          <div
+            class="error-message"
+            *ngIf="
+              editForm.get('tipoLancamento')?.invalid &&
+              (editForm.get('tipoLancamento')?.dirty ||
+                editForm.get('tipoLancamento')?.touched)
+            "
+          >
+            <i class="fas fa-exclamation-circle"></i>
+            <span *ngIf="editForm.get('tipoLancamento')?.hasError('required')"
+              >Campo obrigatório</span
+            >
+          </div>
+        </div>
 
-      <div class="form-group">
-        <label for="descricao" class="form-label">Descrição</label>
-        <div class="input-container">
-          <i class="fas fa-file-alt input-icon"></i>
-          <input id="descricao" formControlName="descricao" type="text" class="form-input"
-            placeholder="Digite a descrição">
+        <!-- Tipo Pagamento -->
+        <div class="form-group">
+          <label for="tipoPagamento" class="form-label"
+            >Forma de Pagamento</label
+          >
+          <div class="input-container">
+            <i class="fas fa-credit-card input-icon"></i>
+            <select
+              id="tipoPagamento"
+              formControlName="tipoPagamento"
+              class="form-input"
+            >
+              <option value="">Selecione a forma de pagamento</option>
+              <option value="CREDITO">Crédito</option>
+              <option value="DEBITO">Débito</option>
+            </select>
+          </div>
+          <div
+            class="error-message"
+            *ngIf="
+              editForm.get('tipoPagamento')?.invalid &&
+              (editForm.get('tipoPagamento')?.dirty ||
+                editForm.get('tipoPagamento')?.touched)
+            "
+          >
+            <i class="fas fa-exclamation-circle"></i>
+            <span *ngIf="editForm.get('tipoP agemento')?.hasError('required')"
+              >Campo obrigatório</span
+            >
+          </div>
         </div>
-        <div class="error-message"
-          *ngIf="editForm.get('descricao')?.invalid && (editForm.get('descricao')?.dirty || editForm.get('descricao')?.touched)">
-          <i class="fas fa-exclamation-circle"></i>
-          <span *ngIf="editForm.get('descricao')?.hasError('required')">Campo obrigatório</span>
-        </div>
-      </div>
 
-      <!-- Conta -->
-      <div class="form-group">
-        <label for="conta" class="form-label">Conta</label>
-        <div class="input-container">
-          <i class="fas fa-wallet input-icon"></i>
-          <select id="conta" formControlName="conta" class="form-input">
-            <option value="">Selecione uma conta</option>
-            <option *ngFor="let c of contas" [value]="c">{{ c.banco }}</option>
-          </select>
+        <!-- Categoria Lançamento -->
+        <div class="form-group">
+          <label for="categoriaLancamento" class="form-label"
+            >Categoria do Lançamento</label
+          >
+          <div class="input-container">
+            <i class="fas fa-folder-open input-icon"></i>
+            <select
+              id="categoriaLancamento"
+              formControlName="categoriaLancamento"
+              class="form-input"
+            >
+              <option value="">Selecione a categoria</option>
+              <option *ngFor="let c of categorias" [value]="c">
+                {{ c.toString() }}
+              </option>
+            </select>
+          </div>
+          <div
+            class="error-message"
+            *ngIf="
+              editForm.get('categoriaLancamento')?.invalid &&
+              (editForm.get('categoriaLancamento')?.dirty ||
+                editForm.get('categoriaLancamento')?.touched)
+            "
+          >
+            <i class="fas fa-exclamation-circle"></i>
+            <span
+              *ngIf="editForm.get('categoriaLancamento')?.hasError('required')"
+              >Campo obrigatório</span
+            >
+          </div>
         </div>
-        <div class="error-message"
-          *ngIf="editForm.get('conta')?.invalid && (editForm.get('conta')?.dirty || editForm.get('conta')?.touched)">
-          <i class="fas fa-exclamation-circle"></i>
-          <span *ngIf="editForm.get('conta')?.hasError('required')">Campo obrigatório</span>
-        </div>
-      </div>
 
-      <!-- Tipo Lançamento -->
-      <div class="form-group">
-        <label for="tipoLancamento" class="form-label">Tipo de Lançamento</label>
-        <div class="input-container">
-          <i class="fas fa-exchange-alt input-icon"></i>
-          <select id="tipoLancamento" formControlName="tipoLancamento" class="form-input">
-            <option value="">Selecione o tipo</option>
-            <option value="ENTRADA">Entrada</option>
-            <option value="SAIDA">Saída</option>
-          </select>
+        <!-- Parcelas -->
+        <div class="form-group">
+          <label for="parcelas" class="form-label">Parcelas</label>
+          <div class="input-container">
+            <i class="fas fa-list-ol input-icon"></i>
+            <input
+              id="parcelas"
+              formControlName="parcelas"
+              type="number"
+              class="form-input"
+              placeholder="0"
+            />
+          </div>
+          <div
+            class="error-message"
+            *ngIf="
+              editForm.get('parcelas')?.invalid &&
+              (editForm.get('parcelas')?.dirty ||
+                editForm.get('parcelas')?.touched)
+            "
+          >
+            <i class="fas fa-exclamation-circle"></i>
+            <span *ngIf="editForm.get('parcelas')?.hasError('required')"
+              >Campo obrigatório</span
+            >
+          </div>
         </div>
-        <div class="error-message"
-          *ngIf="editForm.get('tipoLancamento')?.invalid && (editForm.get('tipoLancamento')?.dirty || editForm.get('tipoLancamento')?.touched)">
-          <i class="fas fa-exclamation-circle"></i>
-          <span *ngIf="editForm.get('tipoLancamento')?.hasError('required')">Campo obrigatório</span>
-        </div>
-      </div>
 
-      <!-- Tipo Pagamento -->
-      <div class="form-group">
-        <label for="tipoPagamento" class="form-label">Forma de Pagamento</label>
-        <div class="input-container">
-          <i class="fas fa-credit-card input-icon"></i>
-          <select id="tipoPagamento" formControlName="tipoPagamento" class="form-input">
-            <option value="">Selecione a forma de pagamento</option>
-            <option value="CREDITO">Crédito</option>
-            <option value="DEBITO">Débito</option>
-          </select>
+        <!-- Data de Criação -->
+        <div class="form-group">
+          <label for="dtCriacao" class="form-label">Data de Criação</label>
+          <div class="input-container">
+            <i class="fas fa-calendar-alt input-icon"></i>
+            <input
+              id="dtCriacao"
+              formControlName="dtCriacao"
+              type="date"
+              class="form-input"
+            />
+          </div>
+          <div
+            class="error-message"
+            *ngIf="
+              editForm.get('dtCriacao')?.invalid &&
+              (editForm.get('dtCriacao')?.dirty ||
+                editForm.get('dtCriacao')?.touched)
+            "
+          >
+            <i class="fas fa-exclamation-circle"></i>
+            <span *ngIf="editForm.get('dtCriacao')?.hasError('required')"
+              >Campo obrigatório</span
+            >
+          </div>
         </div>
-        <div class="error-message"
-          *ngIf="editForm.get('tipoPagamento')?.invalid && (editForm.get('tipoPagamento')?.dirty || editForm.get('tipoPagamento')?.touched)">
-          <i class="fas fa-exclamation-circle"></i>
-          <span *ngIf="editForm.get('tipoP agemento')?.hasError('required')">Campo obrigatório</span>
-        </div>
-      </div>
 
-      <!-- Categoria Lançamento -->
-      <div class="form-group">
-        <label for="categoriaLancamento" class="form-label">Categoria do Lançamento</label>
-        <div class="input-container">
-          <i class="fas fa-folder-open input-icon"></i>
-          <select id="categoriaLancamento" formControlName="categoriaLancamento" class="form-input">
-            <option value="">Selecione a categoria</option>
-            <option *ngFor="let c of categorias" [value]="c">{{ c.toString() }}</option>
-          </select>
+        <!-- Valor -->
+        <div class="form-group">
+          <label for="valor" class="form-label">Valor</label>
+          <div class="input-container">
+            <i class="fas fa-dollar-sign input-icon"></i>
+            <input
+              id="valor"
+              formControlName="valor"
+              type="text"
+              class="form-input"
+              placeholder="0,00"
+              mask="separator.2"
+              thousandSeparator="."
+              decimalMarker=","
+              prefix="R$ "
+            />
+          </div>
+          <div
+            class="error-message"
+            *ngIf="
+              editForm.get('valor')?.invalid &&
+              (editForm.get('valor')?.dirty || editForm.get('valor')?.touched)
+            "
+          >
+            <i class="fas fa-exclamation-circle"></i>
+            <span *ngIf="editForm.get('valor')?.hasError('required')"
+              >Campo obrigatório</span
+            >
+          </div>
         </div>
-        <div class="error-message"
-          *ngIf="editForm.get('categoriaLancamento')?.invalid && (editForm.get('categoriaLancamento')?.dirty || editForm.get('categoriaLancamento')?.touched)">
-          <i class="fas fa-exclamation-circle"></i>
-          <span *ngIf="editForm.get('categoriaLancamento')?.hasError('required')">Campo obrigatório</span>
-        </div>
-      </div>
 
-      <!-- Parcelas -->
-      <div class="form-group">
-        <label for="parcelas" class="form-label">Parcelas</label>
-        <div class="input-container">
-          <i class="fas fa-list-ol input-icon"></i>
-          <input id="parcelas" formControlName="parcelas" type="number" class="form-input" placeholder="0">
+        <div class="form-actions">
+          <button
+            type="button"
+            class="btn btn-secondary"
+            (click)="closeEditModal()"
+          >
+            <i class="fas fa-times"></i> Cancelar
+          </button>
+          <button
+            type="submit"
+            class="btn btn-primary"
+            [disabled]="editForm.invalid"
+          >
+            <i class="fas fa-save"></i> Criar
+          </button>
         </div>
-        <div class="error-message"
-          *ngIf="editForm.get('parcelas')?.invalid && (editForm.get('parcelas')?.dirty || editForm.get('parcelas')?.touched)">
-          <i class="fas fa-exclamation-circle"></i>
-          <span *ngIf="editForm.get('parcelas')?.hasError('required')">Campo obrigatório</span>
-        </div>
-      </div>
-
-      <!-- Data de Criação -->
-      <div class="form-group">
-        <label for="dtCriacao" class="form-label">Data de Criação</label>
-        <div class="input-container">
-          <i class="fas fa-calendar-alt input-icon"></i>
-          <input id="dtCriacao" formControlName="dtCriacao" type="date" class="form-input">
-        </div>
-        <div class="error-message"
-          *ngIf="editForm.get('dtCriacao')?.invalid && (editForm.get('dtCriacao')?.dirty || editForm.get('dtCriacao')?.touched)">
-          <i class="fas fa-exclamation-circle"></i>
-          <span *ngIf="editForm.get('dtCriacao')?.hasError('required')">Campo obrigatório</span>
-        </div>
-      </div>
-
-      <!-- Valor -->
-      <div class="form-group">
-        <label for="valor" class="form-label">Valor</label>
-        <div class="input-container">
-          <i class="fas fa-dollar-sign input-icon"></i>
-          <input id="valor" formControlName="valor" type="text" class="form-input" placeholder="0,00" mask="separator.2"
-            thousandSeparator="." decimalMarker="," prefix="R$ ">
-        </div>
-        <div class="error-message"
-          *ngIf="editForm.get('valor')?.invalid && (editForm.get('valor')?.dirty || editForm.get('valor')?.touched)">
-          <i class="fas fa-exclamation-circle"></i>
-          <span *ngIf="editForm.get('valor')?.hasError('required')">Campo obrigatório</span>
-        </div>
-      </div>
-
-      <div class="form-actions">
-        <button type="button" class="btn btn-secondary" (click)="closeEditModal()">
-          <i class="fas fa-times"></i> Cancelar
-        </button>
-        <button type="submit" class="btn btn-primary" [disabled]="editForm.invalid">
-          <i class="fas fa-save"></i> Criar
-        </button>
-      </div>
-    </form>
-  </div>
-</div>
-
-<!-- Mensagem de ausência de lançamentos -->
-<div *ngIf="transacoes.length === 0 && !loading" class="no-results">
-  Nenhum lançamento encontrado.
-</div>
-
-<!-- EDIT MODAL -->
-
-<div class="modal" *ngIf="showEditModalLancamento">
-  <div class="modal-content">
-    <h2>Editar Conta</h2>
-
-    <form [formGroup]="editForm" (ngSubmit)="onEditSubmit()" (cancel)="closeEditModal()" class="launch-form">
-
-      <div class="form-group">
-        <label for="descricao" class="form-label">Descrição</label>
-        <div class="input-container">
-          <i class="fas fa-file-alt input-icon"></i>
-          <input id="descricao" formControlName="descricao" type="text" class="form-input"
-            placeholder="Digite a descrição">
-        </div>
-        <div class="error-message"
-          *ngIf="editForm.get('descricao')?.invalid && (editForm.get('descricao')?.dirty || editForm.get('descricao')?.touched)">
-          <i class="fas fa-exclamation-circle"></i>
-          <span *ngIf="editForm.get('descricao')?.hasError('required')">Campo obrigatório</span>
-        </div>
-      </div>
-
-      <!-- Conta -->
-      <div class="form-group">
-        <label for="conta" class="form-label">Conta</label>
-        <div class="input-container">
-          <i class="fas fa-wallet input-icon"></i>
-          <select id="conta" formControlName="conta" class="form-input">
-            <option value="">Selecione uma conta</option>
-            <option *ngFor="let c of contas" [value]="c.banco">{{ c.banco }}</option>
-          </select>
-        </div>
-        <div class="error-message"
-          *ngIf="editForm.get('conta')?.invalid && (editForm.get('conta')?.dirty || editForm.get('conta')?.touched)">
-          <i class="fas fa-exclamation-circle"></i>
-          <span *ngIf="editForm.get('conta')?.hasError('required')">Campo obrigatório</span>
-        </div>
-      </div>
-
-      <!-- Tipo Lançamento -->
-      <div class="form-group">
-        <label for="tipoLancamento" class="form-label">Tipo de Lançamento</label>
-        <div class="input-container">
-          <i class="fas fa-exchange-alt input-icon"></i>
-          <select id="tipoLancamento" formControlName="tipoLancamento" class="form-input">
-            <option value="">Selecione o tipo</option>
-            <option value="ENTRADA">Entrada</option>
-            <option value="SAIDA">Saída</option>
-          </select>
-        </div>
-        <div class="error-message"
-          *ngIf="editForm.get('tipoLancamento')?.invalid && (editForm.get('tipoLancamento')?.dirty || editForm.get('tipoLancamento')?.touched)">
-          <i class="fas fa-exclamation-circle"></i>
-          <span *ngIf="editForm.get('tipoLancamento')?.hasError('required')">Campo obrigatório</span>
-        </div>
-      </div>
-
-      <!-- Tipo Pagamento -->
-      <div class="form-group">
-        <label for="tipoPagamento" class="form-label">Forma de Pagamento</label>
-        <div class="input-container">
-          <i class="fas fa-credit-card input-icon"></i>
-          <select id="tipoPagamento" formControlName="tipoPagamento" class="form-input">
-            <option value="">Selecione a forma de pagamento</option>
-            <option value="CREDITO">Crédito</option>
-            <option value="DEBITO">Débito</option>
-          </select>
-        </div>
-        <div class="error-message"
-          *ngIf="editForm.get('tipoPagamento')?.invalid && (editForm.get('tipoPagamento')?.dirty || editForm.get('tipoPagamento')?.touched)">
-          <i class="fas fa-exclamation-circle"></i>
-          <span *ngIf="editForm.get('tipoP agemento')?.hasError('required')">Campo obrigatório</span>
-        </div>
-      </div>
-
-      <!-- Categoria Lançamento -->
-      <div class="form-group">
-        <label for="categoriaLancamento" class="form-label">Categoria do Lançamento</label>
-        <div class="input-container">
-          <i class="fas fa-folder-open input-icon"></i>
-          <select id="categoriaLancamento" formControlName="categoriaLancamento" class="form-input">
-            <option value="">Selecione a categoria</option>
-            <option *ngFor="let c of categorias" [value]="c">{{ c.toString() }}</option>
-          </select>
-        </div>
-        <div class="error-message"
-          *ngIf="editForm.get('categoriaLancamento')?.invalid && (editForm.get('categoriaLancamento')?.dirty || editForm.get('categoriaLancamento')?.touched)">
-          <i class="fas fa-exclamation-circle"></i>
-          <span *ngIf="editForm.get('categoriaLancamento')?.hasError('required')">Campo obrigatório</span>
-        </div>
-      </div>
-
-      <!-- Parcelas -->
-      <div class="form-group">
-        <label for="parcelas" class="form-label">Parcelas</label>
-        <div class="input-container">
-          <i class="fas fa-list-ol input-icon"></i>
-          <input id="parcelas" formControlName="parcelas" type="number" class="form-input" placeholder="0">
-        </div>
-        <div class="error-message"
-          *ngIf="editForm.get('parcelas')?.invalid && (editForm.get('parcelas')?.dirty || editForm.get('parcelas')?.touched)">
-          <i class="fas fa-exclamation-circle"></i>
-          <span *ngIf="editForm.get('parcelas')?.hasError('required')">Campo obrigatório</span>
-        </div>
-      </div>
-
-      <!-- Data de Criação -->
-      <div class="form-group">
-        <label for="dtCriacao" class="form-label">Data de Criação</label>
-        <div class="input-container">
-          <i class="fas fa-calendar-alt input-icon"></i>
-          <input id="dtCriacao" formControlName="dtCriacao" type="date" class="form-input">
-        </div>
-        <div class="error-message"
-          *ngIf="editForm.get('dtCriacao')?.invalid && (editForm.get('dtCriacao')?.dirty || editForm.get('dtCriacao')?.touched)">
-          <i class="fas fa-exclamation-circle"></i>
-          <span *ngIf="editForm.get('dtCriacao')?.hasError('required')">Campo obrigatório</span>
-        </div>
-      </div>
-
-      <!-- Valor -->
-      <div class="form-group">
-        <label for="valor" class="form-label">Valor</label>
-        <div class="input-container">
-          <i class="fas fa-dollar-sign input-icon"></i>
-          <input id="valor" formControlName="valor" type="text" class="form-input" placeholder="0,00" mask="separator.2"
-            thousandSeparator="." decimalMarker="," prefix="R$ ">
-        </div>
-        <div class="error-message"
-          *ngIf="editForm.get('valor')?.invalid && (editForm.get('valor')?.dirty || editForm.get('valor')?.touched)">
-          <i class="fas fa-exclamation-circle"></i>
-          <span *ngIf="editForm.get('valor')?.hasError('required')">Campo obrigatório</span>
-        </div>
-      </div>
-
-      <div class="form-actions">
-        <button type="button" class="btn btn-secondary" (click)="closeEditModal()">
-          <i class="fas fa-times"></i> Cancelar
-        </button>
-        <button type="submit" class="btn btn-primary" [disabled]="editForm.invalid">
-          <i class="fas fa-save"></i> Criar
-        </button>
-      </div>
-    </form>
+      </form>
+    </div>
   </div>
 </div>
