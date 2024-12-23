@@ -1,0 +1,32 @@
+<div class="container">
+    <h1>{{ title }}</h1>
+
+    <div class="chart-container" *ngIf="chartData?.length">
+        <google-chart [type]="chartType" [data]="chartData" [options]="chartOptions" [width]="400" [height]="200">
+        </google-chart>
+    </div>
+
+    <div class="chart-container" *ngIf="comparisonChartData?.length">
+        <google-chart [type]="comparisonChartType" [data]="comparisonChartData" [options]="comparisonChartOptions"
+            [width]="400" [height]="200">
+        </google-chart>
+    </div>
+
+
+    <div class="summary" *ngIf="totalizador">
+        <div class="summary-item">
+            <h3>Total Entradas</h3>
+            <p>R{{ totalizador?.totalEntrada | currency }}</p>
+        </div>
+        <div class="summary-item">
+            <h3>Total Saídas</h3>
+            <p>R{{ totalizador?.totalSaida | currency }}</p>
+        </div>
+        <div class="summary-item">
+            <h3>Saldo</h3>
+            <p [ngClass]="{'positive': totalizador.total >= 0, 'negative': totalizador.total < 0}">
+                R{{ totalizador?.total | currency }}
+            </p>
+        </div>
+    </div>
+</div>

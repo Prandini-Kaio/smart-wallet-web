@@ -2,16 +2,14 @@ import { NgFor, NgIf } from "@angular/common";
 import { Component, OnInit } from "@angular/core";
 import { ApiService } from "../../services/api.service";
 import { HttpParams } from "@angular/common/http";
+import { GastosChartComponent } from "../gastos-chart/gastos-chart.component";
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [NgFor, NgIf],
+  imports: [NgFor, NgIf, GastosChartComponent],
   template: `
-    <h1>Pagina inicial</h1>
-    <div *ngIf="data">
-      {{ data }}
-    </div>
+    <app-gastos-chart/>
   `
 })
 export class HomeComponent implements OnInit{

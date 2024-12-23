@@ -18,7 +18,6 @@ import { app } from '../../../../server';
     FormsModule,
     ReactiveFormsModule,
     LancamentoItemComponent,
-    TransacaoItemComponent,
     TransacaoListComponent,
     LancamentoFilterComponent
 ],
@@ -73,6 +72,7 @@ export class LancamentoListComponent implements OnInit {
     const mesPassado = new Date(dataAtual.getFullYear(), dataAtual.getMonth() + 2, 0);
     return mesPassado.toISOString().split('T')[0];
   }
+  
   constructor(
     private readonly _api: ApiService,
     private router: Router

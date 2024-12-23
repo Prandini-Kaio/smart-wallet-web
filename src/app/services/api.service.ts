@@ -52,6 +52,10 @@ export class ApiService {
       }
     }
 
+    console.log("PARAMS")
+    console.log(paramsObj)
+    console.log(params)
+
     return this.http.get(`${this.apiUrl}/transacao/totalizador`, { params });
   }
 

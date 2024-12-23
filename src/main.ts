@@ -7,6 +7,9 @@ import { provideHttpClient, withFetch } from '@angular/common/http';
 import { ToastrModule } from 'ngx-toastr';
 import { importProvidersFrom } from '@angular/core';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
+import { Chart, registerables } from 'chart.js';
+
+Chart.register(...registerables);
 
 bootstrapApplication(AppComponent, {
   providers: [

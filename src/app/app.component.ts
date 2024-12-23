@@ -6,6 +6,7 @@ import { Router, RouterModule, RouterOutlet } from '@angular/router';
 import { ToastrModule } from 'ngx-toastr';
 import { SidenavComponent } from './components/sidenav/sidenav.component';
 import { ApiService } from './services/api.service';
+import { GoogleChartsModule } from 'angular-google-charts';
 
 @Component({
   selector: 'app-root',
@@ -15,7 +16,8 @@ import { ApiService } from './services/api.service';
     SidenavComponent,
     FormsModule,
     CommonModule,
-    HttpClientModule
+    HttpClientModule,
+    GoogleChartsModule
   ],
   providers: [ApiService],
   templateUrl: './app.component.html',
