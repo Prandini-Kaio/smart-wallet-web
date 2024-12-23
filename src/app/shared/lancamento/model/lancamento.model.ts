@@ -1,4 +1,5 @@
 export interface Lancamento {
+    categoria: any;
     descricao: string;
     valor: number;
     categoriaLancamento: string;
