@@ -44,16 +44,18 @@ export class GastosChartComponent implements OnInit {
     title: 'Lançamentos por Categoria',
     curveType: 'function',
     legend: { position: 'top' },
+    colors: ['#4caf50', '#f44336', '#2196f3', '#ff9800', '#9c27b0'],
     vAxis: {
       title: 'Número de Lançamentos',
       minValue: 0,
+      format: 'decimal'  // Formato numérico para o eixo Y
     },
     hAxis: {
       title: 'Categoria',
     },
     chartArea: {
       width: '80%',
-      height: '70%',
+      height: '70%'
     },
     animation: {
       startup: true,
@@ -61,6 +63,7 @@ export class GastosChartComponent implements OnInit {
       duration: 1000,
     },
   };
+  
 
   public chartLancType = ChartType.Bar;
 
