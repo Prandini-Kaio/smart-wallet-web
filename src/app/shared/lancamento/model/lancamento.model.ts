@@ -1,3 +1,5 @@
+import { ContaFilter } from "../../conta/conta.model";
+
 export interface Lancamento {
     categoria: any;
     descricao: string;
@@ -5,7 +7,7 @@ export interface Lancamento {
     categoriaLancamento: string;
     tipoLancamento: string;
     tipoPagamento: string;
-    conta: string;
+    conta: ContaFilter;
     banco: string;
     dtCriacao: string;
     parcelas: number;

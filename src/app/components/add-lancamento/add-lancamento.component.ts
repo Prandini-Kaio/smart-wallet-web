@@ -5,6 +5,7 @@ import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } 
 import { Router } from '@angular/router';
 import { ApiService } from '../../services/api.service';
 import { ToastrService } from 'ngx-toastr';
+import { ContaFilter, ContaOutput } from '../../shared/conta/conta.model';
 
 @Component({
   selector: 'app-add-lancamento',
@@ -16,8 +17,10 @@ import { ToastrService } from 'ngx-toastr';
 export class AddLancamentoComponent implements OnInit {
   form: FormGroup = new FormGroup({});
 
-  contas: Array<any> = [];
+  contas: Array<ContaOutput> = [];
   categorias: Array<string> = [];
+
+  selectedConta: ContaOutput | null = null;
 
   constructor(
     private http: HttpClient, 
@@ -71,8 +74,15 @@ export class AddLancamentoComponent implements OnInit {
       console.log(currentDateTime.toString())
       console.log(dtCriacaoValue.toISOString())
 
+      const contaSelecionada = this.contas.find(c => c.id === this.form.get('conta')?.value);
+
       const lancamento = {
-        conta: this.form.get('conta')?.value,
+        conta: {
+          nome: contaSelecionada?.nome,
+          banco: contaSelecionada?.banco,
+          tipoConta: contaSelecionada?.tipoConta,
+          diaVencimento: contaSelecionada?.dtVencimento
+        },
         valor: this.form.get('valor')?.value,
         tipoLancamento: this.form.get('tipoLancamento')?.value,
         tipoPagamento: this.form.get('tipoPagamento')?.value,
@@ -83,10 +93,9 @@ export class AddLancamentoComponent implements OnInit {
       };
 
       this._repository.createLancamento(lancamento).subscribe((response) => {
-        this.showSuccess();
+        this.toastr.success("Sucesso!", "Lancamento criado com sucesso.");
       }, (error) => {
-        console.log(error);
-        this.showError();
+        this.toastr.error("Erro: ", error?.error.message);
       });
     }
 
@@ -95,13 +104,5 @@ export class AddLancamentoComponent implements OnInit {
 
   onCancel() : void {
     this._route.navigate(['/lancamentos/view']);
-  }
-
-  showSuccess() {
-    this.toastr.success('Gravado com sucesso!', 'Sucesso');
-  }
-
-  showError() {
-    this.toastr.error('Oops! Algo deu errado.', 'Erro');
   }
 }

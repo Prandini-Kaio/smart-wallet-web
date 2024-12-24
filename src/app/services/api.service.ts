@@ -55,7 +55,7 @@ export class ApiService {
     return this.http.get(`${this.apiUrl}/transacao/totalizador`, { params });
   }
 
-  getContas(paramObj: any): Observable<string[]> {
+  getContas(paramObj: any): Observable<ContaOutput[]> {
     let params = new HttpParams();
 
     for(const key in paramObj){
@@ -64,7 +64,7 @@ export class ApiService {
       }
     }
 
-    return this.http.get<string[]>(`${this.apiUrl}/conta`, { params });
+    return this.http.get<ContaOutput[]>(`${this.apiUrl}/conta`, { params });
   }
 
   createConta(input: any): Observable<any> {
