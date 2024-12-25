@@ -4,6 +4,7 @@ import { ChartType, GoogleChartsModule } from 'angular-google-charts';
 import { ApiService } from '../../services/api.service';
 import { Lancamento, Totalizador } from '../../shared/lancamento/model/lancamento.model';
 import { Observable, forkJoin } from 'rxjs';
+import { group } from 'node:console';
 
 @Component({
   selector: 'app-gastos-chart',
@@ -15,7 +16,11 @@ import { Observable, forkJoin } from 'rxjs';
 export class GastosChartComponent implements OnInit {
 
   // Totalizador (PIE CHART)
-  totalizador!: Totalizador;
+  totalizador: Totalizador = {
+    total: 0,
+    totalSaida: 0,
+    totalEntrada: 0
+  };
   public title = 'Desempenho Financeiro';
   public chartData: any[] = [];
   public chartOptions = {
@@ -27,7 +32,7 @@ export class GastosChartComponent implements OnInit {
   public chartType = ChartType.PieChart;
 
   // Totalizadores (BAR CHART)
-  totalizadores!: Totalizador[];
+  totalizadores: Totalizador[] = []
   public comparisonChartData: any[] = [];
   public comparisonChartOptions = {
     title: 'Comparativo de Gastos - Últimos 4 Meses',
@@ -46,9 +51,9 @@ export class GastosChartComponent implements OnInit {
     legend: { position: 'top' },
     colors: ['#4caf50', '#f44336', '#2196f3', '#ff9800', '#9c27b0'],
     vAxis: {
-      title: 'Número de Lançamentos',
+      title: 'Valor',
       minValue: 0,
-      format: 'decimal'  // Formato numérico para o eixo Y
+      format: 'decimal',
     },
     hAxis: {
       title: 'Categoria',
@@ -63,9 +68,9 @@ export class GastosChartComponent implements OnInit {
       duration: 1000,
     },
   };
-  
 
-  public chartLancType = ChartType.Bar;
+
+  public chartLancType = ChartType.ColumnChart;
 
   constructor(private readonly _api: ApiService) { }
 
@@ -86,13 +91,15 @@ export class GastosChartComponent implements OnInit {
 
       this.lancamentos = response;
 
+      console.log(response)
+
       const grouped = this.lancamentos.reduce((acc: { [categoria: string]: number }, lancamento: Lancamento) => {
         const categoria = lancamento.categoriaLancamento;
         acc[categoria] = (acc[categoria] || 0) + lancamento.valor;
         return acc;
       }, {});
 
-      this.chartLancamentosData = [['Valor', 'Categoria'], ...Object.entries(grouped)];
+      this.chartLancamentosData = Object.entries(grouped).map(([categoria, valor]) => [categoria, valor]);
     })
   }
 
@@ -114,6 +121,7 @@ export class GastosChartComponent implements OnInit {
       };
 
       requests.push(this._api.getTotalizadorTransacoes(params));
+
     }
 
     forkJoin(requests).subscribe((responses: any[]) => {

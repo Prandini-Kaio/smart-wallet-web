@@ -7,7 +7,7 @@ import { GastosChartComponent } from "../gastos-chart/gastos-chart.component";
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [NgFor, NgIf, GastosChartComponent],
+  imports: [GastosChartComponent],
   template: `
     <app-gastos-chart/>
   `

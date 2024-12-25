@@ -22,16 +22,16 @@
     <div class="summary" *ngIf="totalizador">
         <div class="summary-item">
             <h3>Total Entradas</h3>
-            <p>R{{ totalizador?.totalEntrada | currency }}</p>
+            <p>R{{ totalizador.totalEntrada | currency }}</p>
         </div>
         <div class="summary-item">
             <h3>Total Saídas</h3>
-            <p>R{{ totalizador?.totalSaida | currency }}</p>
+            <p>R{{ totalizador.totalSaida | currency }}</p>
         </div>
         <div class="summary-item">
             <h3>Saldo</h3>
             <p [ngClass]="{'positive': totalizador.total >= 0, 'negative': totalizador.total < 0}">
-                R{{ totalizador?.total | currency }}
+                R{{ totalizador.total | currency }}
             </p>
         </div>
     </div>

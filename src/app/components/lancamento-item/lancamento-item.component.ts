@@ -7,7 +7,7 @@ import { TransacaoListComponent } from "../transacao-list/transacao-list.compone
 @Component({
   selector: 'app-lancamento-item',
   standalone: true,
-  imports: [CommonModule, TransacaoItemComponent, TransacaoListComponent],
+  imports: [CommonModule, TransacaoListComponent],
   templateUrl: './lancamento-item.component.html',
   styleUrl: './lancamento-item.component.scss'
 })
