@@ -6,13 +6,13 @@
     </select>
 
     <label>Tipo de Lançamento:</label>
-    <select [(ngModel)]="filtros.tipoLancamento">
+    <select [(ngModel)]="filtros.tipo">
         <option value="">Todos</option>
         <option *ngFor="let tipo of tiposLancamento" [value]="tipo">{{ tipo }}</option>
     </select>
 
     <label>Forma de Pagamento:</label>
-    <select [(ngModel)]="filtros.tipoPagamento">
+    <select [(ngModel)]="filtros.pagamento">
         <option value="">Todas</option>
         <option *ngFor="let pagamento of tiposPagamento" [value]="pagamento">{{ pagamento }}</option>
     </select>
@@ -25,8 +25,8 @@
 
     <label>Conta:</label>
     <select [(ngModel)]="filtros.conta">
-        <option value="">Todas</option>
-        <option *ngFor="let conta of contas" [value]="conta.banco">{{ conta.banco }}</option>
+        <option value='{{contaVazia}}'>Todas</option>
+        <option *ngFor="let conta of contas" [ngValue]="conta">{{ conta.banco }} - {{ conta.nome }}</option>
     </select>
 
     <label>Data de:</label>

@@ -9,6 +9,7 @@ import { TransacaoItemComponent } from "../transacao-item/transacao-item.compone
 import { TransacaoListComponent } from "../transacao-list/transacao-list.component";
 import { LancamentoFilterComponent } from "../lancamento-filter/lancamento-filter.component";
 import { app } from '../../../../server';
+import { ContaOutput } from '../../shared/conta/conta.model';
 
 @Component({
   selector: 'app-lancamento-list',
@@ -45,7 +46,7 @@ export class LancamentoListComponent implements OnInit {
   showEditModalTransacao = false;
 
   categorias: Array<string> = [];
-  contas: Array<any> = [];
+  contas: Array<ContaOutput> = [];
   tiposLancamento = ['ENTRADA', 'SAIDA'];
   tiposPagamento = ['DEBITO', 'CREDITO'];
   statusLancamento = ['Em Aberto', 'Quitado', 'Cancelado'];
@@ -54,7 +55,7 @@ export class LancamentoListComponent implements OnInit {
     tipoLancamento: '',
     tipoPagamento: '',
     status: '',
-    conta: '',
+    conta: {},
     dtInicio: this.getInicioMesPassado(),
     dtFim: this.getFimMesPassado()
   };
@@ -79,7 +80,7 @@ export class LancamentoListComponent implements OnInit {
   ) {
 
     this.editForm = new FormGroup({
-      conta: new FormControl('', Validators.required),
+      conta: new FormControl({nome: '', banco: ''}, Validators.required),
       valor: new FormControl('', Validators.required),
       tipoLancamento: new FormControl('conta', Validators.required),
       tipoPagamento: new FormControl('conta', Validators.required),
@@ -98,7 +99,7 @@ export class LancamentoListComponent implements OnInit {
   }
 
   getContas() {
-    this._api.getContas("").subscribe((response) => {
+    this._api.getContas({}).subscribe((response) => {
       this.contas = response;
     }, (error) => {
       console.error(error);

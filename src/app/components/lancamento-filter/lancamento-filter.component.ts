@@ -1,11 +1,23 @@
 import { CommonModule, formatDate } from '@angular/common';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ApiService } from '../../services/api.service';
+import { ContaFilter } from '../../shared/conta/conta.model';
+
+interface Filter {
+  categoria: string,
+  tipo: string,
+  pagamento: string,
+  status: string,
+  conta: ContaFilter,
+  dtInicio: string,
+  dtFim: string
+}
+
 @Component({
   selector: 'app-lancamento-filter',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, ReactiveFormsModule],
   templateUrl: './lancamento-filter.component.html',
   styleUrl: './lancamento-filter.component.scss'
 })
@@ -17,20 +29,27 @@ export class LancamentoFilterComponent implements OnInit {
 
   constructor(private _api: ApiService) { }
 
+  contaVazia = {}
+
   categorias: Array<string> = [];
   contas: Array<any> = [];
   tiposLancamento = ['ENTRADA', 'SAIDA'];
   tiposPagamento = ['DEBITO', 'CREDITO'];
   statusLancamento = ['Em Aberto', 'Quitado', 'Cancelado'];
-  filtros = {
+  filtros: Filter = {
     categoria: '',
-    tipoLancamento: '',
-    tipoPagamento: '',
+    tipo: '',
+    pagamento: '',
     status: '',
-    conta: '',
+    conta: {
+      nome: '',
+      banco: '',
+      tipoConta: '',
+      diaVencimento: ''
+    },
     dtInicio: this.getInicioMesPassado(),
     dtFim: this.getFimMesPassado()
-  };
+  }
 
   ngOnInit(): void {
     this.getContas();
@@ -38,12 +57,17 @@ export class LancamentoFilterComponent implements OnInit {
   }
 
   onApply() {
+
+    console.log("CONTA")
+    console.log(this.filtros.conta)
+
     const filters = {
       categoria: this.filtros.categoria,
-      tipoLancamento: this.filtros.tipoLancamento,
-      tipoPagamento: this.filtros.tipoPagamento,
+      tipo: this.filtros.tipo,
+      pagamento: this.filtros.pagamento,
       status: this.filtros.status,
-      conta: this.filtros.conta,
+      nomeConta: this.filtros.conta.nome,
+      bancoConta: this.filtros.conta.banco,
       dtInicio: formatDate(this.filtros.dtInicio, 'yyyy-MM-ddT00:00:00', 'en-US'),
       dtFim: formatDate(this.filtros.dtFim, 'yyyy-MM-ddT23:59:59', 'en-US')
     };
@@ -56,7 +80,7 @@ export class LancamentoFilterComponent implements OnInit {
   }
 
   getContas() {
-    this._api.getContas("").subscribe((response) => {
+    this._api.getContas({}).subscribe((response) => {
       this.contas = response;
     }, (error) => {
       console.error(error);
