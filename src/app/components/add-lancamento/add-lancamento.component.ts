@@ -70,10 +70,6 @@ export class AddLancamentoComponent implements OnInit {
       const currentDateTime = new Date();
       dtCriacaoValue.setHours(currentDateTime.getHours(), currentDateTime.getMinutes(), currentDateTime.getSeconds());
 
-      console.log(dtCriacaoValue.toString())
-      console.log(currentDateTime.toString())
-      console.log(dtCriacaoValue.toISOString())
-
       const contaSelecionada = this.contas.find(c => c.id === this.form.get('conta')?.value);
 
       const lancamento = {

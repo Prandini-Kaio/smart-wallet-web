@@ -57,10 +57,6 @@ export class LancamentoFilterComponent implements OnInit {
   }
 
   onApply() {
-
-    console.log("CONTA")
-    console.log(this.filtros.conta)
-
     const filters = {
       categoria: this.filtros.categoria,
       tipo: this.filtros.tipo,

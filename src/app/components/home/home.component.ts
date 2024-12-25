@@ -23,7 +23,6 @@ export class HomeComponent implements OnInit{
     .set('id', '1')
 
     this.apiContext.getLancamento(params).subscribe(response => {
-      console.log(response);
       this.data = response;
     })
   }

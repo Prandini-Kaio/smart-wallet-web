@@ -119,7 +119,6 @@ export class ContasListComponent {
 
   getTipoContas(){
     this._api.getTipoConta().subscribe((data) => {
-      console.log(data);
       this.tipoContas = data;
     });
   }
