@@ -60,7 +60,11 @@ export class LancamentoListComponent implements OnInit {
     dtFim: this.getFimMesPassado()
   };
 
-  totalizador!: Totalizador;
+  totalizador: Totalizador = {
+    totalEntrada: 0,
+    totalSaida: 0,
+    total: 0
+  };
 
   getInicioMesPassado(): string {
     const dataAtual = new Date();
@@ -115,7 +119,7 @@ export class LancamentoListComponent implements OnInit {
   }
 
   loadData(): void {
-    this._api.getTransacoes("").subscribe(
+    this._api.getTransacoes({}).subscribe(
       (data) => {
         this.transacoes = data;
         this.loading = false;
@@ -127,7 +131,7 @@ export class LancamentoListComponent implements OnInit {
       }
     );
 
-    this._api.getLancamento("").subscribe(
+    this._api.getLancamento({}).subscribe(
       (data) => {
         this.lancamentos = data;
         this.loading = false;
@@ -139,7 +143,7 @@ export class LancamentoListComponent implements OnInit {
       }
     );
 
-    this._api.getTotalizadorTransacoes("").subscribe(response => {
+    this._api.getTotalizadorTransacoes({}).subscribe(response => {
       this.totalizador = response;
     });
   }
