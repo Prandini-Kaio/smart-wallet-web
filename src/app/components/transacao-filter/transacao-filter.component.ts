@@ -65,7 +65,7 @@ export class TransacaoFilterComponent {
       categoria: this.filtros.categoria,
       tipo: this.filtros.tipo,
       pagamento: this.filtros.pagamento,
-      status: this.filtros.status,
+      status: this.filtros.status.normalize().toUpperCase().replace(' ', '_'),
       nomeConta: this.filtros.conta.nome,
       bancoConta: this.filtros.conta.banco,
       dtInicio: formatDate(this.filtros.dtInicio, 'yyyy-MM-ddT00:00:00', 'en-US'),
