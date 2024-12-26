@@ -1,11 +1,13 @@
 import { CommonModule } from '@angular/common';
-import { HttpClientModule } from '@angular/common/http';
-import { Component } from '@angular/core';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
+import { Component, importProvidersFrom } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router, RouterModule, RouterOutlet } from '@angular/router';
-import { ToastrModule } from 'ngx-toastr';
+import { GoogleChartsModule } from 'angular-google-charts';
+import { ToastrModule, ToastrService, provideToastr } from 'ngx-toastr';
 import { SidenavComponent } from './components/sidenav/sidenav.component';
 import { ApiService } from './services/api.service';
+import { ErrorInterceptor } from './shared/error-interceptor.interceptor';
 
 @Component({
   selector: 'app-root',
@@ -15,9 +17,14 @@ import { ApiService } from './services/api.service';
     SidenavComponent,
     FormsModule,
     CommonModule,
-    HttpClientModule
+    GoogleChartsModule,
+    ToastrModule,
+    HttpClientModule,
+],
+  providers: [
+    ApiService,
+    { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
   ],
-  providers: [ApiService],
   templateUrl: './app.component.html',
   standalone: true
 })

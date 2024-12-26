@@ -1,10 +1,13 @@
+import { ContaFilter, ContaOutput } from "../../conta/conta.model";
+
 export interface Lancamento {
+    categoria: any;
     descricao: string;
     valor: number;
     categoriaLancamento: string;
     tipoLancamento: string;
     tipoPagamento: string;
-    conta: string;
+    conta: ContaFilter;
     banco: string;
     dtCriacao: string;
     parcelas: number;
@@ -18,7 +21,7 @@ export interface LancamentoOutput {
     categoriaLancamento: string;
     tipoLancamento: string;
     tipoPagamento: string;
-    conta: string;
+    conta: ContaOutput;
     banco: string;
     dtCriacao: string;
     parcelas: number;

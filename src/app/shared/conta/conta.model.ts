@@ -8,6 +8,13 @@ export interface ContaOutput {
     color: string;
 }
 
+export interface ContaFilter {
+    nome: string,
+    banco: string,
+    tipoConta: string,
+    diaVencimento: string
+}
+
 export interface TipoContaOutput {
     nome: string;
     descricao: string;

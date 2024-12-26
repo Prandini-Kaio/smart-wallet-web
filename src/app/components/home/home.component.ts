@@ -2,16 +2,14 @@ import { NgFor, NgIf } from "@angular/common";
 import { Component, OnInit } from "@angular/core";
 import { ApiService } from "../../services/api.service";
 import { HttpParams } from "@angular/common/http";
+import { GastosChartComponent } from "../gastos-chart/gastos-chart.component";
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [NgFor, NgIf],
+  imports: [GastosChartComponent],
   template: `
-    <h1>Pagina inicial</h1>
-    <div *ngIf="data">
-      {{ data }}
-    </div>
+    <app-gastos-chart/>
   `
 })
 export class HomeComponent implements OnInit{
@@ -25,7 +23,6 @@ export class HomeComponent implements OnInit{
     .set('id', '1')
 
     this.apiContext.getLancamento(params).subscribe(response => {
-      console.log(response);
       this.data = response;
     })
   }

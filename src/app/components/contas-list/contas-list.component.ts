@@ -3,11 +3,17 @@ import { CommonModule } from '@angular/common';
 import { ContaOutput, TipoContaOutput } from '../../shared/conta/conta.model';
 import { ApiService } from '../../services/api.service';
 import { FormControl, FormGroup, FormsModule, Validators, ReactiveFormsModule } from '@angular/forms';
+import { ToastrModule, ToastrService } from 'ngx-toastr'
+
 
 @Component({
   selector: 'app-contas-list',
   standalone: true,
-  imports: [CommonModule, FormsModule, ReactiveFormsModule],
+  imports: [
+    CommonModule, 
+    FormsModule, 
+    ReactiveFormsModule,
+  ],
   templateUrl: './contas-list.component.html',
   styleUrl: './contas-list.component.scss'
 })
@@ -25,7 +31,7 @@ export class ContasListComponent {
   form: FormGroup = new FormGroup({});
   editForm: FormGroup = new FormGroup({});
 
-  constructor(private readonly _api: ApiService) { }
+  constructor(private readonly _api: ApiService, private _toaster: ToastrService) { }
 
   ngOnInit(): void {
 
@@ -48,7 +54,6 @@ export class ContasListComponent {
     });
 
     this.getTipoContas();
-
   }
 
   onSubmit(): void {
@@ -64,11 +69,11 @@ export class ContasListComponent {
       this._api.createConta(conta).subscribe(
         (response) => {
           this.closeModal();
-          // Opcional: Adicionar mensagem de sucesso ou atualizar lista de contas
+          this._toaster.show("Conta criada com sucesso!", 'success')
         },
         (error) => {
-          console.log(error);
-          // Opcional: Adicionar tratamento de erro
+          console.log(error)
+          this._toaster.error('Falha na requisição', error.error.message);
         }
       );
     }
@@ -91,7 +96,7 @@ export class ContasListComponent {
           this.closeModal();
         },
         (error) => {
-          console.log(error);
+          
         }
       );
     }
@@ -114,7 +119,6 @@ export class ContasListComponent {
 
   getTipoContas(){
     this._api.getTipoConta().subscribe((data) => {
-      console.log(data);
       this.tipoContas = data;
     });
   }

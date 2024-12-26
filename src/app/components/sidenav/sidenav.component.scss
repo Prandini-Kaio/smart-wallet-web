@@ -53,6 +53,12 @@ $pale-blue: #AFC5E8;
   }
 }
 
+// Seta de drop do nav item
+.fas {
+  margin-left: 8px;
+  transition: transform 0.3s;
+}
+
 nav {
   padding-top: 20px;
   flex-grow: 1;
@@ -64,6 +70,7 @@ nav {
     text-decoration: none;
     color: $pale-blue;
     transition: background-color 0.3s ease;
+    cursor: pointer;
 
     &:hover {
       background-color: $medium-blue;
@@ -84,7 +91,34 @@ nav {
       }
     }
   }
+
+  .sub-menu {
+    list-style-type: none;
+    padding-left: 20px;
+    margin: 0;
+    display: block;
+  }
+
+  .sub-menu li {
+    position: relative;
+    padding: 10px;
+    padding-top: 0px;
+    padding-bottom: 0px;
+  }
+
+  .sub-item {
+    display: flex;
+    align-items: center;
+    border-radius: 5px;
+    text-decoration: none;
+    color: inherit;
+  }
+
+  .hidden {
+    display: none;
+  }
 }
+
 
 .main-content {
   flex-grow: 1;

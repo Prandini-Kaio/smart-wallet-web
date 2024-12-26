@@ -24,7 +24,6 @@ export class TransacaoItemComponent{
   }
 
   getStatusClass(status: string): string {
-    console.log(status)
     return `status--${status.toLowerCase()}`;
   }
 }

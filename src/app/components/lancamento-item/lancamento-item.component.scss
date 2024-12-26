@@ -75,6 +75,7 @@
 
 .edit-btn,
 .delete-btn,
+.copy-btn,
 .expand-btn {
     font-size: 18px;
     color: #666;
@@ -90,6 +91,10 @@
 
 .delete-btn:hover {
     color: #E53935;
+}
+
+.copy-btn:hover {
+    color: #0aa2e9;
 }
 
 .expand-btn:hover {

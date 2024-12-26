@@ -11,13 +11,13 @@
     <div class="lancamento-details">
         <span class="lancamento-value">R{{ lancamento.valor | currency }}<span class="lancamento-date">/{{
                 lancamento.parcelas }}</span></span>
-        <span class="lancamento-date">{{ lancamento.dtCriacao | date:'dd/MM/yyyy' }}</span>
+        <span class="lancamento-date">{{ this.convertData(lancamento.dtCriacao) }}</span>
     </div>
 
-    <!-- Conta e status -->
+    <!-- Banco e nome -->
     <div class="lancamento-details">
-        <span class="lancamento-value">{{ lancamento.conta }}</span>
-        <span class="lancamento-date">{{ lancamento.status }}</span>
+        <span class="lancamento-value">{{ lancamento.conta.banco }}</span>
+        <span class="lancamento-date">{{ lancamento.conta.nome }}</span>
     </div>
 
     <!-- Tipos pagamento e lancamento -->
@@ -34,15 +34,18 @@
         <button class="btn btn-link delete-btn" (click)="onDelete()">
             <i class="fas fa-trash"></i>
         </button>
+        <button class="btn btn-link copy-btn" (click)="onCopy()">
+            <i class="fas fa-clipboard"></i>
+        </button>
         <!-- Dentro do lancamento-item, após lancamento-actions -->
-        <button class="btn btn-link expand-btn" (click)="lancamento.expanded = !lancamento.expanded">
+        <!-- <button class="btn btn-link expand-btn" (click)="lancamento.expanded = !lancamento.expanded">
             <i class="fas"
                 [ngClass]="{'fa-chevron-down': !lancamento.expanded, 'fa-chevron-up': lancamento.expanded}"></i>
-        </button>
+        </button> -->
     </div>
 
-    <div class="lancamento-list">
+    <!-- <div class="lancamento-list">
         <app-transacao-list *ngIf="lancamento.expanded" [transacoes]="lancamento.transacoes">
         </app-transacao-list>
-    </div>
+    </div> -->
 </div>

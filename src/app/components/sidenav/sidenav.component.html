@@ -7,10 +7,21 @@
             </button>
         </div>
         <nav>
-            <a *ngFor="let item of navItems" [routerLink]="item.path" class="nav-item">
-                <i class="fas" [ngClass]="item.icon"></i>
-                <span [ngClass]="{'hidden': isClosed}">{{ item.title }}</span>
-            </a>
+            <ng-container *ngFor="let item of navItems">
+                <a class="nav-item" (click)="item.subItems ? toggleSubMenu(item) : null" [routerLink]="item.path">
+                    <i class="fas" [ngClass]="item.icon"></i>
+                    <span [ngClass]="{'hidden': isClosed}">{{ item.title }}</span>
+                    <i *ngIf="item.subItems" class="fas"
+                        [ngClass]="{'fa-chevron-down': !item.expanded, 'fa-chevron-up': item.expanded}"></i>
+                </a>
+                <ul *ngIf="item.expanded && item.subItems" class="sub-menu">
+                    <li *ngFor="let subItem of item.subItems">
+                        <a [routerLink]="subItem.path" class="nav-item sub-item">
+                            <span [ngClass]="{'hidden': isClosed}">{{ subItem.title }}</span>
+                        </a>
+                    </li>
+                </ul>
+            </ng-container>
         </nav>
     </div>
     <div class="main-content" [ngClass]="{'main-content-expanded': isClosed}">
