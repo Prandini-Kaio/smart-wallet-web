@@ -2,6 +2,19 @@ import { CommonModule, formatDate } from '@angular/common';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { ApiService } from '../../services/api.service';
 import { FormsModule } from '@angular/forms';
+import { ContaFilter } from '../../shared/conta/conta.model';
+
+
+
+interface Filter {
+  categoria: string,
+  tipo: string,
+  pagamento: string,
+  status: string,
+  conta: ContaFilter,
+  dtInicio: string,
+  dtFim: string
+}
 
 @Component({
   selector: 'app-transacao-filter',
@@ -20,20 +33,27 @@ export class TransacaoFilterComponent {
 
   constructor(private _api: ApiService) { }
 
+  contaVazia = {}
+
   categorias: Array<string> = [];
   contas: Array<any> = [];
   tiposLancamento = ['ENTRADA', 'SAIDA'];
   tiposPagamento = ['DEBITO', 'CREDITO'];
   statusTransacao = ['Atrasado', 'Cancelado', 'Pago', 'Pendente'];
-  filtros = {
+  filtros: Filter = {
     categoria: '',
-    tipoLancamento: '',
-    tipoPagamento: '',
+    tipo: '',
+    pagamento: '',
     status: '',
-    conta: '',
+    conta: {
+      nome: '',
+      banco: '',
+      tipoConta: '',
+      diaVencimento: ''
+    },
     dtInicio: this.getInicioMesPassado(),
     dtFim: this.getFimMesPassado()
-  };
+  }
 
   ngOnInit(): void {
     this.getContas();
@@ -43,10 +63,11 @@ export class TransacaoFilterComponent {
   onApply() {
     const filters = {
       categoria: this.filtros.categoria,
-      tipoLancamento: this.filtros.tipoLancamento,
-      tipoPagamento: this.filtros.tipoPagamento,
-      status: this.filtros.status.toUpperCase().replace(' ', '_'),
-      conta: this.filtros.conta,
+      tipo: this.filtros.tipo,
+      pagamento: this.filtros.pagamento,
+      status: this.filtros.status,
+      nomeConta: this.filtros.conta.nome,
+      bancoConta: this.filtros.conta.banco,
       dtInicio: formatDate(this.filtros.dtInicio, 'yyyy-MM-ddT00:00:00', 'en-US'),
       dtFim: formatDate(this.filtros.dtFim, 'yyyy-MM-ddT23:59:59', 'en-US')
     };
@@ -59,7 +80,7 @@ export class TransacaoFilterComponent {
   }
 
   getContas() {
-    this._api.getContas("").subscribe((response) => {
+    this._api.getContas({}).subscribe((response) => {
       this.contas = response;
     }, (error) => {
       console.error(error);
