@@ -29,7 +29,9 @@ export class TransacaoListComponent implements OnInit{
   ngOnInit() {
     this.api.getTransacoes({}).subscribe((response => {
       this.transacoes = response;
-    }))
+    }));
+
+    this.applyFilters({});
   }
 
   applyFilters(filters: any){
