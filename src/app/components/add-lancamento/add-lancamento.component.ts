@@ -1,11 +1,15 @@
 import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import { NavigationEnd, Router } from '@angular/router';
 import { ApiService } from '../../services/api.service';
 import { ToastrService } from 'ngx-toastr';
 import { ContaFilter, ContaOutput } from '../../shared/conta/conta.model';
+import { LancamentoOutput } from '../../shared/lancamento/model/lancamento.model';
+import { parse } from 'date-fns';
+import { LancamentoServiceService } from './service/lancamento-service.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-add-lancamento',
@@ -14,8 +18,10 @@ import { ContaFilter, ContaOutput } from '../../shared/conta/conta.model';
   templateUrl: './add-lancamento.component.html',
   styleUrl: './add-lancamento.component.scss'
 })
-export class AddLancamentoComponent implements OnInit {
+export class AddLancamentoComponent implements OnInit, OnDestroy {
+
   form: FormGroup = new FormGroup({});
+  private routerSubscription!: Subscription;
 
   contas: Array<ContaOutput> = [];
   categorias: Array<string> = [];
@@ -23,15 +29,18 @@ export class AddLancamentoComponent implements OnInit {
   selectedConta: ContaOutput | null = null;
 
   constructor(
-    private http: HttpClient, 
+    private http: HttpClient,
     private _repository: ApiService,
     private _route: Router,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private lancamentoService: LancamentoServiceService
   ) { }
 
   ngOnInit(): void {
 
     const today = new Date().toISOString().split('T')[0];
+
+    const lancamento = this.lancamentoService.getLancamento();
 
     this.form = new FormGroup({
       conta: new FormControl('', Validators.required),
@@ -44,8 +53,35 @@ export class AddLancamentoComponent implements OnInit {
       dtCriacao: new FormControl(today, Validators.required),
     });
 
+    if (lancamento) {
+      this.form = new FormGroup({
+        id: new FormControl(lancamento.id),
+        conta: new FormControl(lancamento.conta, Validators.required),
+        valor: new FormControl(lancamento.valor, Validators.required),
+        tipoLancamento: new FormControl(
+          lancamento.tipoLancamento.normalize('NFD').replace(/[\u0300-\u036f]/g, "").toUpperCase(),
+          Validators.required
+        ),
+        tipoPagamento: new FormControl(
+          lancamento.tipoPagamento.normalize('NFD').replace(/[\u0300-\u036f]/g, "").toUpperCase(),
+          Validators.required
+        ),
+        categoriaLancamento: new FormControl(lancamento.categoriaLancamento.toUpperCase(), Validators.required),
+        parcelas: new FormControl(lancamento.parcelas, Validators.required),
+        descricao: new FormControl(lancamento.descricao, Validators.required),
+        dtCriacao: new FormControl(
+          parse(lancamento.dtCriacao, 'dd/MM/yyyy HH:mm:ss', new Date()).toISOString().split('T')[0],
+          Validators.required
+        ),
+      });
+    }
+
     this.getContas();
     this.getCategorias();
+  }
+
+  ngOnDestroy(): void {
+    this.lancamentoService.clear();
   }
 
   getContas() {
@@ -85,7 +121,7 @@ export class AddLancamentoComponent implements OnInit {
         categoriaLancamento: this.form.get('categoriaLancamento')?.value,
         parcelas: this.form.get('parcelas')?.value,
         descricao: this.form.get('descricao')?.value,
-        dtCriacao: dtCriacaoValue.toISOString(), 
+        dtCriacao: dtCriacaoValue.toISOString(),
       };
 
       this._repository.createLancamento(lancamento).subscribe((response) => {
@@ -98,7 +134,7 @@ export class AddLancamentoComponent implements OnInit {
     this._route.navigate(['/lancamentos/view'])
   }
 
-  onCancel() : void {
+  onCancel(): void {
     this._route.navigate(['/lancamentos/view']);
   }
 }

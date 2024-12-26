@@ -15,6 +15,7 @@ export class LancamentoItemComponent {
   @Input() lancamento!: LancamentoOutput;
   @Output() edit = new EventEmitter<LancamentoOutput>();
   @Output() delete = new EventEmitter<LancamentoOutput>();
+  @Output() copy = new EventEmitter<LancamentoOutput>();
 
   onEdit() {
     this.edit.emit(this.lancamento);
@@ -22,5 +23,24 @@ export class LancamentoItemComponent {
 
   onDelete(){
     this.delete.emit(this.lancamento);
+  }
+
+  onCopy(){
+    this.copy.emit(this.lancamento)
+  }
+
+  convertData(date: string): string{
+    if (!date) {
+      return ''; // Retorna uma string vazia se a data não for válida
+  }
+
+  const d = new Date(date);
+  
+  // Verifica se a data é válida
+  if (isNaN(d.getTime())) {
+      return ''; // Retorna uma string vazia se a data não for válida
+  }
+
+  return d.toISOString().split('T')[0];
   }
 }

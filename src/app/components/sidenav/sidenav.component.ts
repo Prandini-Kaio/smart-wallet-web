@@ -7,7 +7,7 @@ import { RouterModule } from '@angular/router';
 interface NavItem {
   title: string;
   icon: string;
-  path: string;
+  path: string | undefined;
   subItems?: NavItem[];
   expanded?: boolean;
 }
@@ -42,9 +42,9 @@ export class SidenavComponent implements OnInit {
     { title: 'Home', icon: 'fa-home', path: '/home' },
     { title: 'Contas', icon: 'fa-piggy-bank', path: '/contas/view' },
     {
-      title: 'Lançamentos', icon: 'fa-table', path: '/lancamentos/view', subItems: [
+      title: 'Lançamentos', icon: 'fa-table', path: undefined, subItems: [
         { title: 'Lançamentos', icon: 'fa-plus', path: '/lancamentos/view' },
-        { title: 'Transações', icon: 'fa-eye', path: '/lancamentos/view' },
+        { title: 'Transações', icon: 'fa-eye', path: '/transacoes/view' },
       ]
     },
 

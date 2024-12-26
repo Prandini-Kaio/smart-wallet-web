@@ -1,16 +1,15 @@
-import { CommonModule, formatDate } from '@angular/common';
+import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { ApiService } from '../../services/api.service';
-import { LancamentoOutput, Totalizador, TransacaoOutput } from '../../shared/lancamento/model/lancamento.model';
-import { LancamentoItemComponent } from '../lancamento-item/lancamento-item.component';
-import { TransacaoItemComponent } from "../transacao-item/transacao-item.component";
-import { TransacaoListComponent } from "../transacao-list/transacao-list.component";
-import { LancamentoFilterComponent } from "../lancamento-filter/lancamento-filter.component";
-import { app } from '../../../../server';
-import { ContaOutput } from '../../shared/conta/conta.model';
+import { parse } from 'date-fns';
 import { ToastrService } from 'ngx-toastr';
+import { ApiService } from '../../services/api.service';
+import { ContaOutput } from '../../shared/conta/conta.model';
+import { LancamentoOutput, Totalizador, TransacaoOutput } from '../../shared/lancamento/model/lancamento.model';
+import { LancamentoFilterComponent } from "../lancamento-filter/lancamento-filter.component";
+import { LancamentoItemComponent } from '../lancamento-item/lancamento-item.component';
+import { LancamentoServiceService } from '../add-lancamento/service/lancamento-service.service';
 
 @Component({
   selector: 'app-lancamento-list',
@@ -20,7 +19,6 @@ import { ToastrService } from 'ngx-toastr';
     FormsModule,
     ReactiveFormsModule,
     LancamentoItemComponent,
-    TransacaoListComponent,
     LancamentoFilterComponent
 ],
   templateUrl: './lancamento-list.component.html',
@@ -34,7 +32,6 @@ export class LancamentoListComponent implements OnInit {
     this.showLancamentoList = show;
   }
 
-  transacoes: TransacaoOutput[] = [];
   lancamentos: LancamentoOutput[] = [];
   loading: boolean = true;
   error: string | null = null;
@@ -81,18 +78,19 @@ export class LancamentoListComponent implements OnInit {
   constructor(
     private readonly _api: ApiService,
     private toastr: ToastrService,
-    private router: Router
+    private router: Router,
+    private lancamentoService: LancamentoServiceService
   ) {
 
     this.editForm = new FormGroup({
       conta: new FormControl({nome: '', banco: ''}, Validators.required),
       valor: new FormControl('', Validators.required),
-      tipoLancamento: new FormControl('conta', Validators.required),
-      tipoPagamento: new FormControl('conta', Validators.required),
-      categoriaLancamento: new FormControl('conta', Validators.required),
-      parcelas: new FormControl('conta', Validators.required),
-      descricao: new FormControl('conta', Validators.required),
-      dtCriacao: new FormControl('conta', Validators.required),
+      tipoLancamento: new FormControl('', Validators.required),
+      tipoPagamento: new FormControl('', Validators.required),
+      categoriaLancamento: new FormControl('', Validators.required),
+      parcelas: new FormControl('', Validators.required),
+      descricao: new FormControl('', Validators.required),
+      dtCriacao: new FormControl('', Validators.required),
     })
   }
 
@@ -120,17 +118,6 @@ export class LancamentoListComponent implements OnInit {
   }
 
   loadData(): void {
-    this._api.getTransacoes({}).subscribe(
-      (data) => {
-        this.transacoes = data;
-        this.loading = false;
-      },
-      (error) => {
-        this.error = 'Erro carregando lancamentos. Por favor tente novamente.';
-        this.loading = false;
-        console.error('Erro carregando lancamentos:', error);
-      }
-    );
 
     this._api.getLancamento({}).subscribe(
       (data) => {
@@ -167,16 +154,19 @@ export class LancamentoListComponent implements OnInit {
 
   editLancamento(lancamento: LancamentoOutput): void {
 
+    console.log(lancamento.tipoLancamento.trim().toUpperCase())
+    console.log(lancamento.tipoPagamento.trim().toUpperCase())
+
     this.editForm = new FormGroup({
       id: new FormControl(lancamento.id),
       conta: new FormControl(lancamento.conta, Validators.required),
       valor: new FormControl(lancamento.valor, Validators.required),
-      tipoLancamento: new FormControl(lancamento.tipoLancamento, Validators.required),
-      tipoPagamento: new FormControl(lancamento.tipoPagamento, Validators.required),
-      categoriaLancamento: new FormControl(lancamento.categoriaLancamento, Validators.required),
+      tipoLancamento: new FormControl(lancamento.tipoLancamento.normalize('NFD').replace(/[\u0300-\u036f]/g, "").toUpperCase(), Validators.required),
+      tipoPagamento: new FormControl(lancamento.tipoPagamento.normalize('NFD').replace(/[\u0300-\u036f]/g, "").toUpperCase(), Validators.required),
+      categoriaLancamento: new FormControl(lancamento.categoriaLancamento.toUpperCase(), Validators.required),
       parcelas: new FormControl(lancamento.parcelas, Validators.required),
       descricao: new FormControl(lancamento.descricao, Validators.required),
-      dtCriacao: new FormControl(lancamento.dtCriacao, Validators.required),
+      dtCriacao: new FormControl(parse(lancamento.dtCriacao, 'dd/MM/yyyy HH:mm:ss', new Date()).toISOString().split('T')[0], Validators.required),
     })
 
     this.showEditModalLancamento = true;
@@ -223,14 +213,6 @@ export class LancamentoListComponent implements OnInit {
     lancamento.expanded = !lancamento.expanded;
   }
 
-  editTransacao(transacao: TransacaoOutput): void {
-
-  }
-
-  deleteTransacao(obj: any): void {
-    this.router.navigate(['lancamentos/add']);
-  }
-
   deleteLancamento(lancamento: LancamentoOutput): void {
 
     const data = {
@@ -244,28 +226,18 @@ export class LancamentoListComponent implements OnInit {
     window.location.reload();
   }
 
+  copy(lancamento: LancamentoOutput): void{
+    console.log(lancamento)
+    this.lancamentoService.setLancamento(lancamento);
+    this.router.navigate(['lancamentos/add']);
+  }
+
   applyFilters(filters: any) {
-    this._api.getTransacoes(filters).subscribe(
-      (data) => {
-        this.transacoes = data;
-        this.loading = false;
-      },
-      (error) => {
-        this.error = 'Erro carregando lancamentos. Por favor tente novamente.';
-        this.loading = false;
-        console.error('Erro carregando lancamentos:', error);
-      }
-    );
 
     this._api.getLancamento(filters).subscribe(
       (data) => {
         this.lancamentos = data;
         this.loading = false;
-      },
-      (error) => {
-        this.error = 'Erro carregando lancamentos. Por favor tente novamente.';
-        this.loading = false;
-        console.error('Erro carregando lancamentos:', error);
       }
     );
 

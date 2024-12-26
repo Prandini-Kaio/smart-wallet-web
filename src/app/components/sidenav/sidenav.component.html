@@ -8,7 +8,7 @@
         </div>
         <nav>
             <ng-container *ngFor="let item of navItems">
-                <a class="nav-item" (click)="item.subItems ? toggleSubMenu(item) : null">
+                <a class="nav-item" (click)="item.subItems ? toggleSubMenu(item) : null" [routerLink]="item.path">
                     <i class="fas" [ngClass]="item.icon"></i>
                     <span [ngClass]="{'hidden': isClosed}">{{ item.title }}</span>
                     <i *ngIf="item.subItems" class="fas"
