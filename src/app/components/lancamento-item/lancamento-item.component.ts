@@ -14,13 +14,13 @@ import { TransacaoListComponent } from "../transacao-list/transacao-list.compone
 export class LancamentoItemComponent {
   @Input() lancamento!: LancamentoOutput;
   @Output() edit = new EventEmitter<LancamentoOutput>();
-  @Output() delete = new EventEmitter<number>();
+  @Output() delete = new EventEmitter<LancamentoOutput>();
 
   onEdit() {
     this.edit.emit(this.lancamento);
   }
 
   onDelete(){
-    this.delete.emit(this.lancamento.id);
+    this.delete.emit(this.lancamento);
   }
 }

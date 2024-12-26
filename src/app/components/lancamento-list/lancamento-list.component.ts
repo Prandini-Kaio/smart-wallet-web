@@ -10,6 +10,7 @@ import { TransacaoListComponent } from "../transacao-list/transacao-list.compone
 import { LancamentoFilterComponent } from "../lancamento-filter/lancamento-filter.component";
 import { app } from '../../../../server';
 import { ContaOutput } from '../../shared/conta/conta.model';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-lancamento-list',
@@ -54,7 +55,6 @@ export class LancamentoListComponent implements OnInit {
     categoria: '',
     tipoLancamento: '',
     tipoPagamento: '',
-    status: '',
     conta: {},
     dtInicio: this.getInicioMesPassado(),
     dtFim: this.getFimMesPassado()
@@ -80,6 +80,7 @@ export class LancamentoListComponent implements OnInit {
   
   constructor(
     private readonly _api: ApiService,
+    private toastr: ToastrService,
     private router: Router
   ) {
 
@@ -167,6 +168,7 @@ export class LancamentoListComponent implements OnInit {
   editLancamento(lancamento: LancamentoOutput): void {
 
     this.editForm = new FormGroup({
+      id: new FormControl(lancamento.id),
       conta: new FormControl(lancamento.conta, Validators.required),
       valor: new FormControl(lancamento.valor, Validators.required),
       tipoLancamento: new FormControl(lancamento.tipoLancamento, Validators.required),
@@ -181,17 +183,35 @@ export class LancamentoListComponent implements OnInit {
   }
 
   onEditSubmit() {
-    if (this.editForm.valid)
-      this.editForm = new FormGroup({
-        conta: this.editForm.get('conta')?.value,
+    if (this.editForm.valid){
+
+      const dtCriacaoValue = new Date(this.editForm.get('dtCriacao')?.value);
+      const currentDateTime = new Date();
+      dtCriacaoValue.setHours(currentDateTime.getHours(), currentDateTime.getMinutes(), currentDateTime.getSeconds());
+
+      const lancamento = this.lancamentos.find(l => l.id === this.editForm.get("id")?.value)
+
+      const data = {
+        id: lancamento?.id,
+        conta: {
+          nome: this.editForm.get('conta')?.value.nome,
+          banco: this.editForm.get('conta')?.value.banco
+        },
         valor: this.editForm.get('valor')?.value,
         tipoLancamento: this.editForm.get('tipoLancamento')?.value,
         tipoPagamento: this.editForm.get('tipoPagamento')?.value,
         categoriaLancamento: this.editForm.get('categoriaLancamento')?.value,
         parcelas: this.editForm.get('parcelas')?.value,
         descricao: this.editForm.get('descricao')?.value,
-        dtCriacao: this.editForm.get('dtCriacao')?.value,
+        dtCriacao: dtCriacaoValue.toISOString(), 
+        status: lancamento?.status.toUpperCase().replaceAll(" ", "_"),
+
+      };
+
+      this._api.updateLancamento(data).subscribe((response) => {
+        this.toastr.success('Lançamento atualizado com sucesso.', "Atualiado!");
       })
+    }
   }
 
   closeEditModal() {
@@ -211,8 +231,17 @@ export class LancamentoListComponent implements OnInit {
     this.router.navigate(['lancamentos/add']);
   }
 
-  deleteLancamento(obj: any): void {
-    this.router.navigate(['lancamentos/add']);
+  deleteLancamento(lancamento: LancamentoOutput): void {
+
+    const data = {
+      id: lancamento.id
+    }
+
+    this._api.deleteLancamento(data).subscribe((data) => {
+      this.toastr.success('Lançamento deletado com sucesso.', "Deletado!");
+    });
+    
+    window.location.reload();
   }
 
   applyFilters(filters: any) {

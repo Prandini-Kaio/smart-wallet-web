@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { environment } from '../../environments/environment.development';
 import { ContaOutput, TipoContaOutput } from '../shared/conta/conta.model';
 import { ErrorLog } from '../shared/monitor-erros/model/monitor-erros.model';
+import { LancamentoOutput } from '../shared/lancamento/model/lancamento.model';
 
 @Injectable({
   providedIn: 'root',
@@ -87,5 +88,21 @@ export class ApiService {
   getErrors(): Observable<ErrorLog[]> {
     return this.http.get<ErrorLog[]>(`${this.apiUrl}/errors`)
   }
+
+  updateLancamento(params: any): Observable<LancamentoOutput> {
+    return this.http.put<LancamentoOutput>(`${this.apiUrl}/lancamento`, params);
+  }
   
+  deleteLancamento(paramObj: any): Observable<any> {
+
+    let params = new HttpParams();
+
+    for(const key in paramObj){
+      if(paramObj.hasOwnProperty(key)){
+        params = params.append(key, paramObj[key]);
+      }
+    }
+
+    return this.http.delete(`${this.apiUrl}/lancamento`, { params });
+  }
 }

@@ -5,9 +5,11 @@ import { RouterModule } from '@angular/router';
 
 
 interface NavItem {
-  title: string,
-  icon: string,
-  path: string
+  title: string;
+  icon: string;
+  path: string;
+  subItems?: NavItem[];
+  expanded?: boolean;
 }
 
 @Component({
@@ -39,11 +41,21 @@ export class SidenavComponent implements OnInit {
   navItems: NavItem[] = [
     { title: 'Home', icon: 'fa-home', path: '/home' },
     { title: 'Contas', icon: 'fa-piggy-bank', path: '/contas/view' },
-    { title: 'Lancamento', icon: 'fa-table', path: '/lancamentos/view' },
+    {
+      title: 'Lançamentos', icon: 'fa-table', path: '/lancamentos/view', subItems: [
+        { title: 'Lançamentos', icon: 'fa-plus', path: '/lancamentos/view' },
+        { title: 'Transações', icon: 'fa-eye', path: '/lancamentos/view' },
+      ]
+    },
+
     { title: 'Monitor de erros', icon: 'fa-bug', path: '/monitor-erros' },
   ];
 
   constructor(@Inject(PLATFORM_ID) private platformId: Object) {}
+
+  toggleSubMenu(item: NavItem) {
+    item.expanded = !item.expanded; // Alterna o estado de expansão
+  }
 
   @HostListener('window:resize', ['$event'])
   onResize(event: any) {

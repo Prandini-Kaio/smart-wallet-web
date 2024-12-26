@@ -14,10 +14,10 @@
         <span class="lancamento-date">{{ lancamento.dtCriacao | date:'dd/MM/yyyy' }}</span>
     </div>
 
-    <!-- Conta e status -->
+    <!-- Banco e nome -->
     <div class="lancamento-details">
-        <span class="lancamento-value">{{ lancamento.conta }}</span>
-        <span class="lancamento-date">{{ lancamento.status }}</span>
+        <span class="lancamento-value">{{ lancamento.conta.banco }}</span>
+        <span class="lancamento-date">{{ lancamento.conta.nome }}</span>
     </div>
 
     <!-- Tipos pagamento e lancamento -->
