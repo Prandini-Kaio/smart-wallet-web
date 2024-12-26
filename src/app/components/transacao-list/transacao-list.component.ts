@@ -5,11 +5,12 @@ import { LancamentoOutput, Totalizador, TransacaoOutput } from '../../shared/lan
 import { ApiService } from '../../services/api.service';
 import { ToastrService } from 'ngx-toastr';
 import { LancamentoFilterComponent } from "../lancamento-filter/lancamento-filter.component";
+import { TransacaoFilterComponent } from "../transacao-filter/transacao-filter.component";
 
 @Component({
   selector: 'app-transacao-list',
   standalone: true,
-  imports: [CommonModule, TransacaoItemComponent, LancamentoFilterComponent],
+  imports: [CommonModule, TransacaoItemComponent, LancamentoFilterComponent, TransacaoFilterComponent],
   templateUrl: './transacao-list.component.html',
   styleUrl: './transacao-list.component.scss'
 })
