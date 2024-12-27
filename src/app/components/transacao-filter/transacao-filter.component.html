@@ -1,0 +1,54 @@
+<div class="filters">
+  <label>Categoria:</label>
+  <select [(ngModel)]="filtros.categoria">
+      <option value="">Todas</option>
+      <option *ngFor="let categoria of categorias" [value]="categoria">{{ categoria }}</option>
+  </select>
+
+  <label>Tipo de Lançamento:</label>
+  <select [(ngModel)]="filtros.tipo">
+      <option value="">Todos</option>
+      <option *ngFor="let tipo of tiposLancamento" [value]="tipo">{{ tipo }}</option>
+  </select>
+
+  <label>Forma de Pagamento:</label>
+  <select [(ngModel)]="filtros.pagamento">
+      <option value="">Todas</option>
+      <option *ngFor="let pagamento of tiposPagamento" [value]="pagamento">{{ pagamento }}</option>
+  </select>
+
+  <label>Status:</label>
+  <select [(ngModel)]="filtros.status">
+      <option value="">Todos</option>
+      <option *ngFor="let status of statusTransacao" [value]="status">{{ status }}</option>
+  </select>
+
+  <mat-form-field appearance="outline" style="background-color: blue;">
+    <mat-label>Conta</mat-label>
+    <mat-select [(value)]="filtros.contasSelecionadas" style="background-color: aqua;" multiple>
+      <mat-option [value]="contaVazia">Todas</mat-option>
+      <mat-option *ngFor="let conta of contas" [value]="conta">
+        {{ conta.banco }} - {{ conta.nome }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+  
+
+  <label>Data de:</label>
+  <input type="date" [(ngModel)]="filtros.dtInicio">
+
+  <label>Até:</label>
+  <input type="date" [(ngModel)]="filtros.dtFim">
+
+  <!-- <div class="coluna">
+      <label>Somente lançamentos:</label>
+      <label class="toggle">
+          <input type="checkbox" [checked]="show" (change)="onToggle()">
+          <span class="slider"></span>
+      </label>
+  </div> -->
+
+  <button class="btn btn-secondary apply-filters-btn" (click)="onApply()">
+      Aplicar Filtros
+  </button>
+</div>
