@@ -23,11 +23,16 @@
       <option *ngFor="let status of statusTransacao" [value]="status">{{ status }}</option>
   </select>
 
-  <label>Conta:</label>
-  <select [(ngModel)]="filtros.conta">
-      <option value='{{contaVazia}}'>Todas</option>
-      <option *ngFor="let conta of contas" [ngValue]="conta">{{ conta.banco }} - {{ conta.nome }}</option>
-  </select>
+  <mat-form-field appearance="outline" style="background-color: blue;">
+    <mat-label>Conta</mat-label>
+    <mat-select [(value)]="filtros.contasSelecionadas" style="background-color: aqua;" multiple>
+      <mat-option [value]="contaVazia">Todas</mat-option>
+      <mat-option *ngFor="let conta of contas" [value]="conta">
+        {{ conta.banco }} - {{ conta.nome }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+  
 
   <label>Data de:</label>
   <input type="date" [(ngModel)]="filtros.dtInicio">

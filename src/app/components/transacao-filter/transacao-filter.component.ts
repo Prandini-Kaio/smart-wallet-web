@@ -3,6 +3,8 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { ApiService } from '../../services/api.service';
 import { FormsModule } from '@angular/forms';
 import { ContaFilter } from '../../shared/conta/conta.model';
+import { MatSelectModule } from '@angular/material/select';
+import { MatFormFieldModule } from '@angular/material/form-field';
 
 
 
@@ -12,6 +14,7 @@ interface Filter {
   pagamento: string,
   status: string,
   conta: ContaFilter,
+  contasSelecionadas: ContaFilter[],
   dtInicio: string,
   dtFim: string
 }
@@ -21,7 +24,9 @@ interface Filter {
   standalone: true,
   imports: [
     CommonModule,
-    FormsModule
+    FormsModule,
+    MatSelectModule,
+    MatFormFieldModule
   ],
   templateUrl: './transacao-filter.component.html',
   styleUrl: './transacao-filter.component.scss'
@@ -51,6 +56,14 @@ export class TransacaoFilterComponent {
       tipoConta: '',
       diaVencimento: ''
     },
+    contasSelecionadas: [
+      {
+        nome: '',
+        banco: '',
+        tipoConta: '',
+        diaVencimento: ''
+      }
+    ],
     dtInicio: this.getInicioMesPassado(),
     dtFim: this.getFimMesPassado()
   }
@@ -68,6 +81,7 @@ export class TransacaoFilterComponent {
       status: this.filtros.status.normalize().toUpperCase().replace(' ', '_'),
       nomeConta: this.filtros.conta.nome,
       bancoConta: this.filtros.conta.banco,
+      contaIds: this.contas.map(c => c.id).join(','),
       dtInicio: formatDate(this.filtros.dtInicio, 'yyyy-MM-ddT00:00:00', 'en-US'),
       dtFim: formatDate(this.filtros.dtFim, 'yyyy-MM-ddT23:59:59', 'en-US')
     };
