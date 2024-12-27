@@ -13,14 +13,14 @@ export class TransacaoItemComponent{
   @Input() transacao!: TransacaoOutput;
   @Input() lancamento!: LancamentoOutput;
   @Output() edit = new EventEmitter<TransacaoOutput>();
-  @Output() delete = new EventEmitter<number>();
+  @Output() pay = new EventEmitter<TransacaoOutput>();
 
   onEdit(){
     this.edit.emit(this.transacao);
   }
 
-  onDelete(){
-    this.delete.emit(this.transacao.id);
+  onPay(){
+    this.pay.emit(this.transacao);
   }
 
   getStatusClass(status: string): string {

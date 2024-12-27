@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 import { environment } from '../../environments/environment.development';
 import { ContaOutput, TipoContaOutput } from '../shared/conta/conta.model';
 import { ErrorLog } from '../shared/monitor-erros/model/monitor-erros.model';
-import { LancamentoOutput } from '../shared/lancamento/model/lancamento.model';
+import { LancamentoOutput, TransacaoOutput } from '../shared/lancamento/model/lancamento.model';
 
 @Injectable({
   providedIn: 'root',
@@ -14,6 +14,10 @@ export class ApiService {
   private apiUrl = environment.apiUrl;
 
   constructor(private http: HttpClient) { }
+
+  createConta(input: any): Observable<any> {
+    return this.http.post(`${this.apiUrl}/conta`, input);
+  }
 
   getLancamento(paramsObj: any): Observable<any> {
 
@@ -68,10 +72,6 @@ export class ApiService {
     return this.http.get<ContaOutput[]>(`${this.apiUrl}/conta`, { params });
   }
 
-  createConta(input: any): Observable<any> {
-    return this.http.post(`${this.apiUrl}/conta`, input);
-  }
-
   getCategoria(): Observable<string[]> {
     return this.http.get<string[]>(`${this.apiUrl}/lancamento/categoria`);
   }
@@ -92,7 +92,19 @@ export class ApiService {
   updateLancamento(params: any): Observable<LancamentoOutput> {
     return this.http.put<LancamentoOutput>(`${this.apiUrl}/lancamento`, params);
   }
-  
+
+  payTransacao(paramObj: any): Observable<TransacaoOutput> {
+    let params = new HttpParams();
+
+    for(const key in paramObj){
+      if(paramObj.hasOwnProperty(key)){
+        params = params.append(key, paramObj[key]);
+      }
+    }
+
+    return this.http.put<TransacaoOutput>(`${this.apiUrl}/transacao/pagar`, {}, { params });
+  }
+
   deleteLancamento(paramObj: any): Observable<any> {
 
     let params = new HttpParams();

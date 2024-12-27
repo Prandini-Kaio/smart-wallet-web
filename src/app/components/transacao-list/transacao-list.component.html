@@ -42,7 +42,7 @@
     </div>
 
     <app-transacao-item *ngFor="let transacao of transacoes" [transacao]="transacao" (edit)="editTransacao($event)"
-      (delete)="deleteTransacao($event)"></app-transacao-item>
+      (pay)="payTransacao($event)"></app-transacao-item>
   </div>
 
 </div>

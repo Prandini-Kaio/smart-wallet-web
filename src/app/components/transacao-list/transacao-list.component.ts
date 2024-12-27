@@ -25,7 +25,7 @@ export class TransacaoListComponent implements OnInit{
     total: 0
   };
 
-  constructor(private readonly api: ApiService, toastr: ToastrService) { }
+  constructor(private readonly api: ApiService, private toastr: ToastrService) { }
 
   ngOnInit() {
     this.api.getTransacoes({}).subscribe((response => {
@@ -51,7 +51,16 @@ export class TransacaoListComponent implements OnInit{
 
   }
 
-  deleteTransacao(id: number): void{
+  payTransacao(transacao: TransacaoOutput): void {
 
+    const data = {
+      id: transacao.id
+    }
+
+    this.api.payTransacao(data).subscribe((data) => {
+      this.toastr.success("Transação paga com sucesso.", "Pagamento efetuado!");
+    });
+
+    // window.location.reload();
   }
 }
