@@ -30,6 +30,6 @@ bootstrapApplication(AppComponent, {
         positionClass: 'toast-bottom-center',
       })
     ),
-    provideAnimationsAsync(), provideAnimationsAsync(),
+    provideAnimationsAsync(), provideAnimationsAsync(), provideAnimationsAsync(), provideAnimationsAsync(),
   ]
 }).catch (error => console.error(error));

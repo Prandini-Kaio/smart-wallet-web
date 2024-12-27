@@ -1,15 +1,22 @@
 import { CommonModule, formatDate } from '@angular/common';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MatButtonModule } from '@angular/material/button';
+import { MatNativeDateModule } from '@angular/material/core'; // Ou MatMomentDateModule, se preferir usar Moment.js
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatIconModule } from '@angular/material/icon'; // Para ícones, caso necessário
+import { MatInputModule } from '@angular/material/input';
+import { MatSelectModule } from '@angular/material/select';
 import { ApiService } from '../../services/api.service';
-import { ContaFilter } from '../../shared/conta/conta.model';
+import { ContaFilter, ContaOutput } from '../../shared/conta/conta.model';
 
 interface Filter {
   categoria: string,
   tipo: string,
   pagamento: string,
   status: string,
-  conta: ContaFilter,
+  contasSelecionadas: ContaOutput[],
   dtInicio: string,
   dtFim: string
 }
@@ -17,7 +24,18 @@ interface Filter {
 @Component({
   selector: 'app-lancamento-filter',
   standalone: true,
-  imports: [CommonModule, FormsModule, ReactiveFormsModule],
+  imports: [
+    CommonModule,
+    FormsModule,
+    ReactiveFormsModule,
+    MatFormFieldModule,
+    MatSelectModule,
+    MatInputModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    MatButtonModule,
+    MatIconModule,
+  ],
   templateUrl: './lancamento-filter.component.html',
   styleUrl: './lancamento-filter.component.scss'
 })
@@ -29,7 +47,16 @@ export class LancamentoFilterComponent implements OnInit {
 
   constructor(private _api: ApiService) { }
 
-  contaVazia = {}
+
+  contaVazia = {
+    id: 0,
+    banco: '',
+    nome: '',
+    dtVencimento: '',
+    tipoConta: '',
+    saldoParcial: 0,
+    color: '',
+  }
 
   categorias: Array<string> = [];
   contas: Array<any> = [];
@@ -41,12 +68,17 @@ export class LancamentoFilterComponent implements OnInit {
     tipo: '',
     pagamento: '',
     status: '',
-    conta: {
-      nome: '',
-      banco: '',
-      tipoConta: '',
-      diaVencimento: ''
-    },
+    contasSelecionadas: [
+      {
+        id: 0,
+        banco: '',
+        nome: '',
+        dtVencimento: '',
+        tipoConta: '',
+        saldoParcial: 0,
+        color: '',
+      }
+    ],
     dtInicio: this.getInicioMesPassado(),
     dtFim: this.getFimMesPassado()
   }
@@ -57,13 +89,18 @@ export class LancamentoFilterComponent implements OnInit {
   }
 
   onApply() {
+    let contaIds = '';
+
+    if(this.filtros.contasSelecionadas)
+      contaIds = this.filtros.contasSelecionadas  .filter(c => c && Number(c.id) !== 0).map(c => c.id).join(', ');
+
+
     const filters = {
       categoria: this.filtros.categoria,
       tipo: this.filtros.tipo,
       pagamento: this.filtros.pagamento,
       status: this.filtros.status,
-      nomeConta: this.filtros.conta.nome,
-      bancoConta: this.filtros.conta.banco,
+      contaIds: contaIds,
       dtInicio: formatDate(this.filtros.dtInicio, 'yyyy-MM-ddT00:00:00', 'en-US'),
       dtFim: formatDate(this.filtros.dtFim, 'yyyy-MM-ddT23:59:59', 'en-US')
     };

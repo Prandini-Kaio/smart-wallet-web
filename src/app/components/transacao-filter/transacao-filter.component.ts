@@ -1,10 +1,15 @@
 import { CommonModule, formatDate } from '@angular/common';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { ApiService } from '../../services/api.service';
 import { FormsModule } from '@angular/forms';
-import { ContaFilter } from '../../shared/conta/conta.model';
-import { MatSelectModule } from '@angular/material/select';
+import { MatButtonModule } from '@angular/material/button';
+import { MatNativeDateModule } from '@angular/material/core'; // Ou MatMomentDateModule, se preferir usar Moment.js
+import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatIconModule } from '@angular/material/icon'; // Para ícones, caso necessário
+import { MatInputModule } from '@angular/material/input';
+import { MatSelectModule } from '@angular/material/select';
+import { ApiService } from '../../services/api.service';
+import { ContaFilter, ContaOutput } from '../../shared/conta/conta.model';
 
 
 
@@ -13,8 +18,7 @@ interface Filter {
   tipo: string,
   pagamento: string,
   status: string,
-  conta: ContaFilter,
-  contasSelecionadas: ContaFilter[],
+  contasSelecionadas: ContaOutput[],
   dtInicio: string,
   dtFim: string
 }
@@ -25,8 +29,13 @@ interface Filter {
   imports: [
     CommonModule,
     FormsModule,
+    MatFormFieldModule,
     MatSelectModule,
-    MatFormFieldModule
+    MatInputModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    MatButtonModule,
+    MatIconModule,
   ],
   templateUrl: './transacao-filter.component.html',
   styleUrl: './transacao-filter.component.scss'
@@ -38,7 +47,15 @@ export class TransacaoFilterComponent {
 
   constructor(private _api: ApiService) { }
 
-  contaVazia = {}
+  contaVazia = {
+    id: 0,
+    banco: '',
+    nome: '',
+    dtVencimento: '',
+    tipoConta: '',
+    saldoParcial: 0,
+    color: '',
+  }
 
   categorias: Array<string> = [];
   contas: Array<any> = [];
@@ -50,18 +67,15 @@ export class TransacaoFilterComponent {
     tipo: '',
     pagamento: '',
     status: '',
-    conta: {
-      nome: '',
-      banco: '',
-      tipoConta: '',
-      diaVencimento: ''
-    },
     contasSelecionadas: [
       {
-        nome: '',
+        id: 0,
         banco: '',
+        nome: '',
+        dtVencimento: '',
         tipoConta: '',
-        diaVencimento: ''
+        saldoParcial: 0,
+        color: '',
       }
     ],
     dtInicio: this.getInicioMesPassado(),
@@ -74,14 +88,18 @@ export class TransacaoFilterComponent {
   }
 
   onApply() {
+
+    let contaIds = '';
+
+    if(this.filtros.contasSelecionadas)
+      contaIds = this.filtros.contasSelecionadas.filter(c => c.id != 0).map(c => c.id).join(', ');
+
     const filters = {
       categoria: this.filtros.categoria,
       tipo: this.filtros.tipo,
       pagamento: this.filtros.pagamento,
       status: this.filtros.status.normalize().toUpperCase().replace(' ', '_'),
-      nomeConta: this.filtros.conta.nome,
-      bancoConta: this.filtros.conta.banco,
-      contaIds: this.contas.map(c => c.id).join(','),
+      contaIds: this.filtros.contasSelecionadas.map(c => c.id).join(', '),
       dtInicio: formatDate(this.filtros.dtInicio, 'yyyy-MM-ddT00:00:00', 'en-US'),
       dtFim: formatDate(this.filtros.dtFim, 'yyyy-MM-ddT23:59:59', 'en-US')
     };
