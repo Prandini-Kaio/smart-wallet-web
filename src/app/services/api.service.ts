@@ -20,6 +20,10 @@ export class ApiService {
     return this.http.post(`${this.apiUrl}/conta`, input);
   }
 
+  createLancamento(input: any): Observable<any> {
+    return this.http.post(`${this.apiUrl}/lancamento`, input);
+  }
+
   getLancamento(paramsObj: any): Observable<any> {
 
     let params = new HttpParams();
@@ -31,10 +35,6 @@ export class ApiService {
     }
 
     return this.http.get(`${this.apiUrl}/lancamento`, { params });
-  }
-
-  createLancamento(input: any): Observable<any> {
-    return this.http.post(`${this.apiUrl}/lancamento`, input);
   }
 
   getTransacoes(paramsObj: any): Observable<any> {
@@ -94,6 +94,10 @@ export class ApiService {
     return this.http.get<Orcamento[]>(`${this.apiUrl}/orcamento`, { params });
   }
 
+  updateConta(input: any): Observable<any> {
+    return this.http.put(`${this.apiUrl}/conta`, input);
+  }
+
   updateLancamento(params: any): Observable<LancamentoOutput> {
     return this.http.put<LancamentoOutput>(`${this.apiUrl}/lancamento`, params);
   }
@@ -121,5 +125,18 @@ export class ApiService {
     }
 
     return this.http.delete(`${this.apiUrl}/lancamento`, { params });
+  }
+
+  deleteConta(paramObj: any): Observable<any> {
+
+    let params = new HttpParams();
+
+    for(const key in paramObj){
+      if(paramObj.hasOwnProperty(key)){
+        params = params.append(key, paramObj[key]);
+      }
+    }
+
+    return this.http.delete(`${this.apiUrl}/conta`, { params });
   }
 }

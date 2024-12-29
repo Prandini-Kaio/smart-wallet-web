@@ -9,13 +9,13 @@ import { MatIconModule } from '@angular/material/icon'; // Para ícones, caso ne
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { ApiService } from '../../services/api.service';
-import { ContaFilter, ContaOutput } from '../../shared/conta/conta.model';
+import { ContaOutput } from '../../shared/conta/conta.model';
 
 interface Filter {
-  categoria: string,
+  categorias: string[],
   tipo: string,
   pagamento: string,
-  status: string,
+  status: string[],
   contasSelecionadas: ContaOutput[],
   dtInicio: string,
   dtFim: string
@@ -64,20 +64,12 @@ export class LancamentoFilterComponent implements OnInit {
   tiposPagamento = ['DEBITO', 'CREDITO'];
   statusLancamento = ['Em Aberto', 'Quitado', 'Cancelado'];
   filtros: Filter = {
-    categoria: '',
+    categorias: [''],
     tipo: '',
     pagamento: '',
-    status: '',
+    status: [''],
     contasSelecionadas: [
-      {
-        id: 0,
-        banco: '',
-        nome: '',
-        dtVencimento: '',
-        tipoConta: '',
-        saldoParcial: 0,
-        color: '',
-      }
+      this.contaVazia
     ],
     dtInicio: this.getInicioMesPassado(),
     dtFim: this.getFimMesPassado()
@@ -91,15 +83,15 @@ export class LancamentoFilterComponent implements OnInit {
   onApply() {
     let contaIds = '';
 
-    if(this.filtros.contasSelecionadas)
-      contaIds = this.filtros.contasSelecionadas  .filter(c => c && Number(c.id) !== 0).map(c => c.id).join(', ');
+    if (this.filtros.contasSelecionadas)
+      contaIds = this.filtros.contasSelecionadas.filter(c => c && Number(c.id) !== 0).map(c => c.id).join(', ');
 
 
     const filters = {
-      categoria: this.filtros.categoria,
+      categoria: this.filtros.categorias.join(', '),
       tipo: this.filtros.tipo,
       pagamento: this.filtros.pagamento,
-      status: this.filtros.status,
+      status: this.filtros.status.map(s => s.normalize().toUpperCase().replace(' ', '_')).join(', '),
       contaIds: contaIds,
       dtInicio: formatDate(this.filtros.dtInicio, 'yyyy-MM-ddT00:00:00', 'en-US'),
       dtFim: formatDate(this.filtros.dtFim, 'yyyy-MM-ddT23:59:59', 'en-US')

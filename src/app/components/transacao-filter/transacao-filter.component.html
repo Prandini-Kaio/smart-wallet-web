@@ -1,7 +1,7 @@
 <div class="filters">
   <mat-form-field appearance="outline">
     <mat-label>Categoria</mat-label>
-    <mat-select [(value)]="filtros.categoria">
+    <mat-select [(value)]="filtros.categorias" multiple>
       <mat-option value="">Todas</mat-option>
       <mat-option *ngFor="let categoria of categorias" [value]="categoria">
         {{ categoria }}
@@ -31,7 +31,7 @@
 
   <mat-form-field appearance="outline">
     <mat-label>Status</mat-label>
-    <mat-select [(value)]="filtros.status">
+    <mat-select [(value)]="filtros.status" multiple>
       <mat-option value="">Todos</mat-option>
       <mat-option *ngFor="let status of statusTransacao" [value]="status">
         {{ status }}

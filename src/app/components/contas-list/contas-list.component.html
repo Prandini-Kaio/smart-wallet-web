@@ -1,7 +1,7 @@
 <div class="container">
   <header class="header">
     <h2 class="list-title"> Contas </h2>
-    <button class="btn btn-primary create-btn" (click)="createNew()">
+    <button class="create-btn" (click)="createNew()">
       <i class="fas fa-plus"></i> Nova conta
     </button>
   </header>
@@ -26,24 +26,8 @@
     </div>
 
     <!-- ITENS COLUNAS -->
-    <div class="conta-item" *ngFor="let conta of contas" [ngClass]="{'colored': true}" [style.--conta-color]="conta.color">
-      <div class="conta-details">
-        <span class="conta-value">{{ conta.banco }}</span>
-        <span class="conta-date">{{ conta.nome }}</span>
-      </div>
-
-      <div class="conta-details">
-        <span class="conta-value">{{ conta.dtVencimento }}</span>
-      </div>
-
-      <div class="conta-actions">
-        <button class="btn btn-link edit-btn" (click)="editConta(conta)">
-          <i class="fas fa-edit"></i>
-        </button>
-        <button class="btn btn-link delete-btn" (click)="deleteConta(conta)">
-          <i class="fas fa-trash"></i>
-        </button>
-      </div>
+    <div *ngFor="let conta of contas">
+      <app-conta-item [conta]="conta" (edit)="edit($event)" (delete)="deleteConta($event)"></app-conta-item>
     </div>
 
   </div>
@@ -54,115 +38,6 @@
   </div>
 </div>
 
-<!-- CREATE MODAL -->
 <div class="modal" *ngIf="showModal">
-  <div class="modal-content">
-    <h2>Adicionar Nova Conta</h2>
-
-    <form [formGroup]="form" (ngSubmit)="onSubmit()" (cancel)="closeModal()">
-      <div class="form-group">
-        <label for="banco">Banco</label>
-        <input type="text" id="banco" formControlName="banco">
-        <div *ngIf="form.get('banco')?.invalid && form.get('banco')?.touched" class="error-message">
-          Campo obrigatório
-        </div>
-      </div>
-
-      <div class="form-group">
-        <label for="saldoParcial">Nome</label>
-        <input type="text" id="nome" formControlName="nome">
-        <div *ngIf="form.get('nome')?.invalid && form.get('nome')?.touched" class="error-message">
-          Campo obrigatório
-        </div>
-      </div>
-
-      <div class="form-group">
-        <label for="tipoConta">Tipo Conta</label>
-        <select id="tipoConta" formControlName="tipoConta" class="form-control">
-          <option value="">Select an option</option>
-          <option *ngFor="let tipoConta of tipoContas" [value]="tipoConta.nome">
-            {{ tipoConta.descricao }}
-          </option>
-        </select>
-        <div *ngIf="editForm.get('tipoConta')?.invalid && editForm.get('tipoConta')?.touched" class="error-message">
-          Campo obrigatório
-        </div>
-      </div>
-
-      <div class="form-group">
-        <label for="saldoParcial">Dia vencimento</label>
-        <input type="number" id="diaVencimento" formControlName="diaVencimento">
-        <div *ngIf="form.get('diaVencimento')?.invalid && form.get('diaVencimento')?.touched" class="error-message">
-          Campo obrigatório
-        </div>
-      </div>
-
-      <div class="form-group">
-        <label for="color">Cor:</label>
-        <input type="color" id="color" formControlName="color">
-      </div>
-
-      <div class="form-actions">
-        <button type="submit" [disabled]="!form.valid" class="btn-primary">Salvar</button>
-        <button type="button" class="btn-secondary" (click)="closeModal()">Cancelar</button>
-      </div>
-    </form>
-  </div>
-</div>
-
-<!-- EDIT MODAL -->
-
-<div class="modal" *ngIf="showEditModal">
-  <div class="modal-content">
-    <h2>Editar Conta</h2>
-
-    <form [formGroup]="editForm" (ngSubmit)="onEditSubmit()">
-      <div class="form-group">
-        <label for="editBanco">Banco</label>
-        <input type="text" id="editBanco" formControlName="banco">
-        <div *ngIf="editForm.get('banco')?.invalid && editForm.get('banco')?.touched" class="error-message">
-          Campo obrigatório
-        </div>
-      </div>
-
-      <div class="form-group">
-        <label for="editNome">Nome</label>
-        <input type="text" id="editNome" formControlName="nome">
-        <div *ngIf="editForm.get('nome')?.invalid && editForm.get('nome')?.touched" class="error-message">
-          Campo obrigatório
-        </div>
-      </div>
-
-      <div class="form-group">
-        <label for="editTipoConta">Tipo Conta</label>
-        <select id="editTipoConta" formControlName="tipoConta" class="form-control">
-          <option value="">Select an option</option>
-          <option *ngFor="let tipoConta of tipoContas" [value]="tipoConta">
-            {{ tipoConta }}
-          </option>
-        </select>
-        <div *ngIf="editForm.get('tipoConta')?.invalid && editForm.get('tipoConta')?.touched" class="error-message">
-          Campo obrigatório
-        </div>
-      </div>
-
-      <div class="form-group">
-        <label for="editDiaVencimento">Dia vencimento</label>
-        <input type="number" id="editDiaVencimento" formControlName="diaVencimento">
-        <div *ngIf="editForm.get('diaVencimento')?.invalid && editForm.get('diaVencimento')?.touched" class="error-message">
-          Campo obrigatório
-        </div>
-      </div>
-
-      <div class="form-group">
-        <label for="editColor">Cor:</label>
-        <input type="color" id="editColor" formControlName="color">
-      </div>
-
-      <div class="form-actions">
-        <button type="submit" [disabled]="!editForm.valid" class="btn-primary">Salvar</button>
-        <button type="button" class="btn-secondary" (click)="closeEditModal()">Cancelar</button>
-      </div>
-    </form>
-  </div>
+  <app-conta-form [conta]="contaSelecionada" (submit)="onSubmit($event)" (close)="closeModal()"></app-conta-form>
 </div>

@@ -1,107 +1,74 @@
-import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ContaOutput, TipoContaOutput } from '../../shared/conta/conta.model';
+import { Component } from '@angular/core';
+import { FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { ToastrService } from 'ngx-toastr';
 import { ApiService } from '../../services/api.service';
-import { FormControl, FormGroup, FormsModule, Validators, ReactiveFormsModule } from '@angular/forms';
-import { ToastrModule, ToastrService } from 'ngx-toastr'
+import { ContaOutput } from '../../shared/conta/conta.model';
+import { EditModalComponent } from "./conta-form/conta-form.component";
+import { ContaItemComponent } from "./conta-item/conta-item.component";
 
 
 @Component({
   selector: 'app-contas-list',
   standalone: true,
   imports: [
-    CommonModule, 
-    FormsModule, 
+    CommonModule,
+    FormsModule,
     ReactiveFormsModule,
-  ],
+    ContaItemComponent,
+    EditModalComponent
+],
   templateUrl: './contas-list.component.html',
   styleUrl: './contas-list.component.scss'
 })
 export class ContasListComponent {
+
+  public contaSelecionada: ContaOutput | undefined = undefined;
+  public isEdit: boolean = false;
+
   contas: ContaOutput[] = [];
   loading: boolean = false;
   error: string | null = null;
-  tipoContas: TipoContaOutput[] = [];
-
 
   selectedAccount: ContaOutput | null = null;
   totalBalance: number = 0;
   showModal: boolean = false;
-  showEditModal: boolean = false;
-  form: FormGroup = new FormGroup({});
-  editForm: FormGroup = new FormGroup({});
 
   constructor(private readonly _api: ApiService, private _toaster: ToastrService) { }
 
   ngOnInit(): void {
 
     this.contas = this.getAccounts();
-
-    this.form = new FormGroup({
-      banco: new FormControl('', Validators.required),
-      nome: new FormControl('', Validators.required),
-      tipoConta: new FormControl('', Validators.required),
-      diaVencimento: new FormControl(0, Validators.required),
-      color: new FormControl('#000000', Validators.required)
-    });
-
-    this.editForm = new FormGroup({
-      banco: new FormControl('', Validators.required),
-      nome: new FormControl('', Validators.required),
-      tipoConta: new FormControl('', Validators.required),
-      diaVencimento: new FormControl(0, Validators.required),
-      color: new FormControl('#000000', Validators.required)
-    });
-
-    this.getTipoContas();
   }
 
-  onSubmit(): void {
-    if (this.form.valid) {
+  onSubmit(form: FormGroup): void {
+    if (form.valid) {
       const conta = {
-        banco: this.form.get('banco')?.value,
-        nome: this.form.get('nome')?.value,
-        tipoConta: this.form.get('tipoConta')?.value,
-        diaVencimento: this.form.get('diaVencimento')?.value,
-        color: this.form.get('color')?.value,
+        banco: form.get('banco')?.value,
+        nome: form.get('nome')?.value,
+        tipoConta: form.get('tipoConta')?.value,
+        diaVencimento: form.get('diaVencimento')?.value,
+        color: form.get('color')?.value,
       };
 
-      this._api.createConta(conta).subscribe(
-        (response) => {
-          this.closeModal();
-          this._toaster.show("Conta criada com sucesso!", 'success')
-        },
-        (error) => {
-          console.log(error)
-          this._toaster.error('Falha na requisição', error.error.message);
-        }
-      );
+      if(this.isEdit){
+        this._api.updateConta(conta).subscribe(
+          (response) => {
+            this.closeModal();
+            this._toaster.show("Conta atualizada com sucesso!", 'success')
+          }
+        );
+      }else{
+        this._api.createConta(conta).subscribe(
+          (response) => {
+            this.closeModal();
+            this._toaster.show("Conta criada com sucesso!", 'success')
+          }
+        );
+      }
     }
 
     // this.reloadPage();
-  }
-
-  onEditSubmit(): void {
-    if (this.form.valid) {
-      const conta = {
-        banco: this.form.get('banco')?.value,
-        nome: this.form.get('nome')?.value,
-        tipoConta: this.form.get('tipoConta')?.value,
-        diaVencimento: this.form.get('diaVencimento')?.value,
-        color: this.form.get('color')?.value,
-      };
-
-      this._api.createConta(conta).subscribe(
-        (response) => {
-          this.closeModal();
-        },
-        (error) => {
-          
-        }
-      );
-    }
-
-    this.reloadPage();
   }
 
   getAccounts(): ContaOutput[] {
@@ -117,10 +84,10 @@ export class ContasListComponent {
     return [];
   }
 
-  getTipoContas(){
-    this._api.getTipoConta().subscribe((data) => {
-      this.tipoContas = data;
-    });
+  edit(conta: ContaOutput) {
+    this.contaSelecionada = conta;
+    this.isEdit = true;
+    this.showModal = true;
   }
 
   calculateTotalBalance(): void {
@@ -140,32 +107,22 @@ export class ContasListComponent {
     this.reloadPage();
   }
 
-  closeEditModal() {
-    this.showEditModal = false;
-    this.reloadPage();
-  }
-
   createNew() {
     this.showModal = true;
   }
 
-  reloadPage() {
-    window.location.reload();
-  }
+  deleteConta(obj: any) {
 
-  editConta(conta: any) {
-    this.showEditModal = true;
+    const data = {
+      id: obj.id
+    }
 
-    this.editForm = new FormGroup({
-      banco: new FormControl(conta.banco, Validators.required),
-      nome: new FormControl(conta.nome, Validators.required),
-      tipoConta: new FormControl(conta.tipoConta, Validators.required),
-      diaVencimento: new FormControl(conta.diaVencimento, Validators.required),
-      color: new FormControl(conta.color, Validators.required)
+    this._api.deleteConta(data).subscribe((data) => {
+      this._toaster.success("Conta deletada.", "Sucesso!")
     });
   }
 
-  deleteConta(obj: any) {
-
+  reloadPage() {
+    window.location.reload();
   }
 }

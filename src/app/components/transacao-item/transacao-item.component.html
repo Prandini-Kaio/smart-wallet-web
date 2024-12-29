@@ -7,7 +7,7 @@
 
     <!-- Valor e status -->
     <div class="details">
-        <span class="value">R{{ transacao.valor | currency }}</span>
+        <span class="value">{{ transacao.valor | currency: 'BRL' }}</span>
     </div>
 
     <!-- status -->

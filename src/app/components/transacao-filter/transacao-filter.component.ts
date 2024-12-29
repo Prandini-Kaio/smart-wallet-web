@@ -14,10 +14,10 @@ import { ContaFilter, ContaOutput } from '../../shared/conta/conta.model';
 
 
 interface Filter {
-  categoria: string,
+  categorias: string[],
   tipo: string,
   pagamento: string,
-  status: string,
+  status: string[],
   contasSelecionadas: ContaOutput[],
   dtInicio: string,
   dtFim: string
@@ -63,20 +63,12 @@ export class TransacaoFilterComponent {
   tiposPagamento = ['DEBITO', 'CREDITO'];
   statusTransacao = ['Atrasado', 'Cancelado', 'Pago', 'Pendente'];
   filtros: Filter = {
-    categoria: '',
+    categorias: [''],
     tipo: '',
     pagamento: '',
-    status: '',
+    status: ['Pendente'],
     contasSelecionadas: [
-      {
-        id: 0,
-        banco: '',
-        nome: '',
-        dtVencimento: '',
-        tipoConta: '',
-        saldoParcial: 0,
-        color: '',
-      }
+      this.contaVazia
     ],
     dtInicio: this.getInicioMesPassado(),
     dtFim: this.getFimMesPassado()
@@ -95,11 +87,11 @@ export class TransacaoFilterComponent {
       contaIds = this.filtros.contasSelecionadas.filter(c => c.id != 0).map(c => c.id).join(', ');
 
     const filters = {
-      categoria: this.filtros.categoria,
+      categorias: this.filtros.categorias.join(', '),
       tipo: this.filtros.tipo,
       pagamento: this.filtros.pagamento,
-      status: this.filtros.status.normalize().toUpperCase().replace(' ', '_'),
-      contaIds: this.filtros.contasSelecionadas.map(c => c.id).join(', '),
+      status: this.filtros.status.map(s => s.normalize().toUpperCase().replace(' ', '_')).join(', '),
+      contaIds: contaIds,
       dtInicio: formatDate(this.filtros.dtInicio, 'yyyy-MM-ddT00:00:00', 'en-US'),
       dtFim: formatDate(this.filtros.dtFim, 'yyyy-MM-ddT23:59:59', 'en-US')
     };

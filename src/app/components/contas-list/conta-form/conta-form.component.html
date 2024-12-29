@@ -1,0 +1,64 @@
+<div class="modal">
+    <div class="modal-content">
+        <h2>Adicionar Nova Conta</h2>
+
+        <form [formGroup]="form" (ngSubmit)="onSubmit()" (cancel)="onClose()">
+            <!-- Banco -->
+            <mat-form-field appearance="outline" class="form-group">
+                <mat-label>Banco</mat-label>
+                <input matInput type="text" id="banco" formControlName="banco">
+                <mat-error *ngIf="form.get('banco')?.invalid && form.get('banco')?.touched">
+                    Campo obrigatório
+                </mat-error>
+            </mat-form-field>
+
+            <!-- Nome -->
+            <mat-form-field appearance="outline" class="form-group">
+                <mat-label>Nome</mat-label>
+                <input matInput type="text" id="nome" formControlName="nome">
+                <mat-error *ngIf="form.get('nome')?.invalid && form.get('nome')?.touched">
+                    Campo obrigatório
+                </mat-error>
+            </mat-form-field>
+
+            <!-- Tipo Conta -->
+            <mat-form-field appearance="outline" class="form-group">
+                <mat-label>Tipo Conta</mat-label>
+                <mat-select id="tipoConta" formControlName="tipoConta">
+                    <mat-option value="">Selecione uma opção</mat-option>
+                    <mat-option *ngFor="let tipoConta of tipoContas" [value]="tipoConta.nome">
+                        {{ tipoConta.descricao }}
+                    </mat-option>
+                </mat-select>
+                <mat-error *ngIf="form.get('tipoConta')?.invalid && form.get('tipoConta')?.touched">
+                    Campo obrigatório
+                </mat-error>
+            </mat-form-field>
+
+            <!-- Dia Vencimento -->
+            <mat-form-field appearance="outline" class="form-group">
+                <mat-label>Dia Vencimento</mat-label>
+                <input matInput type="number" id="diaVencimento" formControlName="diaVencimento">
+                <mat-error *ngIf="form.get('diaVencimento')?.invalid && form.get('diaVencimento')?.touched">
+                    Campo obrigatório
+                </mat-error>
+            </mat-form-field>
+
+            <!-- Cor -->
+            <mat-form-field appearance="outline" class="form-group">
+                <mat-label>Cor</mat-label>
+                <input matInput type="color" id="color" formControlName="color">
+            </mat-form-field>
+
+            <!-- Ações -->
+            <div class="form-actions">
+                <button class="btn-salvar" type="submit" [disabled]="!form.valid">
+                    Salvar
+                </button>
+                <button class="btn-cancelar" type="button" (click)="onClose()">
+                    Cancelar
+                </button>
+            </div>
+        </form>
+    </div>
+</div>

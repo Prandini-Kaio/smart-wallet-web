@@ -8,9 +8,9 @@
 
     <!-- Valor e Data criacao -->
     <div class="lancamento-details">
-        <span class="lancamento-value">R{{ lancamento.valor | currency }}<span class="lancamento-date">/{{
+        <span class="lancamento-value">{{ lancamento.valor | currency: 'BRL' }}<span class="lancamento-date">/{{
                 lancamento.parcelas }}</span></span>
-        <span class="lancamento-date">{{ this.convertData(lancamento.dtCriacao) }}</span>
+        <span class="lancamento-date">{{ lancamento.dtCriacao }}</span>
     </div>
 
     <!-- Banco e nome -->
@@ -36,15 +36,5 @@
         <button class="btn btn-link copy-btn" (click)="onCopy()">
             <i class="fas fa-clipboard"></i>
         </button>
-        <!-- Dentro do lancamento-item, após lancamento-actions -->
-        <!-- <button class="btn btn-link expand-btn" (click)="lancamento.expanded = !lancamento.expanded">
-            <i class="fas"
-                [ngClass]="{'fa-chevron-down': !lancamento.expanded, 'fa-chevron-up': lancamento.expanded}"></i>
-        </button> -->
     </div>
-
-    <!-- <div class="lancamento-list">
-        <app-transacao-list *ngIf="lancamento.expanded" [transacoes]="lancamento.transacoes">
-        </app-transacao-list>
-    </div> -->
 </div>

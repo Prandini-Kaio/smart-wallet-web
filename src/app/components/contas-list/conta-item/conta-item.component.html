@@ -1,0 +1,32 @@
+<div class="container" [ngClass]="{'colored': true}" [style.--conta-color]="conta.color">
+    <div class="conta-details">
+        <span class="conta-value">{{ conta.banco }}</span>
+        <span class="conta-date">{{ conta.nome }}</span>
+    </div>
+
+    <div class="conta-details">
+        <span class="conta-value">{{ conta.dtVencimento }}</span>
+    </div>
+
+    <div class="conta-actions">
+        <button class="btn btn-link edit-btn" (click)="editar()">
+            <i class="fas fa-edit"></i>
+        </button>
+        <button class="btn btn-link delete-btn" (click)="showModal()">
+            <i class="fas fa-trash"></i>
+        </button>
+    </div>
+
+    <div class="modal" *ngIf="showConfirmationModal">
+        <div class="modal-content">
+            <div class="message">
+                <h1>Tem certeza?</h1>
+                <p>Essa operação é irreversivel e não poderá ser desfeita.</p>
+            </div>
+            <div class="actions">
+                <button class="btn-voltar" (click)="showModal()">Voltar</button>
+                <button class="btn-apagar" (click)="deletar()">Apagar</button>
+            </div>
+        </div>
+    </div>
+</div>
