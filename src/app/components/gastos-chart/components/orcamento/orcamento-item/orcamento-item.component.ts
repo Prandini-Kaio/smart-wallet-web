@@ -18,25 +18,14 @@ export class OrcamentoItemComponent {
     return (this.orcamento.gastoAtual / this.orcamento.limite) * 100;
   }
 
-  getBackgroundColor(): string {
-    const progresso = this.getProgresso();
-    if (progresso <= 50) {
-      return '#d4e8d4'; // Tons pastéis para valores baixos
-    } else if (progresso <= 80) {
-      return '#ffe6b3'; // Tons médios
-    } else {
-      return '#f8d7da'; // Tons fortes para valores altos
-    }
-  }
-
   getBarColor(): string {
     const progresso = this.getProgresso();
     if (progresso <= 50) {
-      return '#4caf50'; // Verde para valores baixos
+      return '#038544';
     } else if (progresso <= 80) {
-      return '#ffc107'; // Amarelo para valores médios
+      return '#ebcc1c';
     } else {
-      return '#f44336'; // Vermelho para valores altos
+      return '#921e1e';
     }
   }
 }

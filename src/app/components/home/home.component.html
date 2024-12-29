@@ -5,105 +5,54 @@
       <input type="text" placeholder="Search" />
     </div>
     <div class="header-actions">
-      <button class="action-button">
+      <!-- <button class="action-button">
         <i class="fas fa-plus"></i>
-        Create new order
-      </button>
+        Criar Orcamento
+      </button> -->
       <div class="notifications">
         <i class="fas fa-bell"></i>
         <span class="notification-badge">3</span>
       </div>
+
       <div class="profile">
-        <img
-          src="https://via.placeholder.com/32"
-          alt="Profile"
-          class="profile-image"
-        />
+        <img src="https://i.pinimg.com/736x/d0/5d/32/d05d32a29acec1eb735fd9bde451aa02.jpg" alt="Profile"
+          class="profile-image" />
       </div>
     </div>
   </header>
 
   <!-- Welcome Section -->
   <div class="welcome-section">
-    <div class="user-greeting">Hi Felix,</div>
+    <div class="user-greeting">Olá Kaio,</div>
     <div class="welcome-message">
-      <span>Welcome back!</span>
+      <span>Bem vindo de volta!</span>
       <span class="wave-emoji">👋</span>
     </div>
   </div>
 
-  <!-- Balance Card -->
+  <!-- BALANCE -->
   <div class="balance-card">
+
     <div class="balance-header">
-      <div class="toggle-buttons">
-        <button class="toggle-btn active">Total revenue</button>
-        <button class="toggle-btn">Total expenditure</button>
-      </div>
-      <div class="action-buttons">
-        <button class="action-btn"><i class="fas fa-expand"></i></button>
-        <button class="action-btn"><i class="fas fa-sync"></i></button>
-      </div>
+      <p>Balanço</p>
+
+      <mat-form-field class="ass" appearance="outline" style="height: auto;">
+        <mat-select [(value)]="contasSelecionadas" multiple>
+          <mat-option [value]="">Todas</mat-option>
+          <mat-option *ngFor="let conta of contas" [value]="conta">
+            {{ conta.banco }} - {{ conta.nome }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
     </div>
 
-    <div class="total-amount">
-      ${{ totalRevenue }}
-      <span class="percentage-increase">↑ 24%</span>
-    </div>
-
-    <div class="revenue-grid">
-      <div class="revenue-card">
-        <div class="revenue-label">Store</div>
-        <div class="revenue-amount increase">${{ storeRevenue }}</div>
-      </div>
-      <div class="revenue-card">
-        <div class="revenue-label">Online store</div>
-        <div class="revenue-amount decrease">${{ onlineStoreRevenue }}</div>
-      </div>
-      <div class="revenue-card">
-        <div class="revenue-label">Debt collection</div>
-        <div class="revenue-amount increase">${{ debtCollection }}</div>
-      </div>
-      <div class="revenue-card">
-        <div class="revenue-label">Other amounts</div>
-        <div class="revenue-amount decrease">${{ otherAmounts }}</div>
-      </div>
+    <div class="total">
+      <p class="total-value">{{ getSaldoParcial() | currency: 'BRL' }}</p>
+      <i *ngIf="getSaldoParcial() > 0" class="fas fa-arrow-up positive"></i>
+      <i *ngIf="getSaldoParcial() < 0" class="fas fa-arrow-down negative"></i>
     </div>
   </div>
 
-  <!-- Order Status -->
-  <div class="order-status-grid">
-    <div class="order-card">
-      <div class="order-header">
-        <h3>Order</h3>
-        <button class="detail-btn">Detail ></button>
-      </div>
-      <div class="order-content">
-        <div class="order-total">
-          <div class="total-label">Total order</div>
-          <div class="total-number">{{ totalOrders }}</div>
-        </div>
-        <div class="progress-circle">
-          <svg class="circle-chart">
-            <circle
-              *ngFor="let status of orderStatuses; let i = index"
-              [attr.cx]="48"
-              [attr.cy]="48"
-              [attr.r]="44"
-              [attr.stroke-dasharray]="getCircumference()"
-              [attr.stroke-dashoffset]="getDashOffset(i)"
-              [attr.stroke]="status.color"
-              stroke-width="8"
-              fill="none"
-            />
-          </svg>
-        </div>
-      </div>
-      <div class="status-grid">
-        <div *ngFor="let status of orderStatuses" class="status-item">
-          <div class="status-label">{{ status.status }}</div>
-          <div class="status-count">{{ status.count }}</div>
-        </div>
-      </div>
-    </div>
-  </div>
+  <app-orcamento-chart [orcamentos]="orcamentos"></app-orcamento-chart>
 </div>

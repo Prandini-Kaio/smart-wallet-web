@@ -1,6 +1,17 @@
 .container {
-  background-color: white;
-  border-radius: 10px;
+  font-family: "Inter", sans-serif;
+  background-color: #262626;
+  border-radius: 16px;
+  padding: 24px;
+  margin-bottom: 32px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 24px;
+  font-size: 14px;
 }
 
 .container h1 {
@@ -10,9 +21,9 @@
 }
 
 .card-container {
-  
-  display: flex;
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
   flex-wrap: wrap;
-  justify-content: space-between;
+  justify-content: center;
   gap: 10px;
 }

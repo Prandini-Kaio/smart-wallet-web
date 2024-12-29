@@ -1,23 +1,25 @@
 .card {
-  width: 200px;
-  height: 150px;
-  border-radius: 10px;
-  padding: 10px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   display: flex;
+  background-color: #66666633;
+  width: 200px;
+  height: 40px;
+  border-radius: 10px;
+  padding: 26px;
+  margin: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  margin: 10px;
   text-align: center;
   transition: box-shadow 0.3s ease, transform 0.3s ease;
 }
 
 .card:hover {
-  box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2); /* Aumenta a sombra ao passar o mouse */
-  transform: translateY(-5px); /* Move o card levemente para cima */
+  box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2);
+  transform: translateY(-5px);
 }
 .card-content {
+  background-color: #3333;
   width: 100%;
 }
 
@@ -28,26 +30,27 @@
 }
 
 .valor {
-  font-size: 2em;
+  font-size: 1.5em;
   font-weight: bold;
   margin-bottom: 5px;
 }
 
 .comparacao {
+  color: #f0f0f0;
   font-size: 0.9em;
-  color: #555;
   margin-bottom: 10px;
 }
 
 .progress-bar {
   width: 100%;
   height: 10px;
-  background: #f0f0f0;
+  background: #3c3c3e;
   border-radius: 5px;
   overflow: hidden;
 }
 
 .progress {
+  color: #3c3c3e;
   height: 100%;
   border-radius: 5px;
 }

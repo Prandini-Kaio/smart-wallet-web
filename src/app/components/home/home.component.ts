@@ -1,8 +1,17 @@
-import { CommonModule, NgFor, NgIf } from "@angular/common";
+import { CommonModule } from "@angular/common";
 import { Component, OnInit } from "@angular/core";
+import { Orcamento } from "../../shared/orcamento/orcamento.model";
+import { OrcamentoChartComponent } from "../gastos-chart/components/orcamento/orcamento-chart/orcamento-chart.component";
+import { MatFormField } from "@angular/material/form-field";
+import { MatButtonModule } from '@angular/material/button';
+import { MatNativeDateModule } from '@angular/material/core';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatIconModule } from '@angular/material/icon';
+import { MatInputModule } from '@angular/material/input';
+import { MatSelectModule } from '@angular/material/select';
+import { ContaOutput } from "../../shared/conta/conta.model";
 import { ApiService } from "../../services/api.service";
-import { HttpParams } from "@angular/common/http";
-import { GastosChartComponent } from "../gastos-chart/gastos-chart.component";
 
 interface OrderStatus {
   status: string;
@@ -14,19 +23,37 @@ interface OrderStatus {
   selector: 'app-home',
   standalone: true,
   imports: [
-    GastosChartComponent,
-    CommonModule
-  ],
+    CommonModule,
+    OrcamentoChartComponent,
+    MatFormFieldModule,
+    MatSelectModule,
+    MatInputModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    MatButtonModule,
+    MatIconModule,
+],
   styleUrl: 'home.component.scss',
   templateUrl: 'home.component.html'
 })
 export class HomeComponent implements OnInit{
-  totalRevenue = 10080;
+  saldoParcial = 0;
   storeRevenue = 3236;
   onlineStoreRevenue = 3764;
   debtCollection = 1800;
   otherAmounts = 1200;
   totalOrders = 86;
+
+  contas: ContaOutput[] = []
+  contasSelecionadas: ContaOutput[] = []
+
+  orcamentos: Orcamento[] = [
+    { id: 1, limite: 500, gastoAtual: 200, categoria: "Lazer", mes: "Dezembro" },
+    { id: 1, limite: 2500, gastoAtual: 1250, categoria: "Moradia", mes: "Dezembro" },
+    { id: 1, limite: 500, gastoAtual: 300, categoria: "Alimentacao", mes: "Dezembro" },
+    { id: 1, limite: 100, gastoAtual: 99, categoria: "Saude", mes: "Dezembro" },
+    { id: 1, limite: 100, gastoAtual: 99, categoria: "LAZER", mes: "Dezembro" }
+  ]
 
   orderStatuses: OrderStatus[] = [
     { status: 'Success', count: 24, color: '#10B981' },
@@ -35,9 +62,22 @@ export class HomeComponent implements OnInit{
     { status: 'Processing', count: 14, color: '#3B82F6' }
   ];
 
-  constructor() { }
+  constructor(private readonly api: ApiService) { }
 
-  ngOnInit(): void { }
+  ngOnInit(): void { 
+
+    this.api.getContas('').subscribe((data) => {
+      this.contas = data;
+    });
+  }
+
+  getSaldoParcial(): number {
+    let saldo = 0;
+    this.contas.forEach(c => {
+      saldo = saldo + c.saldoParcial;
+    })
+    return saldo;
+  }
 
   getCircumference(): number {
     return 2 * Math.PI * 44;
