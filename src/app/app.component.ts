@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
-import { Component, importProvidersFrom } from '@angular/core';
+import { Component, importProvidersFrom, LOCALE_ID } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router, RouterModule, RouterOutlet } from '@angular/router';
 import { GoogleChartsModule } from 'angular-google-charts';
@@ -8,6 +8,8 @@ import { ToastrModule, ToastrService, provideToastr } from 'ngx-toastr';
 import { SidenavComponent } from './components/sidenav/sidenav.component';
 import { ApiService } from './services/api.service';
 import { ErrorInterceptor } from './shared/error-interceptor.interceptor';
+import localePt from '@angular/common/locales/pt';
+import { registerLocaleData } from '@angular/common';
 
 @Component({
   selector: 'app-root',
@@ -23,7 +25,7 @@ import { ErrorInterceptor } from './shared/error-interceptor.interceptor';
 ],
   providers: [
     ApiService,
-    { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
+    { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true }
   ],
   templateUrl: './app.component.html',
   standalone: true

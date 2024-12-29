@@ -1,2 +1,109 @@
-<!-- <h1>Página Principal</h1>
-<button (click)="logout()">Sair</button> -->
+<div class="dashboard">
+  <header class="header">
+    <div class="search-bar">
+      <i class="fas fa-search search-icon"></i>
+      <input type="text" placeholder="Search" />
+    </div>
+    <div class="header-actions">
+      <button class="action-button">
+        <i class="fas fa-plus"></i>
+        Create new order
+      </button>
+      <div class="notifications">
+        <i class="fas fa-bell"></i>
+        <span class="notification-badge">3</span>
+      </div>
+      <div class="profile">
+        <img
+          src="https://via.placeholder.com/32"
+          alt="Profile"
+          class="profile-image"
+        />
+      </div>
+    </div>
+  </header>
+
+  <!-- Welcome Section -->
+  <div class="welcome-section">
+    <div class="user-greeting">Hi Felix,</div>
+    <div class="welcome-message">
+      <span>Welcome back!</span>
+      <span class="wave-emoji">👋</span>
+    </div>
+  </div>
+
+  <!-- Balance Card -->
+  <div class="balance-card">
+    <div class="balance-header">
+      <div class="toggle-buttons">
+        <button class="toggle-btn active">Total revenue</button>
+        <button class="toggle-btn">Total expenditure</button>
+      </div>
+      <div class="action-buttons">
+        <button class="action-btn"><i class="fas fa-expand"></i></button>
+        <button class="action-btn"><i class="fas fa-sync"></i></button>
+      </div>
+    </div>
+
+    <div class="total-amount">
+      ${{ totalRevenue }}
+      <span class="percentage-increase">↑ 24%</span>
+    </div>
+
+    <div class="revenue-grid">
+      <div class="revenue-card">
+        <div class="revenue-label">Store</div>
+        <div class="revenue-amount increase">${{ storeRevenue }}</div>
+      </div>
+      <div class="revenue-card">
+        <div class="revenue-label">Online store</div>
+        <div class="revenue-amount decrease">${{ onlineStoreRevenue }}</div>
+      </div>
+      <div class="revenue-card">
+        <div class="revenue-label">Debt collection</div>
+        <div class="revenue-amount increase">${{ debtCollection }}</div>
+      </div>
+      <div class="revenue-card">
+        <div class="revenue-label">Other amounts</div>
+        <div class="revenue-amount decrease">${{ otherAmounts }}</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Order Status -->
+  <div class="order-status-grid">
+    <div class="order-card">
+      <div class="order-header">
+        <h3>Order</h3>
+        <button class="detail-btn">Detail ></button>
+      </div>
+      <div class="order-content">
+        <div class="order-total">
+          <div class="total-label">Total order</div>
+          <div class="total-number">{{ totalOrders }}</div>
+        </div>
+        <div class="progress-circle">
+          <svg class="circle-chart">
+            <circle
+              *ngFor="let status of orderStatuses; let i = index"
+              [attr.cx]="48"
+              [attr.cy]="48"
+              [attr.r]="44"
+              [attr.stroke-dasharray]="getCircumference()"
+              [attr.stroke-dashoffset]="getDashOffset(i)"
+              [attr.stroke]="status.color"
+              stroke-width="8"
+              fill="none"
+            />
+          </svg>
+        </div>
+      </div>
+      <div class="status-grid">
+        <div *ngFor="let status of orderStatuses" class="status-item">
+          <div class="status-label">{{ status.status }}</div>
+          <div class="status-count">{{ status.count }}</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

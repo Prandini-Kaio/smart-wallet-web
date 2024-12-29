@@ -1,0 +1,10 @@
+<div class="container">
+  <h1>Orçamento</h1>
+
+  <div class="card-container">
+    <app-orcamento-item
+      *ngFor="let orcamento of orcamentos"
+      [orcamento]="orcamento"
+    ></app-orcamento-item>
+  </div>
+</div>

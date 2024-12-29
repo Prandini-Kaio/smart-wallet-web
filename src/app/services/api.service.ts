@@ -5,6 +5,7 @@ import { environment } from '../../environments/environment.development';
 import { ContaOutput, TipoContaOutput } from '../shared/conta/conta.model';
 import { ErrorLog } from '../shared/monitor-erros/model/monitor-erros.model';
 import { LancamentoOutput, TransacaoOutput } from '../shared/lancamento/model/lancamento.model';
+import { Orcamento } from '../shared/orcamento/orcamento.model';
 
 @Injectable({
   providedIn: 'root',
@@ -87,6 +88,10 @@ export class ApiService {
 
   getErrors(): Observable<ErrorLog[]> {
     return this.http.get<ErrorLog[]>(`${this.apiUrl}/errors`)
+  }
+
+  getOrcamentos(params: any): Observable<Orcamento[]>{
+    return this.http.get<Orcamento[]>(`${this.apiUrl}/orcamento`, { params });
   }
 
   updateLancamento(params: any): Observable<LancamentoOutput> {

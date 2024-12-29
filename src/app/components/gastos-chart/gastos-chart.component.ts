@@ -5,11 +5,14 @@ import { ApiService } from '../../services/api.service';
 import { Lancamento, Totalizador } from '../../shared/lancamento/model/lancamento.model';
 import { Observable, forkJoin } from 'rxjs';
 import { group } from 'node:console';
+import { OrcamentoChartComponent } from "./components/orcamento/orcamento-chart/orcamento-chart.component";
+import { ToastrService } from 'ngx-toastr';
+import { Orcamento } from '../../shared/orcamento/orcamento.model';
 
 @Component({
   selector: 'app-gastos-chart',
   standalone: true,
-  imports: [CommonModule, GoogleChartsModule],
+  imports: [CommonModule, GoogleChartsModule, OrcamentoChartComponent],
   templateUrl: './gastos-chart.component.html',
   styleUrls: ['./gastos-chart.component.scss'],
 })
@@ -72,20 +75,16 @@ export class GastosChartComponent implements OnInit {
 
   public chartLancType = ChartType.ColumnChart;
 
-  constructor(private readonly _api: ApiService) { }
+  //
+
+  public orcamentos: Orcamento[] = [];
+
+  constructor(private readonly _api: ApiService, private toastr: ToastrService) { }
 
   ngOnInit() {
-    this._api.getTotalizadorTransacoes('').subscribe(response => {
-      this.totalizador = response;
-
-      this.chartData = [
-        ['Entradas', Math.abs(this.totalizador.totalEntrada)],
-        ['Saídas', Math.abs(this.totalizador.totalSaida)],
-        ['Saldo', Math.abs(this.totalizador.total)],
-      ];
-    });
 
     this.getGastos(4);
+    this.getOrcamentos();
 
     this._api.getLancamento("").subscribe(response => {
 
@@ -133,6 +132,19 @@ export class GastosChartComponent implements OnInit {
         ['Próximo Mês 1', this.totalizadores[2]?.total],
         ['Próximo Mês 2', this.totalizadores[3]?.total],
       ];
+    });
+  }
+
+  getOrcamentos(){
+
+    const date = new Date();  // 2009-11-10
+    const month = date.toLocaleString('en-US', { month: 'long' });
+    const data = {
+      mes: month
+    }
+
+    this._api.getOrcamentos(data).subscribe((data) => {
+      this.orcamentos = data;
     });
   }
 }

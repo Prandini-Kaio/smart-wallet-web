@@ -1,0 +1,19 @@
+<div class="card" [style.background-color]="getBackgroundColor()">
+  <div class="card-content">
+    <div class="categoria">{{ orcamento.categoria }}</div>
+    <div class="valor">{{ orcamento.gastoAtual.toFixed(2) | currency:'BRL' }}</div>
+    <div class="comparacao">
+      {{ getProgresso().toFixed(0) }}%
+    </div>
+    <div class="progress-bar">
+      <div
+        class="progress"
+        [style.width.%]="getProgresso()"
+        [style.background-color]="getBarColor()"
+      ></div>
+    </div>
+    <div class="comparacao">
+      {{ orcamento.gastoAtual }} / {{ orcamento.limite }}
+    </div>
+  </div>
+</div>
