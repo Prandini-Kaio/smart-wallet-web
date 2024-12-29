@@ -1,0 +1,64 @@
+@import '../../../../../shared/variable.scss';
+
+.modal {
+    display: flex;
+    position: fixed;
+    left: 0px;
+    top: 0px;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.4);
+    justify-content: center;
+    align-items: center;
+
+    .modal-content {
+        background-color: $background-color;
+        padding: 20px;
+        width: 80%;
+        max-width: 500px;
+        border-radius: 15px;
+    }
+
+    .form-actions {
+        text-align: right;
+        margin-top: 20px;
+    }
+
+    .btn-salvar,
+    .btn-cancelar {
+        padding: 10px 20px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        transition: background-color 0.2s ease;
+    }
+
+    .btn-salvar {
+        background-color: $blue;
+        color: $text-light;
+        margin-right: 10px;
+
+        &:hover {
+            background-color: $blue-dark;
+        }
+
+        &:disabled {
+            background-color: $text-muted;
+        }
+    }
+
+    .btn-cancelar {
+        background-color: $text-red;
+        color: $text-light;
+
+        &:hover {
+            background-color: $text-red-dark;
+        }
+    }
+
+    button:hover {
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+}

@@ -24,6 +24,10 @@ export class ApiService {
     return this.http.post(`${this.apiUrl}/lancamento`, input);
   }
 
+  createOrcamento(input: any): Observable<any> {
+    return this.http.post(`${this.apiUrl}/orcamento`, input);
+  }
+
   getLancamento(paramsObj: any): Observable<any> {
 
     let params = new HttpParams();

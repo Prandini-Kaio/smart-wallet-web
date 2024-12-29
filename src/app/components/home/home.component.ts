@@ -69,6 +69,8 @@ export class HomeComponent implements OnInit{
     this.api.getContas('').subscribe((data) => {
       this.contas = data;
     });
+
+    this.getOrcamentos();
   }
 
   getSaldoParcial(): number {
@@ -90,5 +92,18 @@ export class HomeComponent implements OnInit{
       .slice(0, index)
       .reduce((acc, curr) => acc + (curr.count / total) * circumference, 0);
     return circumference - (this.orderStatuses[index].count / total) * circumference - offset;
+  }
+
+  getOrcamentos(){
+
+    const date = new Date();  // 2009-11-10
+    const month = date.toLocaleString('en-US', { month: 'long' });
+    const data = {
+      mes: month
+    }
+
+    this.api.getOrcamentos(data).subscribe((data) => {
+      this.orcamentos = data;
+    });
   }
 }

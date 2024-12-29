@@ -4,7 +4,7 @@
     <p>Orçamentos</p>
     <div class="icon-button-container">
       
-      <button class="create"><i class="fas fa-plus"></i></button>
+      <button class="create" (click)="showOrcamentoModal()"><i class="fas fa-plus"></i></button>
     </div>
   </div>
 
@@ -13,5 +13,9 @@
       *ngFor="let orcamento of orcamentos"
       [orcamento]="orcamento"
     ></app-orcamento-item>
+  </div>
+
+  <div class="modal" *ngIf="showModal">
+    <app-orcamento-form (submit)="onSubmit($event)" (close)="showOrcamentoModal()"></app-orcamento-form>
   </div>
 </div>
