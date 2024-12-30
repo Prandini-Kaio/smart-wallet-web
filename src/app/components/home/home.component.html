@@ -35,8 +35,9 @@
 
     <div class="balance-header">
       <p>Balanço</p>
+      <p>{{getMonth()}}</p>
 
-      <mat-form-field class="ass" appearance="outline" style="height: auto;">
+      <mat-form-field appearance="outline" style="height: auto;">
         <mat-select [(value)]="contasSelecionadas" multiple>
           <mat-option [value]="">Todas</mat-option>
           <mat-option *ngFor="let conta of contas" [value]="conta">
@@ -51,6 +52,12 @@
       <p class="total-value">{{ getSaldoParcial() | currency: 'BRL' }}</p>
       <i *ngIf="getSaldoParcial() > 0" class="fas fa-arrow-up positive"></i>
       <i *ngIf="getSaldoParcial() < 0" class="fas fa-arrow-down negative"></i>
+    </div>
+
+    <div class="action">
+      <button class="btn-simular">
+        Simular
+      </button>
     </div>
   </div>
 

@@ -1,0 +1,160 @@
+@import '../../shared/variable.scss';
+
+.container {
+    display: flex;
+    flex-direction: column;
+    background-color: $background-color;
+    width: 100%;
+    height: 100%;
+    align-items: center;
+    margin: auto;
+}
+
+.header {
+    display: flex;
+    align-items: center;
+    padding: 12px;
+    font-weight: bold;
+
+    .header-title {
+        font-size: 28px;
+        font-weight: bold;
+        color: $text-title;
+    }
+}
+
+.action-meses {
+
+    padding: 10px;
+
+    button {
+        background-color: $blue;
+        padding: 2px 10px;
+        margin: 0px 4px;
+        border: none;
+        border-radius: 15px;
+        color: $light;
+        font-weight: bold;
+        cursor: pointer;
+        transition: background-color 0.3s, color 0.3s;
+
+        &:hover {
+            background-color: darken($blue, 10%);
+        }
+    }
+
+    button.selected {
+        background-color: $blue-dark;
+        color: white;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+    }
+
+}
+
+.list {
+    display: flex;
+    flex-direction: column;
+    width: 90%;
+
+    .list-header {
+        color: $text-light;
+        font-weight: bold;
+    }
+
+    .list-header>* {
+        padding: 0 10px;
+
+        &:not(:last-child)::after {
+            content: '';
+            position: absolute;
+            top: 10%;
+            right: 0;
+            height: 80%;
+            width: 1px;
+            background: linear-gradient(to bottom, transparent, $light-hover, transparent);
+        }
+    }
+}
+
+.list-header,
+.item-container,
+.foot {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    align-items: center;
+    text-align: center;
+    position: relative;
+    gap: 12px;
+    background-color: $blue;
+    border-radius: 4px 4px 0 0;
+    padding: 12px;
+}
+
+.item-container {
+    background-color: $light;
+    border-left: 4px solid transparent;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.05);
+
+    &.colored {
+        border-left-color: var(--conta-color);
+    }
+
+    &:not(:last-child) {
+        border-bottom: 1px solid $light;
+    }
+
+    &:hover {
+        background-color: $light-hover;
+    }
+
+    .item-conta {
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-end;
+        gap: 4px;
+        font-size: 14px;
+        text-align: left;
+
+        .conta-value {
+            color: $blue-dark;
+            font-weight: bold;
+        }
+    }
+
+    .item-entradas {
+        text-align: center;
+    }
+
+    .item-saidas {
+        text-align: center;
+    }
+
+    .item-saldo {
+        text-align: center;
+    }
+
+    .item-mes {
+        text-align: center;
+    }
+}
+
+.item-container>* {
+    padding: 0 10px;
+
+    &:not(:last-child)::after {
+        content: '';
+        position: absolute;
+        top: 10%;
+        right: 0;
+        height: 80%;
+        width: 1px;
+        background: linear-gradient(to bottom, transparent, $light-hover, transparent);
+    }
+}
+
+.foot {
+    font-weight: bold;
+    font-size: 18px;
+    color: $text-light;
+    border-radius: 0 0 4px 4px;
+}

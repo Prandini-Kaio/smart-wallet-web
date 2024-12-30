@@ -35,4 +35,8 @@ export const routes: Routes = [
         path: 'monitor-erros',
         loadComponent: () => import('./components/monitor-erros/monitor-erros.component').then(m => m.MonitorErrosComponent)
     },
+    { 
+        path: 'simular',
+        loadComponent: () => import('./components/simular/simular.component').then(m => m.SimularComponent)
+    },
 ];

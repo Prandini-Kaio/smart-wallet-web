@@ -106,4 +106,11 @@ export class HomeComponent implements OnInit{
       this.orcamentos = data;
     });
   }
+
+  getMonth(): string {
+    const now = new Date();
+    let mes = now.toLocaleString('pt-Br', { month: 'long' });
+    mes = mes.charAt(0).toUpperCase() + mes.slice(1);
+    return mes;
+  }
 }

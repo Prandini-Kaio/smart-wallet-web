@@ -35,6 +35,8 @@ export interface TransacaoOutput {
     id: number,
     valor: number,
     status: string,
+    tipo: string,
+    tipoPagamento: string, 
     dtVencimento: string,
     dtPagamento: string,
     descricao: string;

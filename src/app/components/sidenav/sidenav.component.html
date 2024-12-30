@@ -2,9 +2,9 @@
     <div class="sidenav" [@sidenavAnimation]="isClosed ? 'closed' : 'open'">
         <div class="sidenav-header">
             <img src="assets/logo.png" alt="Logo" class="logo" [ngClass]="{'small': isClosed}">
-            <button class="toggle-btn" (click)="toggleSidenav()">
+            <!-- <button class="toggle-btn" (click)="toggleSidenav()">
                 <i class="fas" [ngClass]="{'fa-bars': isClosed, 'fa-times': !isClosed}"></i>
-            </button>
+            </button> -->
         </div>
         <nav>
             <ng-container *ngFor="let item of navItems">

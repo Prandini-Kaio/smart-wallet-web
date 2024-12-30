@@ -171,3 +171,42 @@
     }
   }
 }
+
+.action {
+  text-align: left;
+  margin-top: 20px;
+}
+
+.btn-simular {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background-color: #333;
+  /* Verde vibrante */
+  color: white;
+  font-size: 16px;
+  font-weight: bold;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+}
+
+.btn-simular i {
+  font-size: 18px;
+}
+
+.btn-simular:hover {
+  background-color: #222;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 10px rgba(0, 0, 0, 0.2);
+}
+
+.btn-simular:active {
+  background-color: #111;
+  /* Cor mais escura ao clicar */
+  transform: translateY(1px);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}

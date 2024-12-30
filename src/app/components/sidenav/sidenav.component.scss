@@ -1,7 +1,7 @@
+@import '../../shared/variable.scss';
+
 // Color palette
 $dark-blue: #151F48;
-$medium-blue: #256DD3;
-$light-blue: #5AA5F4;
 $grey-blue: #536889;
 $pale-blue: #AFC5E8;
 
@@ -27,11 +27,11 @@ $pale-blue: #AFC5E8;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 20px;
-  background-color: darken(#bfbfbf, 5%);
+  padding: 10px;
+  background-color: darken($blue-dark, 10%);
 
   .logo {
-    height: 40px;
+    height: 70px;
     transition: all 0.3s ease;
 
     &.small {
@@ -42,13 +42,13 @@ $pale-blue: #AFC5E8;
   .toggle-btn {
     background: none;
     border: none;
-    color: $pale-blue;
+    color: $light;
     font-size: 24px;
     cursor: pointer;
     transition: color 0.3s ease;
 
     &:hover {
-      color: $light-blue;
+      color: $blue;
     }
   }
 }
