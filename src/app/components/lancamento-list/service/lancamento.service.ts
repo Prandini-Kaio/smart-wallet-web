@@ -4,7 +4,7 @@ import { LancamentoOutput } from '../../../shared/lancamento/model/lancamento.mo
 @Injectable({
   providedIn: 'root'
 })
-export class LancamentoServiceService {
+export class LancamentoService {
 
   private lancamento?: LancamentoOutput;
 

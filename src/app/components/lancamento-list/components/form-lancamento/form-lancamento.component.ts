@@ -22,7 +22,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { ContaOutput } from '../../../../shared/conta/conta.model';
 import { ApiService } from '../../../../services/api.service';
 import { parse } from 'date-fns';
-import { LancamentoServiceService } from '../../../add-lancamento/service/lancamento-service.service';
+import { LancamentoService } from '../../service/lancamento.service';
 
 @Component({
   selector: 'app-form-lancamento',
@@ -52,7 +52,7 @@ export class FormLancamentoComponent implements OnInit, OnDestroy {
 
   constructor(
     private readonly api: ApiService,
-    private readonly lancamentoService: LancamentoServiceService
+    private readonly lancamentoService: LancamentoService
   ) {}
 
   ngOnInit(): void {

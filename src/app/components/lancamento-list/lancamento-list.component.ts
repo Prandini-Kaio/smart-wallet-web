@@ -18,8 +18,8 @@ import {
 } from '../../shared/lancamento/model/lancamento.model';
 import { LancamentoFilterComponent } from './components/lancamento-filter/lancamento-filter.component';
 import { LancamentoItemComponent } from './components/lancamento-item/lancamento-item.component';
-import { LancamentoServiceService } from '../add-lancamento/service/lancamento-service.service';
 import { FormLancamentoComponent } from './components/form-lancamento/form-lancamento.component';
+import { LancamentoService } from './service/lancamento.service';
 
 @Component({
   selector: 'app-lancamento-list',
@@ -30,8 +30,8 @@ import { FormLancamentoComponent } from './components/form-lancamento/form-lanca
     ReactiveFormsModule,
     LancamentoItemComponent,
     LancamentoFilterComponent,
-    FormLancamentoComponent,
-  ],
+    FormLancamentoComponent
+],
   templateUrl: './lancamento-list.component.html',
   styleUrl: './lancamento-list.component.scss',
 })
@@ -97,7 +97,7 @@ export class LancamentoListComponent implements OnInit {
     private readonly _api: ApiService,
     private toastr: ToastrService,
     private router: Router,
-    private lancamentoService: LancamentoServiceService
+    private lancamentoService: LancamentoService
   ) {
     this.editForm = new FormGroup({
       conta: new FormControl({ nome: '', banco: '' }, Validators.required),
