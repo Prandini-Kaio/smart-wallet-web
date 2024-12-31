@@ -38,7 +38,7 @@ export class SimularComponent implements OnInit {
   public totalSaidas = 0;
   public totalSaldo = 0;
 
-  meses: number[] = [1, 2, 3];
+  meses: number[] = [1, 2, 3, 4, 5, 6];
   selectedMes: number | null = null;
   params: Params = {
     dtInicio: '',
@@ -58,17 +58,12 @@ export class SimularComponent implements OnInit {
     const hoje = new Date();
     const anoAtual = hoje.getFullYear();
 
-    // Calcula o mês de início (meses a partir do mês atual)
-    const dtInicio = new Date(anoAtual, hoje.getMonth(), 1); // Início do mês atual
+    const dtInicio = new Date(anoAtual, hoje.getMonth(), 1);
+    const dtFim = new Date(anoAtual, hoje.getMonth() + mes, 0);
 
-    // Calcula o mês de fim (meses a partir do mês atual)
-    const dtFim = new Date(anoAtual, hoje.getMonth() + mes, 0); // Último dia do mês 'mes' a partir de hoje
-
-    // Atualiza os parâmetros com as novas datas
     this.params.dtInicio = formatDate(dtInicio, 'yyyy-MM-ddT00:00:00', 'en-US');
     this.params.dtFim = formatDate(dtFim, 'yyyy-MM-ddT00:00:00', 'en-US');
 
-    // Chama a função para popular os dados com base nas datas
     this.populate();
   }
 

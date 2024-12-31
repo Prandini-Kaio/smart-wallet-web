@@ -8,8 +8,8 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon'; // Para ícones, caso necessário
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
-import { ApiService } from '../../services/api.service';
-import { ContaOutput } from '../../shared/conta/conta.model';
+import { ApiService } from '../../../../services/api.service';
+import { ContaOutput } from '../../../../shared/conta/conta.model';
 
 interface Filter {
   categorias: string[],

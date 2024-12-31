@@ -80,6 +80,7 @@ export class OrcamentoFormComponent implements OnInit{
 
   onSubmit() {
     this.submit.emit(this.form);
+    this.onClose();
   }
 
   onClose() {

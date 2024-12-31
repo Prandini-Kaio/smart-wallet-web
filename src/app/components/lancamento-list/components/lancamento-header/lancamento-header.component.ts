@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { Lancamento } from '../../shared/lancamento/model/lancamento.model';
+import { Lancamento } from '../../../../shared/lancamento/model/lancamento.model';
 import { CommonModule } from '@angular/common';
 
 @Component({

@@ -1,0 +1,77 @@
+@import "../../../../shared/variable.scss";
+
+.container {
+  background-color: $background-color;
+  max-width: 900px;
+  margin: 2rem auto;
+  padding: 2rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba($blue-dark, 0.5);
+  animation: slideIn 0.5s ease-out;
+}
+
+.form-container {
+  display: grid;
+  grid-template-columns: repeat(3, 2fr);
+  gap: 2rem;
+
+  .form-group {
+    margin-bottom: 1.5rem;
+    animation: fadeIn 0.5s ease-out forwards;
+
+    @for $i from 1 through 10 {
+      &:nth-child(#{$i}) {
+        animation-delay: #{$i * 0.1}s;
+      }
+    }
+  }
+
+  .form-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 1.5rem;
+    margin-top: 2.5rem;
+    padding-top: 1.5rem;
+    border-top: 0.5px solid $blue-light;
+  }
+
+  .btn {
+    display: flex;
+    align-items: center;
+    padding: 0.75rem 1.5rem;
+    border-radius: 8px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+
+    i {
+      margin-right: 0.5rem;
+    }
+
+    &:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+  }
+
+  .btn-primary {
+    background-color: $blue-dark;
+    color: $gray;
+    border: none;
+
+    &:hover:not(:disabled) {
+      background-color: darken($medium-blue, 10%);
+    }
+  }
+
+  .btn-secondary {
+    background-color: transparent;
+    color: $blue-light;
+    border: 1px solid $blue;
+
+    &:hover {
+      background-color: $blue;
+      color: $blue-dark;
+    }
+  }
+}

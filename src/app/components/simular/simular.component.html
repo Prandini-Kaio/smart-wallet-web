@@ -44,4 +44,39 @@
         </div>
     </div>
 
+    <div class="list">
+        <div class="list-header-lancamentos">
+            <span class="col-info">Tipo</span>
+            <span class="col-info">Pagamento</span>
+            <span class="col-info">Descricao</span>
+            <span class="col-info">Valor</span>
+        </div>
+
+        <div class="itens" *ngFor="let item of transacoesPorConta">
+            <div class="item-lancamento-container">
+                <div class="item-conta">
+                    <span class="conta-value">{{item.conta.banco}} - {{item.conta.nome}}</span>
+                </div>
+
+                <div class="item-entradas">
+                    <span class="entradas-value">{{item.entradas | currency: 'BRL'}}</span>
+                </div>
+
+                <div class="item-saidas">
+                    <span class="saidas-value">{{item.saidas | currency: 'BRL'}}</span>
+                </div>
+
+                <div class="item-saldo">
+                    <span class="saldo-value">{{item.saldo | currency: 'BRL'}}</span>
+                </div>
+            </div>
+        </div>
+        <div class="foot">
+            <div class="foot-item">TOTAL</div>
+            <div class="foot-item">{{totalEntradas | currency: 'BRL'}}</div>
+            <div class="foot-item">{{totalSaidas | currency: 'BRL'}}</div>
+            <div class="foot-item">{{totalSaldo | currency: 'BRL'}}</div>
+        </div>
+    </div>
+
 </div>

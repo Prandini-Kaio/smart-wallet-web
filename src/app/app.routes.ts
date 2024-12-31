@@ -14,18 +14,13 @@ export const routes: Routes = [
         path: 'contas/view',
         loadComponent: () => import('./components/contas-list/contas-list.component').then(m => m.ContasListComponent)
     },
-    
-    { 
-        path: 'lancamentos/add',
-        loadComponent: () => import('./components/add-lancamento/add-lancamento.component').then(m => m.AddLancamentoComponent)
-    },
     { 
         path: 'lancamentos/view',
         loadComponent: () => import('./components/lancamento-list/lancamento-list.component').then(m => m.LancamentoListComponent)
     },
     { 
         path: 'lancamentos/details/:id',
-        loadComponent: () => import('./components/lancamento-details/lancamento-details.component').then(m => m.LancamentoDetailsComponent)
+        loadComponent: () => import('./components/lancamento-list/components/lancamento-details/lancamento-details.component').then(m => m.LancamentoDetailsComponent)
     },
     { 
         path: 'transacoes/view',
@@ -38,5 +33,9 @@ export const routes: Routes = [
     { 
         path: 'simular',
         loadComponent: () => import('./components/simular/simular.component').then(m => m.SimularComponent)
+    },
+    { 
+        path: 'tst',
+        loadComponent: () => import('./components/lancamento-list/components/form-lancamento/form-lancamento.component').then(m => m.FormLancamentoComponent)
     },
 ];

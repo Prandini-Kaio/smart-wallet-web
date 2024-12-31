@@ -12,6 +12,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { ContaOutput } from "../../shared/conta/conta.model";
 import { ApiService } from "../../services/api.service";
+import { Router } from "@angular/router";
 
 interface OrderStatus {
   status: string;
@@ -62,7 +63,7 @@ export class HomeComponent implements OnInit{
     { status: 'Processing', count: 14, color: '#3B82F6' }
   ];
 
-  constructor(private readonly api: ApiService) { }
+  constructor(private readonly api: ApiService, private route: Router) { }
 
   ngOnInit(): void { 
 
@@ -112,5 +113,9 @@ export class HomeComponent implements OnInit{
     let mes = now.toLocaleString('pt-Br', { month: 'long' });
     mes = mes.charAt(0).toUpperCase() + mes.slice(1);
     return mes;
+  }
+
+  simular() {
+    this.route.navigate(["/simular"])
   }
 }

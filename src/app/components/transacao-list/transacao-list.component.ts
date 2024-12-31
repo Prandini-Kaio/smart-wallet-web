@@ -4,7 +4,7 @@ import { CommonModule } from '@angular/common';
 import { LancamentoOutput, Totalizador, TransacaoOutput } from '../../shared/lancamento/model/lancamento.model';
 import { ApiService } from '../../services/api.service';
 import { ToastrService } from 'ngx-toastr';
-import { LancamentoFilterComponent } from "../lancamento-filter/lancamento-filter.component";
+import { LancamentoFilterComponent } from "../lancamento-list/components/lancamento-filter/lancamento-filter.component";
 import { TransacaoFilterComponent } from "../transacao-filter/transacao-filter.component";
 
 @Component({

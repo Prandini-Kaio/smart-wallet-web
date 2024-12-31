@@ -1,10 +1,10 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { ApiService } from '../../services/api.service';
-import { Transacao } from '../../shared/lancamento/model/lancamento.model';
+import { ApiService } from '../../../../services/api.service';
+import { Transacao } from '../../../../shared/lancamento/model/lancamento.model';
 import { LancamentoHeaderComponent } from "../lancamento-header/lancamento-header.component";
-import { TransactionCardComponent } from "../transaction-card/transaction-card.component";
+import { TransactionCardComponent } from "../../../transaction-card/transaction-card.component";
 
 @Component({
   selector: 'app-lancamento-details',
