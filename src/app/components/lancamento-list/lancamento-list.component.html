@@ -1,38 +1,46 @@
 <div class="container">
-
   <!-- Filtros -->
-  <app-lancamento-filter [show]="showLancamentoList" (apply)="applyFilters($event)" (toggle)="toggle($event)">
+  <app-lancamento-filter (apply)="applyFilters($event)">
   </app-lancamento-filter>
-
 
   <div class="lancamento-list-container">
     <!-- Header com título e botão para novo lançamento -->
     <header class="header">
       <h2 class="list-title">Lançamentos</h2>
-      <button class="btn btn-primary create-btn" (click)="createNew()">
+      <button class="btn btn-primary create-btn" (click)="createModal()">
         <i class="fas fa-plus"></i> Novo Lançamento
       </button>
     </header>
-    
+
     <div class="totalizadores">
       <div class="total-item total-entrada">
         <i class="fas fa-arrow-circle-up"></i>
         <span class="total-label">Entradas</span>
-        <span class="total-value">{{ totalizador.totalEntrada| currency:'BRL':'symbol':'1.2-2' }}</span>
+        <span class="total-value">{{
+          totalizador.totalEntrada | currency : "BRL" : "symbol" : "1.2-2"
+        }}</span>
       </div>
 
       <div class="total-item total-saldo">
         <i class="fas fa-balance-scale"></i>
         <span class="total-label">Saldo</span>
-        <span class="total-value" [ngClass]="{'positive': totalizador.total >= 0, 'negative': totalizador.total < 0}">
-          {{ totalizador.total |  currency:'BRL':'symbol':'1.2-2' }}
+        <span
+          class="total-value"
+          [ngClass]="{
+            positive: totalizador.total >= 0,
+            negative: totalizador.total < 0
+          }"
+        >
+          {{ totalizador.total | currency : "BRL" : "symbol" : "1.2-2" }}
         </span>
       </div>
 
       <div class="total-item total-saida">
         <i class="fas fa-arrow-circle-down"></i>
         <span class="total-label">Saídas</span>
-        <span class="total-value">{{ totalizador.totalSaida| currency:'BRL':'symbol':'1.2-2' }}</span>
+        <span class="total-value">{{
+          totalizador.totalSaida | currency : "BRL" : "symbol" : "1.2-2"
+        }}</span>
       </div>
     </div>
 
@@ -59,17 +67,15 @@
         <span class="col-actions">Ações</span>
       </div>
 
-      <app-lancamento-item *ngFor="let lancamento of lancamentos" [lancamento]="lancamento"
-        (edit)="editLancamento($event)" (delete)="deleteLancamento($event)" (copy)="copy($event)">
+      <app-lancamento-item
+        *ngFor="let lancamento of lancamentos"
+        [lancamento]="lancamento"
+        (edit)="editLancamento($event)"
+        (delete)="deleteLancamento($event)"
+        (copy)="copy($event)"
+      >
       </app-lancamento-item>
     </div>
-
-    <!-- <div *ngIf="!showLancamentoList" class="lancamento-list">
-      <app-transacao-list [transacoes]="transacoes">
-
-      </app-transacao-list>
-    </div> -->
-
   </div>
 
   <!-- Mensagem de ausência de lançamentos -->
@@ -77,13 +83,23 @@
     Nenhum lançamento encontrado.
   </div>
 
+  <!-- ADD MODAL -->
+
+  <div class="modal" *ngIf="showCreateModalLancamento">
+    <app-form-lancamento
+      [title]="'Criar lançamento'"
+      (enviar)="onSubmit($event)"
+      (cancel)="createModal()"
+    ></app-form-lancamento>
+  </div>
+
   <!-- EDIT MODAL -->
 
   <div class="modal" *ngIf="showEditModalLancamento">
-    <div class="modal-content">
-      <h2>Editar Lançamento</h2>
-
-      <app-form-lancamento (enviar)="onEditSubmit($event)" (cancel)="onCancel()"></app-form-lancamento>
-    </div>
+    <app-form-lancamento
+      [title]="'Editar lançamento'"
+      (enviar)="onEditSubmit($event)"
+      (cancel)="editModal()"
+    ></app-form-lancamento>
   </div>
 </div>

@@ -1,6 +1,19 @@
 <div class="container">
-  <h1 class="form-title">{{title}}</h1>
+  <h1 class="form-title">{{ title }}</h1>
   <form [formGroup]="form" (ngSubmit)="onSubmitForm()" class="form-container">
+    <input
+      id="hiddenId"
+      formControlName="id"
+      type="text"
+      style="display: none"
+    />
+    <input
+      id="hiddenStatus"
+      formControlName="status"
+      type="text"
+      style="display: none"
+    />
+
     <!-- Descrição -->
     <mat-form-field appearance="outline" class="form-group">
       <mat-label>Descrição</mat-label>
@@ -172,8 +185,7 @@
 
     <!-- Ações -->
     <div class="form-actions">
-      <button
-        mat-raised-button color="warn" type="button" (click)="onCancel()">
+      <button mat-raised-button color="warn" type="button" (click)="onCancel()">
         Cancelar
       </button>
       <button
@@ -182,7 +194,7 @@
         type="submit"
         [disabled]="form.invalid"
       >
-        Criar
+        Salvar
       </button>
     </div>
   </form>

@@ -31,6 +31,13 @@ export interface LancamentoOutput {
     expanded?: boolean;
 }
 
+export interface SaldoProjetado {
+    mes: string,
+    entradas: number,
+    saidas: number,
+    saldo: number
+}
+
 export interface TransacaoOutput {
     id: number,
     valor: number,

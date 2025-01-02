@@ -86,7 +86,7 @@
 .item-lancamento-container,
 .foot {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(5, 1fr);
   align-items: center;
   text-align: center;
   position: relative;
@@ -176,12 +176,54 @@
   margin-top: 20px;
 
   .item-lancamento-container {
-
   }
 }
 
 .item-lancamento-container {
-    background-color: $light;
-    border-left: 4px solid transparent;
-    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.05);
+  background-color: $light;
+  border-left: 4px solid transparent;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+//
+
+.edit-btn,
+.delete-btn,
+.copy-btn {
+  font-size: 18px;
+  color: #666;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  transition: color 0.2s;
+}
+
+.edit-btn:hover {
+  color: #4caf50;
+}
+
+.delete-btn:hover {
+  color: #e53935;
+}
+
+.copy-btn:hover {
+  color: #0aa2e9;
+}
+
+.list-meses {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  align-items: center;
+  text-align: center;
+  position: relative;
+  gap: 12px;
+  background-color: $blue;
+  border-radius: 4px 4px 0 0;
+  padding: 12px;
+  margin-top: 15px;
+
+  .col-info {
+    color: $text-light;
+    font-weight: bold;
+  }
 }

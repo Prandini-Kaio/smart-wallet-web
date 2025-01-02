@@ -1,82 +1,109 @@
 <div class="container">
-    <header class="header">
-        <h2 class="header-title">Simular</h2>
-    </header>
+  <header class="header">
+    <h2 class="header-title">Simular</h2>
+  </header>
 
-    <div class="action-meses">
-        <button *ngFor="let mes of meses" [class.selected]="mes === selectedMes" (click)="selecionarMes(mes)">
-            {{ mes }} mes{{ mes > 1 ? 'es' : '' }}
-        </button>
+  <div class="action-meses">
+    <button
+      *ngFor="let mes of meses"
+      [class.selected]="mes === selectedMes"
+      (click)="selecionarMes(mes)"
+    >
+      {{ mes }} mes{{ mes > 1 ? "es" : "" }}
+    </button>
+  </div>
+
+  <button (click)="openModal()">Criar lancamento</button>
+
+  <div class="list">
+    <div class="list-header">
+      <span class="col-info">Conta</span>
+      <span class="col-info">Descricao</span>
+      <span class="col-info">Pagamento</span>
+      <span class="col-info">Valor</span>
+      <span class="col-info">Ações</span>
     </div>
 
-    <div class="list">
-        <div class="list-header">
-            <span class="col-info">Conta</span>
-            <span class="col-info">Entradas</span>
-            <span class="col-info">Saidas</span>
-            <span class="col-info">Saldo</span>
+    <div class="itens" *ngFor="let item of lancamentos">
+      <div class="item-container">
+        <div class="item-conta">
+          <span class="conta-value"
+            >{{ item.conta.banco }} - {{ item.conta.nome }}</span
+          >
         </div>
 
-        <div class="itens" *ngFor="let item of transacoesPorConta">
-            <div class="item-container">
-                <div class="item-conta">
-                    <span class="conta-value">{{item.conta.banco}} - {{item.conta.nome}}</span>
-                </div>
-
-                <div class="item-entradas">
-                    <span class="entradas-value">{{item.entradas | currency: 'BRL'}}</span>
-                </div>
-
-                <div class="item-saidas">
-                    <span class="saidas-value">{{item.saidas | currency: 'BRL'}}</span>
-                </div>
-
-                <div class="item-saldo">
-                    <span class="saldo-value">{{item.saldo | currency: 'BRL'}}</span>
-                </div>
-            </div>
+        <div class="item-entradas">
+          <span class="entradas-value">{{ item.descricao }}</span>
         </div>
-        <div class="foot">
-            <div class="foot-item">TOTAL</div>
-            <div class="foot-item">{{totalEntradas | currency: 'BRL'}}</div>
-            <div class="foot-item">{{totalSaidas | currency: 'BRL'}}</div>
-            <div class="foot-item">{{totalSaldo | currency: 'BRL'}}</div>
+
+        <div class="item-saidas">
+          <span class="saidas-value">{{ item.tipoPagamento }}</span>
+          <span class="saidas-value">{{ item.tipoLancamento }}</span>
         </div>
+
+        <div class="item-saldo">
+          <span class="saldo-value">{{ item.valor | currency : "BRL" }}</span>
+        </div>
+
+        <div class="lancamento-actions">
+          <button class="btn btn-link edit-btn">
+            <i class="fas fa-edit"></i>
+          </button>
+          <button class="btn btn-link delete-btn">
+            <i class="fas fa-trash"></i>
+          </button>
+          <button class="btn btn-link copy-btn">
+            <i class="fas fa-clipboard"></i>
+          </button>
+        </div>
+      </div>
     </div>
 
-    <div class="list">
-        <div class="list-header-lancamentos">
-            <span class="col-info">Tipo</span>
-            <span class="col-info">Pagamento</span>
-            <span class="col-info">Descricao</span>
-            <span class="col-info">Valor</span>
-        </div>
-
-        <div class="itens" *ngFor="let item of transacoesPorConta">
-            <div class="item-lancamento-container">
-                <div class="item-conta">
-                    <span class="conta-value">{{item.conta.banco}} - {{item.conta.nome}}</span>
-                </div>
-
-                <div class="item-entradas">
-                    <span class="entradas-value">{{item.entradas | currency: 'BRL'}}</span>
-                </div>
-
-                <div class="item-saidas">
-                    <span class="saidas-value">{{item.saidas | currency: 'BRL'}}</span>
-                </div>
-
-                <div class="item-saldo">
-                    <span class="saldo-value">{{item.saldo | currency: 'BRL'}}</span>
-                </div>
-            </div>
-        </div>
-        <div class="foot">
-            <div class="foot-item">TOTAL</div>
-            <div class="foot-item">{{totalEntradas | currency: 'BRL'}}</div>
-            <div class="foot-item">{{totalSaidas | currency: 'BRL'}}</div>
-            <div class="foot-item">{{totalSaldo | currency: 'BRL'}}</div>
-        </div>
+    <div class="foot">
+      <div class="foot-item">TOTAL</div>
+      <div class="foot-item"></div>
+      <div class="foot-item"></div>
+      <div class="foot-item"></div>
+      <div class="foot-item">
+        {{ calcularTotalLancamentos() | currency : "BRL" }}
+      </div>
     </div>
+  </div>
 
+
+  <!-- Tabela de contas -->
+
+  <app-transacao-filter (apply)="onApplyFilters($event)"></app-transacao-filter>
+
+  <div class="list">
+    <div class="list-meses">
+        <div class="col-info" *ngFor="let item of saldoProjetados">
+          {{ item.mes }}
+        </div>
+      </div>
+    
+      <div class="list-saldos">
+        <div class="col-info" *ngFor="let item of saldoProjetados">
+          {{ item.saldo | currency: "BRL" }}
+        </div>
+      </div>
+
+    <div class="foot">
+      <div class="foot-item">TOTAL</div>
+      <div class="foot-item"></div>
+      <div class="foot-item"></div>
+      <div class="foot-item"></div>
+      <div class="foot-item">
+        {{ calcularTotalLancamentos() | currency : "BRL" }}
+      </div>
+    </div>
+  </div>
+
+  <div class="modal" *ngIf="showModal">
+    <app-form-lancamento
+      [title]="'Criar lançamento'"
+      (enviar)="criarLancamento($event)"
+      (cancel)="openModal()"
+    ></app-form-lancamento>
+  </div>
 </div>

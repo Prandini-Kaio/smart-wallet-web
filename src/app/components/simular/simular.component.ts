@@ -4,8 +4,14 @@ import { forkJoin } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { ApiService } from '../../services/api.service';
 import { ContaOutput } from '../../shared/conta/conta.model';
-import { TransacaoOutput } from '../../shared/lancamento/model/lancamento.model';
-
+import {
+  LancamentoOutput,
+  SaldoProjetado,
+  TransacaoOutput,
+} from '../../shared/lancamento/model/lancamento.model';
+import { FormLancamentoComponent } from '../lancamento-list/components/form-lancamento/form-lancamento.component';
+import { ToastrService } from 'ngx-toastr';
+import { TransacaoFilterComponent } from '../transacao-filter/transacao-filter.component';
 
 interface ContaTransacoes {
   conta: ContaOutput;
@@ -14,22 +20,23 @@ interface ContaTransacoes {
   saldo: number;
 }
 interface Params {
-  contaIds: string,
-  dtInicio: string,
-  dtFim: string
+  contaIds: string;
+  dtInicio: string;
+  dtFim: string;
 }
 
 @Component({
   selector: 'app-simular',
   standalone: true,
-  imports: [
-    CommonModule,
-  ],
+  imports: [CommonModule, FormLancamentoComponent, TransacaoFilterComponent],
   templateUrl: './simular.component.html',
-  styleUrl: './simular.component.scss'
+  styleUrl: './simular.component.scss',
 })
 export class SimularComponent implements OnInit {
-  constructor(private readonly api: ApiService) { }
+  constructor(
+    private readonly api: ApiService,
+    private readonly toastr: ToastrService
+  ) {}
 
   public contas: ContaOutput[] = [];
   public transacoesPorConta: ContaTransacoes[] = [];
@@ -38,18 +45,61 @@ export class SimularComponent implements OnInit {
   public totalSaidas = 0;
   public totalSaldo = 0;
 
-  meses: number[] = [1, 2, 3, 4, 5, 6];
-  selectedMes: number | null = null;
-  params: Params = {
+  protected meses: number[] = [1, 2, 3, 4, 5, 6];
+  protected selectedMes: number | null = null;
+  public params: Params = {
     dtInicio: '',
     dtFim: '',
-    contaIds: ''
+    contaIds: '',
+  };
+
+  public transacoes: TransacaoOutput[] = [];
+
+  //
+  //
+  //
+
+  public lancamentos: LancamentoOutput[] = [];
+  public saldoProjetados: SaldoProjetado[] = [];
+
+  protected showModal = false;
+
+  criarLancamento(data: any) {
+    this.api.createMockLancamento(data).subscribe((lancamento) => {
+      this.lancamentos.push(lancamento);
+      this.toastr.success('Lancamento criado.', 'Sucesso!');
+    });
+  }
+
+  openModal() {
+    this.showModal = !this.showModal;
+  }
+
+  calcularTotalLancamentos(): number {
+    return this.lancamentos.reduce((total, lancamento) => {
+      if (lancamento.tipoLancamento === 'Entrada') {
+        return total + lancamento.valor;
+      } else if (lancamento.tipoLancamento === 'Saída') {
+        return total - lancamento.valor;
+      }
+      return total;
+    }, 0);
+  }
+
+  onApplyFilters(filters: any) {
+    this.api.getSaldoProjetado(filters).subscribe((data) => {
+      this.saldoProjetados = data;
+    });
   }
 
   ngOnInit() {
     this.api.getContas('').subscribe((contas) => {
       this.contas = contas;
       this.populate();
+    });
+
+    this.api.getTransacoes('').subscribe((data) => {
+      this.transacoes = data;
     });
   }
 
@@ -65,13 +115,11 @@ export class SimularComponent implements OnInit {
     this.params.dtFim = formatDate(dtFim, 'yyyy-MM-ddT00:00:00', 'en-US');
 
     this.populate();
+    this.populateLancamentos();
   }
 
-
   populate() {
-
     const transacoesRequests = this.contas.map((conta) => {
-
       this.params.contaIds = conta.id.toString();
 
       return this.api.getTransacoes(this.params).pipe(
@@ -99,9 +147,30 @@ export class SimularComponent implements OnInit {
     });
   }
 
+  populateLancamentos() {
+    const param = {
+      contaIds: this.contas.map((c) => c.id).join(', '),
+      dtInicio: this.params.dtInicio,
+      dtFim: this.params.dtFim,
+    };
+
+    this.api.getTransacoes(param).subscribe((data) => {
+      this.transacoes = data;
+    });
+  }
+
   calculateTotals() {
-    this.totalEntradas = this.transacoesPorConta.reduce((sum, t) => sum + t.entradas, 0);
-    this.totalSaidas = this.transacoesPorConta.reduce((sum, t) => sum + t.saidas, 0);
-    this.totalSaldo = this.transacoesPorConta.reduce((sum, t) => sum + t.saldo, 0);
+    this.totalEntradas = this.transacoesPorConta.reduce(
+      (sum, t) => sum + t.entradas,
+      0
+    );
+    this.totalSaidas = this.transacoesPorConta.reduce(
+      (sum, t) => sum + t.saidas,
+      0
+    );
+    this.totalSaldo = this.transacoesPorConta.reduce(
+      (sum, t) => sum + t.saldo,
+      0
+    );
   }
 }

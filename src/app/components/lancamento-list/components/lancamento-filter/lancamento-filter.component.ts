@@ -41,7 +41,6 @@ interface Filter {
 })
 export class LancamentoFilterComponent implements OnInit {
 
-  @Input() show!: boolean;
   @Output() apply = new EventEmitter<any>();
   @Output() toggle = new EventEmitter<boolean>();
 
@@ -98,10 +97,6 @@ export class LancamentoFilterComponent implements OnInit {
     };
 
     this.apply.emit(filters);
-  }
-
-  onToggle() {
-    this.toggle.emit(!this.show);
   }
 
   getContas() {

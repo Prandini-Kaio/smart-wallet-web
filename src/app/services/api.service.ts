@@ -24,6 +24,10 @@ export class ApiService {
     return this.http.post(`${this.apiUrl}/lancamento`, input);
   }
 
+  createMockLancamento(input: any): Observable<any> {
+    return this.http.post(`${this.apiUrl}/lancamento/create-input`, input);
+  }
+
   createOrcamento(input: any): Observable<any> {
     return this.http.post(`${this.apiUrl}/orcamento`, input);
   }
@@ -63,6 +67,18 @@ export class ApiService {
     }
 
     return this.http.get(`${this.apiUrl}/transacao/totalizador`, { params });
+  }
+
+  getSaldoProjetado(paramsObj: any): Observable<any>{
+    let params = new HttpParams();
+
+    for(const key in paramsObj){
+      if(paramsObj.hasOwnProperty(key)){
+        params = params.append(key, paramsObj[key]);
+      }
+    }
+
+    return this.http.get(`${this.apiUrl}/lancamento/saldo-projetado`, { params });
   }
 
   getContas(paramObj: any): Observable<ContaOutput[]> {

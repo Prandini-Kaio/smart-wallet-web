@@ -21,7 +21,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { ContaOutput } from '../../../../shared/conta/conta.model';
 import { ApiService } from '../../../../services/api.service';
-import { parse } from 'date-fns';
+import { format, parse } from 'date-fns';
 import { LancamentoService } from '../../service/lancamento.service';
 
 @Component({
@@ -40,7 +40,7 @@ import { LancamentoService } from '../../service/lancamento.service';
   styleUrl: './form-lancamento.component.scss',
 })
 export class FormLancamentoComponent implements OnInit, OnDestroy {
-  @Input() title: string = "Lançamento"
+  @Input() title: string = 'Lançamento';
   @Output() enviar = new EventEmitter<any>();
   @Output() cancel = new EventEmitter();
 
@@ -88,18 +88,16 @@ export class FormLancamentoComponent implements OnInit, OnDestroy {
 
     const lancamento = this.lancamentoService.getLancamento();
 
-    this.form = new FormGroup({
-      conta: new FormControl('', Validators.required),
-      valor: new FormControl('', Validators.required),
-      tipoLancamento: new FormControl('', Validators.required),
-      tipoPagamento: new FormControl('', Validators.required),
-      categoriaLancamento: new FormControl('', Validators.required),
-      parcelas: new FormControl('', Validators.required),
-      descricao: new FormControl('', Validators.required),
-      dtCriacao: new FormControl(today, Validators.required),
-    });
-
     if (lancamento) {
+      const data = parse(
+        lancamento.dtCriacao,
+        'dd/MM/yyyy HH:mm:ss',
+        new Date()
+      )
+        .toISOString()
+        .split('T')[0];
+
+      console.log(data);
       this.form = new FormGroup({
         id: new FormControl(lancamento.id),
         conta: new FormControl(lancamento.conta, Validators.required),
@@ -125,17 +123,31 @@ export class FormLancamentoComponent implements OnInit, OnDestroy {
         parcelas: new FormControl(lancamento.parcelas, Validators.required),
         descricao: new FormControl(lancamento.descricao, Validators.required),
         dtCriacao: new FormControl(
-          parse(lancamento.dtCriacao, 'dd/MM/yyyy HH:mm:ss', new Date())
-            .toISOString()
-            .split('T')[0],
+          format(
+            parse(lancamento.dtCriacao, 'dd/MM/yyyy HH:mm:ss', new Date()),
+            'yyyy-MM-dd'
+          ),
           Validators.required
         ),
+        status: new FormControl(lancamento.status.replace(" ", "_").toUpperCase()),
+      });
+    } else {
+      this.form = new FormGroup({
+        conta: new FormControl('', Validators.required),
+        valor: new FormControl('', Validators.required),
+        tipoLancamento: new FormControl('', Validators.required),
+        tipoPagamento: new FormControl('', Validators.required),
+        categoriaLancamento: new FormControl('', Validators.required),
+        parcelas: new FormControl('', Validators.required),
+        descricao: new FormControl('', Validators.required),
+        dtCriacao: new FormControl(today, Validators.required),
       });
     }
   }
 
   onSubmitForm() {
     const params = this.montarEnvio();
+    console.log(params);
     this.enviar.emit(params);
   }
 
@@ -157,13 +169,18 @@ export class FormLancamentoComponent implements OnInit, OnDestroy {
         (c) => c.id === this.form.get('conta')?.value
       );
 
+      const diaVencimento = contaSelecionada?.dtVencimento
+        ? new Date(contaSelecionada.dtVencimento).getDay()
+        : '';
+
       const lancamento = {
+        id: this.form.get('id')?.value,
         conta: {
           nome: contaSelecionada?.nome,
           banco: contaSelecionada?.banco,
           tipoConta: contaSelecionada?.tipoConta,
-          diaVencimento: contaSelecionada?.dtVencimento,
         },
+        status: this.form.get('status')?.value,
         valor: this.form.get('valor')?.value,
         tipoLancamento: this.form.get('tipoLancamento')?.value,
         tipoPagamento: this.form.get('tipoPagamento')?.value,

@@ -8,6 +8,26 @@
   border-radius: 12px;
   box-shadow: 0 4px 20px rgba($blue-dark, 0.5);
   animation: slideIn 0.5s ease-out;
+
+  .form-title {
+    color: $blue-dark;
+    margin-bottom: 2.5rem;
+    font-size: 2rem;
+    font-weight: 600;
+    position: relative;
+    padding-bottom: 0.5rem;
+
+    &::after {
+      content: "";
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 60px;
+      height: 3px;
+      background: $medium-blue;
+      border-radius: 2px;
+    }
+  }
 }
 
 .form-container {
@@ -74,4 +94,10 @@
       color: $blue-dark;
     }
   }
+}
+
+#hiddenId,
+#hiddenStatus {
+  position: absolute;
+  left: -9999px;
 }
