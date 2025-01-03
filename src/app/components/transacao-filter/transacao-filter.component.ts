@@ -52,6 +52,7 @@ export class TransacaoFilterComponent {
     banco: '',
     nome: '',
     dtVencimento: '',
+    dtFechamento: '',
     tipoConta: '',
     saldoParcial: 0,
     color: '',

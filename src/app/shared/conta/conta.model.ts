@@ -3,6 +3,7 @@ export interface ContaOutput {
     banco: string;
     nome: string;
     dtVencimento: string;
+    dtFechamento: string;
     tipoConta: string;
     saldoParcial: number;
     color: string;

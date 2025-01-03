@@ -100,6 +100,7 @@ export class LancamentoListComponent implements OnInit {
     this._api.createLancamento(request).subscribe((response) => {
       this.toastr.success('Lançamento criado.', 'Sucesso!');
     });
+    this.showCreateModalLancamento = false;
     this.router.navigate(['lancamentos/view']);
   }
 
@@ -107,6 +108,7 @@ export class LancamentoListComponent implements OnInit {
     this._api.updateLancamento(request).subscribe((response) => {
       this.toastr.success('Lançamento atualizado.', 'Sucesso!');
     });
+    this.showEditModalLancamento = false;
     this.router.navigate(['lancamentos/view']);
   }
 

@@ -3,6 +3,9 @@
         <h2>Adicionar Nova Conta</h2>
 
         <form [formGroup]="form" (ngSubmit)="onSubmit()" (cancel)="onClose()">
+
+            <input id="hiddenId" formControlName="id" type="text" style="display: none" />
+
             <!-- Banco -->
             <mat-form-field appearance="outline" class="form-group">
                 <mat-label>Banco</mat-label>
@@ -40,6 +43,15 @@
                 <mat-label>Dia Vencimento</mat-label>
                 <input matInput type="number" id="diaVencimento" formControlName="diaVencimento">
                 <mat-error *ngIf="form.get('diaVencimento')?.invalid && form.get('diaVencimento')?.touched">
+                    Campo obrigatório
+                </mat-error>
+            </mat-form-field>
+
+            <!-- Dia fechamento -->
+            <mat-form-field appearance="outline" class="form-group">
+                <mat-label>Dia Fechamento</mat-label>
+                <input matInput type="number" id="diaFechamento" formControlName="diaFechamento">
+                <mat-error *ngIf="form.get('diaFechamento')?.invalid && form.get('diaFechamento')?.touched">
                     Campo obrigatório
                 </mat-error>
             </mat-form-field>

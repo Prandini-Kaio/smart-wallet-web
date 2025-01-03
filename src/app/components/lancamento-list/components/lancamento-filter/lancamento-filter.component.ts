@@ -52,6 +52,7 @@ export class LancamentoFilterComponent implements OnInit {
     banco: '',
     nome: '',
     dtVencimento: '',
+    dtFechamento: '',
     tipoConta: '',
     saldoParcial: 0,
     color: '',

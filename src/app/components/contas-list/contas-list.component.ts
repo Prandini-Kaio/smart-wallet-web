@@ -44,10 +44,12 @@ export class ContasListComponent {
   onSubmit(form: FormGroup): void {
     if (form.valid) {
       const conta = {
+        id: form.get('id')?.value,
         banco: form.get('banco')?.value,
         nome: form.get('nome')?.value,
         tipoConta: form.get('tipoConta')?.value,
         diaVencimento: form.get('diaVencimento')?.value,
+        diaFechamento: form.get('diaFechamento')?.value,
         color: form.get('color')?.value,
       };
 

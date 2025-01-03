@@ -52,18 +52,22 @@ export class EditModalComponent implements OnInit {
 
     if (this.conta) {
       this.form = new FormGroup({
+        id: new FormControl(this.conta.id, Validators.required),
         banco: new FormControl(this.conta.banco, Validators.required),
         nome: new FormControl(this.conta.nome, Validators.required),
         tipoConta: new FormControl(this.conta.tipoConta, Validators.required),
         diaVencimento: new FormControl(Number.parseFloat(this.conta.dtVencimento), Validators.required),
+        diaFechamento: new FormControl(Number.parseFloat(this.conta.dtFechamento), Validators.required),
         color: new FormControl(this.conta.color, Validators.required)
       });
     } else {
       this.form = new FormGroup({
+        id: new FormControl(0, Validators.required),
         banco: new FormControl('', Validators.required),
         nome: new FormControl('', Validators.required),
         tipoConta: new FormControl('', Validators.required),
         diaVencimento: new FormControl(0, Validators.required),
+        diaFechamento: new FormControl(0, Validators.required),
         color: new FormControl('#000000', Validators.required)
       });
     }
