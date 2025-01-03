@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { ContaOutput, TipoContaOutput } from '../../../shared/conta/conta.model';
+import { ContaOutput, TipoContaOutput } from '../../../shared/model/conta/conta.model';
 import { CommonModule } from '@angular/common';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';

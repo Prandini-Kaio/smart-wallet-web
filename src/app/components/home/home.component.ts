@@ -1,6 +1,6 @@
 import { CommonModule } from "@angular/common";
 import { Component, OnInit } from "@angular/core";
-import { Orcamento } from "../../shared/orcamento/orcamento.model";
+import { Orcamento } from "../../shared/model/orcamento/orcamento.model";
 import { OrcamentoChartComponent } from "../gastos-chart/components/orcamento/orcamento-chart/orcamento-chart.component";
 import { MatFormField } from "@angular/material/form-field";
 import { MatButtonModule } from '@angular/material/button';
@@ -10,7 +10,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
-import { ContaOutput } from "../../shared/conta/conta.model";
+import { ContaOutput } from "../../shared/model/conta/conta.model";
 import { ApiService } from "../../services/api.service";
 import { Router } from "@angular/router";
 
@@ -65,7 +65,7 @@ export class HomeComponent implements OnInit{
 
   constructor(private readonly api: ApiService, private route: Router) { }
 
-  ngOnInit(): void { 
+  ngOnInit(): void {
 
     this.api.getContas('').subscribe((data) => {
       this.contas = data;

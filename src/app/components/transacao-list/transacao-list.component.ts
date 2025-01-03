@@ -1,11 +1,11 @@
-import { Component, Input, OnInit, Output } from '@angular/core';
-import { TransacaoItemComponent } from "../transacao-item/transacao-item.component";
-import { CommonModule } from '@angular/common';
-import { LancamentoOutput, Totalizador, TransacaoOutput } from '../../shared/lancamento/model/lancamento.model';
-import { ApiService } from '../../services/api.service';
-import { ToastrService } from 'ngx-toastr';
-import { LancamentoFilterComponent } from "../lancamento-list/components/lancamento-filter/lancamento-filter.component";
-import { TransacaoFilterComponent } from "../transacao-filter/transacao-filter.component";
+import {Component, Input, OnInit} from '@angular/core';
+import {TransacaoItemComponent} from "../transacao-item/transacao-item.component";
+import {CommonModule} from '@angular/common';
+import {LancamentoOutput, Totalizador, TransacaoOutput} from '../../shared/model/lancamento/model/lancamento.model';
+import {ApiService} from '../../services/api.service';
+import {LancamentoFilterComponent} from "../lancamento-list/components/lancamento-filter/lancamento-filter.component";
+import {TransacaoFilterComponent} from "../transacao-filter/transacao-filter.component";
+import {ToastrService} from "../../shared/services/toastr.service";
 
 @Component({
   selector: 'app-transacao-list',
@@ -16,8 +16,8 @@ import { TransacaoFilterComponent } from "../transacao-filter/transacao-filter.c
 })
 export class TransacaoListComponent implements OnInit{
   @Input() lancamento!: LancamentoOutput;
-  
-  
+
+
   transacoes: TransacaoOutput[] = [];
   totalizador: Totalizador = {
     totalEntrada: 0,
@@ -58,7 +58,7 @@ export class TransacaoListComponent implements OnInit{
     }
 
     this.api.payTransacao(data).subscribe((data) => {
-      this.toastr.success("Transação paga com sucesso.", "Pagamento efetuado!");
+      this.toastr.success("Transação paga com sucesso!", 3000);
     });
 
     // window.location.reload();

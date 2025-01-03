@@ -1,17 +1,13 @@
-import { CommonModule, formatDate } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
-import { forkJoin } from 'rxjs';
-import { map } from 'rxjs/operators';
-import { ApiService } from '../../services/api.service';
-import { ContaOutput } from '../../shared/conta/conta.model';
-import {
-  LancamentoOutput,
-  SaldoProjetado,
-  TransacaoOutput,
-} from '../../shared/lancamento/model/lancamento.model';
-import { FormLancamentoComponent } from '../lancamento-list/components/form-lancamento/form-lancamento.component';
-import { ToastrService } from 'ngx-toastr';
-import { TransacaoFilterComponent } from '../transacao-filter/transacao-filter.component';
+import {CommonModule, formatDate} from '@angular/common';
+import {Component, OnInit} from '@angular/core';
+import {forkJoin} from 'rxjs';
+import {map} from 'rxjs/operators';
+import {ApiService} from '../../services/api.service';
+import {ContaOutput} from '../../shared/model/conta/conta.model';
+import {LancamentoOutput, SaldoProjetado, TransacaoOutput,} from '../../shared/model/lancamento/model/lancamento.model';
+import {FormLancamentoComponent} from '../lancamento-list/components/form-lancamento/form-lancamento.component';
+import {TransacaoFilterComponent} from '../transacao-filter/transacao-filter.component';
+import {ToastrService} from "../../shared/services/toastr.service";
 
 interface ContaTransacoes {
   conta: ContaOutput;
@@ -67,7 +63,7 @@ export class SimularComponent implements OnInit {
   criarLancamento(data: any) {
     this.api.createMockLancamento(data).subscribe((lancamento) => {
       this.lancamentos.push(lancamento);
-      this.toastr.success('Lancamento criado.', 'Sucesso!');
+      this.toastr.success('Lancamento criado com sucesso!', 3000);
     });
   }
 

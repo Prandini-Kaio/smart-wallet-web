@@ -1,11 +1,11 @@
 import { CommonModule } from '@angular/common';
 import { Component, Input } from '@angular/core';
 import { FormGroup } from '@angular/forms';
-import { ToastrService } from 'ngx-toastr';
 import { ApiService } from '../../../../../services/api.service';
-import { Orcamento } from '../../../../../shared/orcamento/orcamento.model';
+import { Orcamento } from '../../../../../shared/model/orcamento/orcamento.model';
 import { OrcamentoFormComponent } from "../orcamento-form/orcamento-form.component";
 import { OrcamentoItemComponent } from "../orcamento-item/orcamento-item.component";
+import {ToastrService} from "../../../../../shared/services/toastr.service";
 
 
 
@@ -36,7 +36,7 @@ export class OrcamentoChartComponent {
     }
 
     this.api.createOrcamento(data).subscribe((data) => {
-      this.toastr.success("Orçamento criado.", "Sucesso!");
+      this.toastr.success("Orçamento criado com sucesso!", 3000);
     })
   }
 

@@ -9,7 +9,7 @@ import { MatIconModule } from '@angular/material/icon'; // Para ícones, caso ne
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { ApiService } from '../../../../services/api.service';
-import { ContaOutput } from '../../../../shared/conta/conta.model';
+import { ContaOutput } from '../../../../shared/model/conta/conta.model';
 
 interface Filter {
   categorias: string[],

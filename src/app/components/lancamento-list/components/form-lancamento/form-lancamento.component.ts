@@ -14,12 +14,12 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { LancamentoOutput } from '../../../../shared/lancamento/model/lancamento.model';
+import { LancamentoOutput } from '../../../../shared/model/lancamento/model/lancamento.model';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import { ContaOutput } from '../../../../shared/conta/conta.model';
+import { ContaOutput } from '../../../../shared/model/conta/conta.model';
 import { ApiService } from '../../../../services/api.service';
 import { format, parse } from 'date-fns';
 import { LancamentoService } from '../../service/lancamento.service';

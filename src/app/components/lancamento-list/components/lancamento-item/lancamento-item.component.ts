@@ -1,7 +1,6 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { LancamentoOutput } from '../../../../shared/lancamento/model/lancamento.model';
+import { LancamentoOutput } from '../../../../shared/model/lancamento/model/lancamento.model';
 import { CommonModule } from '@angular/common';
-import { TransacaoListComponent } from "../../../transacao-list/transacao-list.component";
 
 @Component({
   selector: 'app-lancamento-item',
@@ -36,7 +35,7 @@ export class LancamentoItemComponent {
   }
 
   const d = new Date(date);
-  
+
   // Verifica se a data é válida
   if (isNaN(d.getTime())) {
       return ''; // Retorna uma string vazia se a data não for válida

@@ -1,8 +1,8 @@
 import { HttpErrorResponse, HttpEvent, HttpHandler, HttpInterceptor, HttpRequest } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { ToastrService } from 'ngx-toastr';
 import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
+import {ToastrService} from "./services/toastr.service";
 
 interface ErrorOutput {
   message: string,
@@ -22,14 +22,9 @@ export class ErrorInterceptor implements HttpInterceptor {
       .pipe(
         catchError((error: HttpErrorResponse) => {
 
-          let errorMsg = '';
-
-          if (error.error instanceof ErrorEvent) {
-            errorMsg = `Error: ${error.error?.message}`;
-          } else {
-            errorMsg = `${error.error?.message}`;
-          }
-          this.toasterService.error(errorMsg, error.error?.code)
+          let errorMsg = ''
+          errorMsg = `${error.error?.message}`;
+          this.toasterService.error(errorMsg, 3000)
           return throwError(errorMsg);
         })
       )

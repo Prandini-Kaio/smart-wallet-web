@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { LancamentoOutput } from '../../../shared/lancamento/model/lancamento.model';
+import { LancamentoOutput } from '../../../shared/model/lancamento/model/lancamento.model';
 
 @Injectable({
   providedIn: 'root'

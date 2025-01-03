@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { Orcamento } from '../../../../../shared/orcamento/orcamento.model';
+import { Orcamento } from '../../../../../shared/model/orcamento/orcamento.model';
 import { CommonModule } from '@angular/common';
 
 @Component({

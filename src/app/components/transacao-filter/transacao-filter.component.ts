@@ -1,16 +1,15 @@
-import { CommonModule, formatDate } from '@angular/common';
-import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { FormsModule } from '@angular/forms';
-import { MatButtonModule } from '@angular/material/button';
-import { MatNativeDateModule } from '@angular/material/core'; // Ou MatMomentDateModule, se preferir usar Moment.js
-import { MatDatepickerModule } from '@angular/material/datepicker';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatIconModule } from '@angular/material/icon'; // Para ícones, caso necessário
-import { MatInputModule } from '@angular/material/input';
-import { MatSelectModule } from '@angular/material/select';
-import { ApiService } from '../../services/api.service';
-import { ContaFilter, ContaOutput } from '../../shared/conta/conta.model';
-
+import {CommonModule, formatDate} from '@angular/common';
+import {Component, EventEmitter, Input, Output} from '@angular/core';
+import {FormsModule} from '@angular/forms';
+import {MatButtonModule} from '@angular/material/button';
+import {MatNativeDateModule} from '@angular/material/core'; // Ou MatMomentDateModule, se preferir usar Moment.js
+import {MatDatepickerModule} from '@angular/material/datepicker';
+import {MatFormFieldModule} from '@angular/material/form-field';
+import {MatIconModule} from '@angular/material/icon'; // Para ícones, caso necessário
+import {MatInputModule} from '@angular/material/input';
+import {MatSelectModule} from '@angular/material/select';
+import {ApiService} from '../../services/api.service';
+import {ContaOutput} from '../../shared/model/conta/conta.model';
 
 
 interface Filter {

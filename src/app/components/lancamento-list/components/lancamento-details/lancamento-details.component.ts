@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ApiService } from '../../../../services/api.service';
-import { Transacao } from '../../../../shared/lancamento/model/lancamento.model';
+import { Transacao } from '../../../../shared/model/lancamento/model/lancamento.model';
 import { LancamentoHeaderComponent } from "../lancamento-header/lancamento-header.component";
 import { TransactionCardComponent } from "../../../transaction-card/transaction-card.component";
 
@@ -11,7 +11,7 @@ import { TransactionCardComponent } from "../../../transaction-card/transaction-
   standalone: true,
   imports: [
     CommonModule,
-    TransactionCardComponent, 
+    TransactionCardComponent,
     LancamentoHeaderComponent
   ],
   templateUrl: './lancamento-details.component.html',
@@ -30,7 +30,7 @@ export class LancamentoDetailsComponent implements OnInit {
 
   ngOnInit() {
     const id = this._route.snapshot.paramMap.get('id');
-    
+
     if(id){
       this.fetch(id);
     }

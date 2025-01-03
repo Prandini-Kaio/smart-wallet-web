@@ -2,12 +2,12 @@ import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { ChartType, GoogleChartsModule } from 'angular-google-charts';
 import { ApiService } from '../../services/api.service';
-import { Lancamento, Totalizador } from '../../shared/lancamento/model/lancamento.model';
+import { Lancamento, Totalizador } from '../../shared/model/lancamento/model/lancamento.model';
 import { Observable, forkJoin } from 'rxjs';
 import { group } from 'node:console';
 import { OrcamentoChartComponent } from "./components/orcamento/orcamento-chart/orcamento-chart.component";
 import { ToastrService } from 'ngx-toastr';
-import { Orcamento } from '../../shared/orcamento/orcamento.model';
+import { Orcamento } from '../../shared/model/orcamento/orcamento.model';
 
 @Component({
   selector: 'app-gastos-chart',
@@ -17,6 +17,8 @@ import { Orcamento } from '../../shared/orcamento/orcamento.model';
   styleUrls: ['./gastos-chart.component.scss'],
 })
 export class GastosChartComponent implements OnInit {
+
+  constructor(private readonly _api: ApiService) { }
 
   // Totalizador (PIE CHART)
   totalizador: Totalizador = {
@@ -78,8 +80,6 @@ export class GastosChartComponent implements OnInit {
   //
 
   public orcamentos: Orcamento[] = [];
-
-  constructor(private readonly _api: ApiService, private toastr: ToastrService) { }
 
   ngOnInit() {
 

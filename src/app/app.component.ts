@@ -1,15 +1,12 @@
-import { CommonModule } from '@angular/common';
-import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
-import { Component, importProvidersFrom, LOCALE_ID } from '@angular/core';
-import { FormsModule } from '@angular/forms';
-import { Router, RouterModule, RouterOutlet } from '@angular/router';
-import { GoogleChartsModule } from 'angular-google-charts';
-import { ToastrModule, ToastrService, provideToastr } from 'ngx-toastr';
-import { SidenavComponent } from './components/sidenav/sidenav.component';
-import { ApiService } from './services/api.service';
-import { ErrorInterceptor } from './shared/error-interceptor.interceptor';
-import localePt from '@angular/common/locales/pt';
-import { registerLocaleData } from '@angular/common';
+import {CommonModule} from '@angular/common';
+import {HttpClientModule} from '@angular/common/http';
+import {Component} from '@angular/core';
+import {FormsModule} from '@angular/forms';
+import {Router, RouterModule, RouterOutlet} from '@angular/router';
+import {GoogleChartsModule} from 'angular-google-charts';
+import {ToastrModule} from 'ngx-toastr';
+import {SidenavComponent} from './components/sidenav/sidenav.component';
+import {MatSnackBarModule} from "@angular/material/snack-bar";
 
 @Component({
   selector: 'app-root',
@@ -22,11 +19,9 @@ import { registerLocaleData } from '@angular/common';
     GoogleChartsModule,
     ToastrModule,
     HttpClientModule,
+    MatSnackBarModule
 ],
-  providers: [
-    ApiService,
-    { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true }
-  ],
+  providers: [],
   templateUrl: './app.component.html',
   standalone: true
 })

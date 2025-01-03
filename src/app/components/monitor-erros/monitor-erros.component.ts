@@ -1,8 +1,7 @@
-import { Component, OnInit } from '@angular/core';
-import { ApiService } from '../../services/api.service';
-import { ErrorLog } from '../../shared/monitor-erros/model/monitor-erros.model';
-import { CommonModule } from '@angular/common';
-import { MatDialog } from '@angular/material/dialog';
+import {Component} from '@angular/core';
+import {ApiService} from '../../services/api.service';
+import {ErrorLog} from '../../shared/model/monitor-erros/model/monitor-erros.model';
+import {CommonModule} from '@angular/common';
 
 @Component({
   selector: 'app-monitor-erros',

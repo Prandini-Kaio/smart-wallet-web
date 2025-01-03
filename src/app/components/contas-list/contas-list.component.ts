@@ -1,11 +1,11 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { ToastrService } from 'ngx-toastr';
 import { ApiService } from '../../services/api.service';
-import { ContaOutput } from '../../shared/conta/conta.model';
+import { ContaOutput } from '../../shared/model/conta/conta.model';
 import { EditModalComponent } from "./conta-form/conta-form.component";
 import { ContaItemComponent } from "./conta-item/conta-item.component";
+import {ToastrService} from "../../shared/services/toastr.service";
 
 
 @Component({
@@ -34,7 +34,7 @@ export class ContasListComponent {
   totalBalance: number = 0;
   showModal: boolean = false;
 
-  constructor(private readonly _api: ApiService, private _toaster: ToastrService) { }
+  constructor(private readonly _api: ApiService, private toaster: ToastrService) { }
 
   ngOnInit(): void {
 
@@ -57,14 +57,14 @@ export class ContasListComponent {
         this._api.updateConta(conta).subscribe(
           (response) => {
             this.closeModal();
-            this._toaster.show("Conta atualizada com sucesso!", 'success')
+            this.toaster.success("Conta atualizada com sucesso!", 3000);
           }
         );
       }else{
         this._api.createConta(conta).subscribe(
           (response) => {
             this.closeModal();
-            this._toaster.show("Conta criada com sucesso!", 'success')
+            this.toaster.success("Conta criada com sucesso!", 3000);
           }
         );
       }
@@ -120,7 +120,7 @@ export class ContasListComponent {
     }
 
     this._api.deleteConta(data).subscribe((data) => {
-      this._toaster.success("Conta deletada.", "Sucesso!")
+      this.toaster.success("Conta deletada com sucesso!", 3000)
     });
   }
 

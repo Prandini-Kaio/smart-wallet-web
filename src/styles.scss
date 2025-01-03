@@ -199,3 +199,11 @@ body {
 body {
   font-family: "Roboto", sans-serif; /* Define Roboto como fonte padrão */
 }
+
+
+@import './app/shared/variable.scss';
+
+$danger-positive: #f8d7da;
+$text-danger-positive: #842029;
+
+@include mat.snack-bar-color($danger-positive, $text-danger-positive);

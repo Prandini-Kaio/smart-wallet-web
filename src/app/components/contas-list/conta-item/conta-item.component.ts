@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { ContaOutput } from '../../../shared/conta/conta.model';
+import { ContaOutput } from '../../../shared/model/conta/conta.model';
 import { CommonModule } from '@angular/common';
 
 @Component({

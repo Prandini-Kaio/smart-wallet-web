@@ -1,25 +1,14 @@
-import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
-import {
-  FormControl,
-  FormGroup,
-  FormsModule,
-  ReactiveFormsModule,
-  Validators,
-} from '@angular/forms';
-import { Router } from '@angular/router';
-import { parse } from 'date-fns';
-import { ToastrService } from 'ngx-toastr';
-import { ApiService } from '../../services/api.service';
-import { ContaOutput } from '../../shared/conta/conta.model';
-import {
-  LancamentoOutput,
-  Totalizador,
-} from '../../shared/lancamento/model/lancamento.model';
-import { LancamentoFilterComponent } from './components/lancamento-filter/lancamento-filter.component';
-import { LancamentoItemComponent } from './components/lancamento-item/lancamento-item.component';
-import { FormLancamentoComponent } from './components/form-lancamento/form-lancamento.component';
-import { LancamentoService } from './service/lancamento.service';
+import {CommonModule} from '@angular/common';
+import {Component, OnInit} from '@angular/core';
+import {FormsModule, ReactiveFormsModule,} from '@angular/forms';
+import {Router} from '@angular/router';
+import {ApiService} from '../../services/api.service';
+import {LancamentoOutput, Totalizador,} from '../../shared/model/lancamento/model/lancamento.model';
+import {LancamentoFilterComponent} from './components/lancamento-filter/lancamento-filter.component';
+import {LancamentoItemComponent} from './components/lancamento-item/lancamento-item.component';
+import {FormLancamentoComponent} from './components/form-lancamento/form-lancamento.component';
+import {LancamentoService} from './service/lancamento.service';
+import {ToastrService} from "../../shared/services/toastr.service";
 
 @Component({
   selector: 'app-lancamento-list',
@@ -98,7 +87,7 @@ export class LancamentoListComponent implements OnInit {
 
   onSubmit(request: any) {
     this._api.createLancamento(request).subscribe((response) => {
-      this.toastr.success('Lançamento criado.', 'Sucesso!');
+      this.toastr.success('Lançamento criado com sucesso!', 3000);
     });
     this.showCreateModalLancamento = false;
     this.router.navigate(['lancamentos/view']);
@@ -106,7 +95,7 @@ export class LancamentoListComponent implements OnInit {
 
   onEditSubmit(request: any) {
     this._api.updateLancamento(request).subscribe((response) => {
-      this.toastr.success('Lançamento atualizado.', 'Sucesso!');
+      this.toastr.success('Lançamento atualizado com sucesso!', 3000);
     });
     this.showEditModalLancamento = false;
     this.router.navigate(['lancamentos/view']);
@@ -120,17 +109,13 @@ export class LancamentoListComponent implements OnInit {
     this.showEditModalLancamento = !this.showEditModalLancamento;
   }
 
-  toggleExpand(lancamento: LancamentoOutput): void {
-    lancamento.expanded = !lancamento.expanded;
-  }
-
   deleteLancamento(lancamento: LancamentoOutput): void {
     const data = {
       id: lancamento.id,
     };
 
     this._api.deleteLancamento(data).subscribe((data) => {
-      this.toastr.success('Lançamento deletado com sucesso.', 'Deletado!');
+      this.toastr.success('Lançamento deletado com sucesso!', 3000);
     });
 
     this.router.navigate(['lancamentos/view']);
@@ -145,25 +130,5 @@ export class LancamentoListComponent implements OnInit {
     this._api.getTotalizadorTransacoes(filters).subscribe((response) => {
       this.totalizador = response;
     });
-  }
-
-  getInicioMesPassado(): string {
-    const dataAtual = new Date();
-    const mesPassado = new Date(
-      dataAtual.getFullYear(),
-      dataAtual.getMonth(),
-      1
-    );
-    return mesPassado.toISOString().split('T')[0];
-  }
-
-  getFimMesPassado(): string {
-    const dataAtual = new Date();
-    const mesPassado = new Date(
-      dataAtual.getFullYear(),
-      dataAtual.getMonth() + 2,
-      0
-    );
-    return mesPassado.toISOString().split('T')[0];
   }
 }
