@@ -1,32 +1,32 @@
 <div class="item">
     <!-- Descricao -->
     <div class="details">
-        <span class="title">{{ transacao.descricaoLancamento }}</span>
-        <span class="value">{{ transacao.descricao }}</span>
-    </div>
-
-    <!-- Valor e status -->
-    <div class="details">
-        <span class="value">{{ transacao.valor | currency: 'BRL' }}</span>
+        <span class="txt-title">{{ transacao.descricaoLancamento }}</span>
+        <span class="txt-secondary">{{ transacao.descricao }}</span>
     </div>
 
     <!-- status -->
     <div class="details">
         <span [ngClass]="getStatusClass(transacao.status)">{{ transacao.status }}</span>
-        <span class="date">{{ transacao.dtPagamento }}</span>
+        <span class="txt-secondary">{{ transacao.dtPagamento }}</span>
     </div>
 
     <!-- Data pagamento -->
     <div class="details">
-        <span class="date">{{ transacao.dtVencimento }}</span>
+        <span class="txt-primary">{{ transacao.dtVencimento }}</span>
+    </div>
+
+    <!-- Valor -->
+    <div class="details">
+      <span class="txt-valor">{{ transacao.valor | currency: 'BRL' }}</span>
     </div>
 
     <!-- Botao de acao -->
     <div class="actions">
-        <button class="btn btn-link edit-btn" (click)="onEdit()">
+        <button class="btn btn-link btn-details" (click)="onEdit()">
             <i class="fas fa-magnifying-glass"></i>
         </button>
-        <button class="btn btn-link delete-btn" (click)="onPay()">
+        <button class="btn btn-link btn-pay" (click)="onPay()">
             <i class="fas fa-comments-dollar"></i>
         </button>
     </div>

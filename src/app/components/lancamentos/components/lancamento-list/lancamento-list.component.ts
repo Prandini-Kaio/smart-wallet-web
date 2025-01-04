@@ -32,12 +32,6 @@ export class LancamentoListComponent implements OnInit {
   protected showCreateModalLancamento = false;
   protected showEditModalLancamento = false;
 
-  public totalizador: Totalizador = {
-    totalEntrada: 0,
-    totalSaida: 0,
-    total: 0,
-  };
-
   constructor(
     private readonly _api: ApiService,
     private toastr: ToastrService,
@@ -51,19 +45,13 @@ export class LancamentoListComponent implements OnInit {
 
   loadData(): void {
     this.loading = true;
+
     this._api.getLancamento({}).subscribe((data) => {
       this.lancamentos = data;
       this.loading = false;
     });
 
-    this._api.getTotalizadorTransacoes({}).subscribe((response) => {
-      this.totalizador = response;
-    });
     this.loading = false;
-  }
-
-  viewDetails(id: string): void {
-    this.router.navigate(['lancamentos/details', id]);
   }
 
   editLancamento(lancamento: LancamentoOutput): void {
@@ -118,10 +106,6 @@ export class LancamentoListComponent implements OnInit {
     this._api.getLancamento(filters).subscribe((data) => {
       this.lancamentos = data;
       this.loading = false;
-    });
-
-    this._api.getTotalizadorTransacoes(filters).subscribe((response) => {
-      this.totalizador = response;
     });
   }
 }

@@ -1,96 +1,94 @@
-$colors: (
-    "ABERTO": #1E88E5,
-    "PENDENTE": #1E88E5,
-    "PAGO": #00FF00
-);
-
+@import '../../../shared/variable.scss';
 
 .item {
-    display: grid;
-    grid-template-columns: repeat(5, 1fr);
-    gap: 12px;
-    align-items: center;
-    padding: 12px;
-    text-align: left;
-    position: relative;
-}
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 12px;
+  align-items: center;
+  padding: 12px;
+  text-align: left;
+  position: relative;
+  background-color: $bg-positive;
+  border-left: 4px solid transparent;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 
-.item {
-    background-color: #ffffff;
-    border-left: 4px solid transparent;
-    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.05);
+  &:not(:last-child) {
+    border-bottom: 1px solid $gray;
+  }
 
-    &:not(:last-child) {
-        border-bottom: 1px solid #e0e0e0;
-    }
-
-    &:hover {
-        background-color: #f8f8f8;
-    }
+  &:hover {
+    background-color: $shadow;
+  }
 }
 
 .item>* {
-    padding: 0 10px;
+  padding: 0 10px;
 
-    &:not(:last-child)::after {
-        content: '';
-        position: absolute;
-        top: 10%;
-        right: 0;
-        height: 80%;
-        width: 1px;
-        background: linear-gradient(to bottom, transparent, #ddd, transparent);
-    }
+  &:not(:last-child)::after {
+    content: '';
+    position: absolute;
+    top: 10%;
+    right: 0;
+    height: 80%;
+    width: 1px;
+    background: linear-gradient(to bottom, transparent, $bg-positive, transparent);
+  }
 }
 
 .details {
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
-    gap: 4px;
-    font-size: 14px;
-    color: #555;
-}
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  gap: 4px;
+  font-size: 14px;
 
-.title {
+  .txt-title {
     font-weight: bold;
-    color: #333;
-}
+    font-size: 16px;
+    color: $title-positive;
+  }
 
-.value {
-    color: #1E88E5;
+  .txt-primary {
+    color: $text-blue;
+    font-weight: bold;
+  }
+
+  .txt-secondary {
+    font-size: 12px;
+    color: $text-positive;
+  }
+
+  .txt-valor {
+    color: $text-blue;
     font-size: 18px;
     font-weight: bold;
-}
-
-.date {
-    font-size: 14px;
-    color: #888;
+    text-align: center;
+  }
 }
 
 /* Coluna: Ações */
 .actions {
-    display: flex;
-    justify-content: flex;
-    gap: 12px;
+  display: flex;
+  justify-content: center;
+  gap: 12px;
 }
 
-.edit-btn,
-.delete-btn {
+.btn-details,
+.btn-pay {
     font-size: 18px;
-    color: #666;
+    color: $text-positive;
     border: none;
     background: transparent;
     cursor: pointer;
     transition: color 0.2s;
 }
 
-.edit-btn:hover {
-    color: #4CAF50;
+.btn-details:hover {
+    color: $blue;
 }
 
-.delete-btn:hover {
-    color: #E53935;
+.btn-pay:hover {
+    color: $text-green;
 }
 
 @function get-status-color($status) {
@@ -104,22 +102,22 @@ $colors: (
 .status {
 
     &--atrasado {
-        color: #e7b719;
+        color: $text-yellow;
         font-weight: bold;
     }
 
     &--cancelado {
-        color: #b12319;
+        color: $text-red;
         font-weight: bold;
     }
 
     &--pendente {
-        color: #1E88E5;
+        color: $text-blue;
         font-weight: bold;
     }
 
     &--pago {
-        color: #1ee56a;
+        color: $text-green;
         font-weight: bold;
     }
 }

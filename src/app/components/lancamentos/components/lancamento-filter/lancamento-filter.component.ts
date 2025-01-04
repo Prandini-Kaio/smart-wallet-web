@@ -77,6 +77,7 @@ export class LancamentoFilterComponent implements OnInit {
   ngOnInit(): void {
     this.getContas();
     this.getCategorias();
+    this.onApply();
   }
 
   onCriar() {

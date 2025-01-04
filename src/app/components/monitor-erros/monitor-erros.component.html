@@ -1,27 +1,28 @@
+<app-page-header [navName]="'Monitor'" [title]="'Monitor de erros'"></app-page-header>
+
 <div class="container">
-  <h2>Monitor de erros</h2>
-  <table class="table">
-    <thead>
-      <tr>
-        <th>Data/Hora</th>
-        <th>Operador</th>
-        <th>Mensagem de Erro</th>
-        <th>Ações</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let registro of errors">
-        <td>{{ registro.timestamp }}</td>
-        <td>{{ registro.operador }}</td>
-        <td>{{ registro.errorMessage }}</td>
-        <td class="actions">
-          <button class="icon-button" (click)="openModal(registro)">
-            <i class="material-icons">search</i>
-          </button>
-        </td>
-      </tr>
-    </tbody>
-  </table>
+
+  <div class="list-container">
+
+    <div *ngIf="loading" class="loading-spinner">
+      <mat-spinner diameter="40"></mat-spinner>
+    </div>
+
+    <div class="table-container">
+      <div class="table-header">
+        <span class="col-info">Data/Hora</span>
+        <span class="col-info">Operador</span>
+        <span class="col-info">Mensagem de Erro</span>
+        <span class="col-acoes">Ações</span>
+      </div>
+
+      <app-monitor-erros-item *ngFor="let error of errors" [error]="error" (viewDetails)="openModal($event)"></app-monitor-erros-item>
+    </div>
+  </div>
+
+  <div *ngIf="errors.length === 0 && !loading" class="no-results">
+    Nenhum lançamento encontrado.
+  </div>
 </div>
 
 <!-- Modal -->
@@ -35,7 +36,10 @@
 
     <!-- Corpo -->
     <div class="modal-body">
-      <pre>{{ selectedLog.stacktrace }}</pre>
+      <mat-form-field>
+        <mat-label>Textarea</mat-label>
+        <textarea matInput rows="5" cols="100" type="text">{{ selectedLog.stacktrace }}</textarea>
+      </mat-form-field>
     </div>
 
     <!-- Rodapé -->

@@ -1,0 +1,21 @@
+<div class="item">
+
+  <div class="info">
+    <span class="txt-title">{{ error.timestamp }}</span>
+  </div>
+
+  <div class="info">
+    <span class="txt-primary">{{ error.operador }}</span>
+  </div>
+
+  <div class="message">
+    <span class="txt-title">{{ error.errorMessage }}</span>
+  </div>
+
+  <div class="actions">
+    <button class="btn-details" (click)="onView()">
+      <i class="fas fa-magnifying-glass"></i>
+    </button>
+  </div>
+
+</div>

@@ -2,37 +2,47 @@ import {Component} from '@angular/core';
 import {ApiService} from '../../services/api.service';
 import {ErrorLog} from '../../shared/model/monitor-erros/model/monitor-erros.model';
 import {CommonModule} from '@angular/common';
+import {PageHeaderComponent} from "../../shared/components/page-header/page-header.component";
+import {MatProgressSpinner} from "@angular/material/progress-spinner";
+import {MonitorErrosItemComponent} from "./components/monitor-erros-item/monitor-erros-item.component";
+import {MatFormFieldModule} from "@angular/material/form-field";
 
 @Component({
     selector: 'app-monitor-erros',
-    imports: [CommonModule],
+    imports: [
+      CommonModule,
+      PageHeaderComponent,
+      MonitorErrosItemComponent,
+      MatProgressSpinner,
+      MatFormFieldModule
+    ],
     templateUrl: './monitor-erros.component.html',
     styleUrl: './monitor-erros.component.scss'
 })
 export class MonitorErrosComponent{
   errors: ErrorLog[] = [];
   isModalOpen = false;
-  selectedLog: any = null;
+  selectedLog: ErrorLog | null = null;
+
+  public loading = false;
 
   constructor(private readonly _api: ApiService) {
 
   }
 
   ngOnInit(): void {
-    this.errors = this.getErrors();
+    this.getErrors();
   }
 
-  getErrors(): ErrorLog[]{
+  getErrors() {
+    this.loading = true;
     this._api.getErrors().subscribe(errors => {
-      return this.errors = errors;
-    }, (error) => {
-      console.error(error);
+      this.errors = errors;
     });
-
-    return [];
+    this.loading = false;
   }
 
-  openModal(log: any): void {
+  openModal(log: ErrorLog): void {
     this.selectedLog = log;
     this.isModalOpen = true;
   }

@@ -72,18 +72,11 @@
     gap: 12px;
 }
 
-.lancamento-list {
-    display: flexnpm s;
-    flex-direction: column;
-    width: 100%;
-}
-
 .edit-btn,
 .delete-btn,
-.copy-btn,
-.expand-btn {
+.copy-btn {
     font-size: 18px;
-    color: #666;
+    color: $text-positive;
     border: none;
     background: transparent;
     cursor: pointer;
@@ -100,10 +93,6 @@
 
 .copy-btn:hover {
     color: #0aa2e9;
-}
-
-.expand-btn:hover {
-    color: #1745dd;
 }
 
 

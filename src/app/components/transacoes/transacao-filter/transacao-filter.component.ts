@@ -76,6 +76,7 @@ export class TransacaoFilterComponent {
   ngOnInit(): void {
     this.getContas();
     this.getCategorias();
+    this.onApply();
   }
 
   onApply() {
