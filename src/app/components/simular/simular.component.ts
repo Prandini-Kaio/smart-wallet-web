@@ -6,7 +6,7 @@ import {ApiService} from '../../services/api.service';
 import {ContaOutput} from '../../shared/model/conta/conta.model';
 import {LancamentoOutput, SaldoProjetado, TransacaoOutput,} from '../../shared/model/lancamento/model/lancamento.model';
 import {FormLancamentoComponent} from '../lancamentos/components/form-lancamento/form-lancamento.component';
-import {TransacaoFilterComponent} from '../transacao-filter/transacao-filter.component';
+import {TransacaoFilterComponent} from '../transacoes/transacao-filter/transacao-filter.component';
 import {ToastrService} from "../../shared/services/toastr.service";
 
 interface ContaTransacoes {

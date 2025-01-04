@@ -10,6 +10,7 @@ $blue: #4a90e2;
 $blue-light: #5AA5F4;
 $medium-blue: #2b7ef3;
 $blue-dark: #256DD3;
+$blue-dark-dark: #1d56a7;
 $light: #fff;
 $light-hover: #f8f8f8;
 $gray: #6c757d;
@@ -23,3 +24,15 @@ $text-red: #E53935;
 $text-red-dark: #8a1f1d;
 $text-green: #34C759;
 
+$btn-positive: $blue-dark-dark;
+$btn-hover-positive: $blue;
+$text-btn-positive: $text-light;
+
+$btn-disabled-positive: #dcddde;
+$text-btn-disabled-positive: $text-muted;
+
+$btn-danger-positive: #E53935;
+$btn-danger-hover-positive: #791e1c;
+$text-btn-danger-positive: $text-light;
+
+$box-logo: $blue-dark-dark;

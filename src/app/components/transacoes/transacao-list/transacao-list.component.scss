@@ -1,0 +1,85 @@
+@import '../../../shared/variable.scss';
+.container {
+
+}
+
+.container-list {
+  margin: 20px;
+  background-color: $bg-positive;
+  border: 1px solid $border-default-positive;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  overflow-x: hidden;
+}
+
+.loading-spinner {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+}
+
+.list-container {
+  display: flex;
+  background-color: $blue-dark;
+  flex-direction: column;
+  width: 100%;
+
+  .list-header {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 12px;
+    align-items: center;
+    padding: 12px;
+    text-align: left;
+    position: relative;
+
+    color: $text-light;
+    padding: 20px;
+    border: 1px double $border-default-positive;
+    font-weight: bold;
+
+    .col-info {
+      border-right: 1px solid $border-default-positive;
+    }
+
+    .col-valor {
+      border-right: 1px solid $border-default-positive;
+      text-align: center;
+    }
+
+    .col-acoes {
+      border-right: 1px solid $border-default-positive;
+      text-align: center;
+    }
+  }
+
+  .list-header > * {
+    padding: 0 10px;
+
+    &:not(:last-child)::after {
+      content: '';
+      position: absolute;
+      top: 10%;
+      right: 0;
+      height: 80%;
+      width: 1px;
+      background: linear-gradient(to bottom, transparent, $light-hover, transparent);
+    }
+  }
+}
+@media (max-width: 768px) {
+
+    .totalizadores {
+        flex-direction: column;
+    }
+
+    .total-item {
+        width: 100%;
+        margin: 10px 0;
+    }
+
+    .header {
+        grid-template-columns: 1fr;
+        gap: 8px;
+    }
+}

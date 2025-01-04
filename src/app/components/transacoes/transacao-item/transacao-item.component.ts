@@ -1,5 +1,5 @@
 import {Component, EventEmitter, Input, Output} from '@angular/core';
-import {LancamentoOutput, TransacaoOutput} from '../../shared/model/lancamento/model/lancamento.model';
+import {LancamentoOutput, TransacaoOutput} from '../../../shared/model/lancamento/model/lancamento.model';
 import {CommonModule} from '@angular/common';
 
 @Component({

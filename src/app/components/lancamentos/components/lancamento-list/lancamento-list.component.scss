@@ -1,88 +1,73 @@
-/* Container Principal */
-.lancamento-list-container {
-  display: grid;
-  flex-direction: column;
-  align-items: center;
-  max-width: min(100%, 95%);
-  padding: 20px;
-  margin: auto;
-  background-color: #f3f4f6;
-  border-radius: 8px;
-  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
-  overflow-x: hidden;
-  overflow-y: hidden;
+@import '../../../../shared/variable.scss';
+
+.container {
+
 }
 
-body,
-html {
+.lancamento-list-container {
+  margin: 20px;
+  background-color: $bg-positive;
+  border: 1px solid $border-default-positive;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  overflow-x: hidden;
+}
+
+.loading-spinner {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh;
-  margin: 0;
-  background-color: #e0e7ff;
+  margin-top: 20px;
 }
 
-.header {
+
+.list-container {
   display: flex;
-  justify-content: space-between;
-  align-items: center;
+  background-color: $blue-dark;
+  flex-direction: column;
   width: 100%;
-  padding: 12px;
-  font-weight: bold;
-  border-radius: 4px;
-}
 
-.list-title {
-  font-size: 28px;
-  font-weight: bold;
-  color: #333;
-}
+  .list-header {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 12px;
+    align-items: center;
+    padding: 12px;
+    text-align: left;
+    position: relative;
 
-.create-btn-container {
-  position: fixed;
-  top: 20px;
-  right: 20px;
-  z-index: 10;
-}
+    color: $text-light;
+    padding: 20px;
+    border: 1px double $border-default-positive;
+    font-weight: bold;
 
-.create-btn {
-  display: flex;
-  align-items: center;
-  padding: 10px 15px;
-  font-size: 16px;
-  color: #fff;
-  background-color: #4CAF50;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: background-color 0.3s;
-}
+    .col-info{
+      border-right: 1px solid $border-default-positive;
+    }
 
-.create-btn i {
-  margin-right: 8px;
-}
+    .col-valor{
+      border-right: 1px solid $border-default-positive;
+      text-align: center;
+    }
 
-.create-btn:hover {
-  background-color: #43A047;
-}
+    .col-acoes{
+      border-right: 1px solid $border-default-positive;
+      text-align: center;
+    }
+  }
 
-.lancamento-header,
-.lancamento-item {
-  display: grid;
-  grid-template-columns: repeat(5, 1fr);
-  gap: 12px;
-  align-items: center;
-  padding: 12px;
-  text-align: left;
-  position: relative;
-}
+  .list-header > * {
+    padding: 0 10px;
 
-.lancamento-header {
-  background-color: #4a90e2;
-  color: #fff;
-  font-weight: bold;
-  border-radius: 4px 4px 0 0;
+    &:not(:last-child)::after {
+      content: '';
+      position: absolute;
+      top: 10%;
+      right: 0;
+      height: 80%;
+      width: 1px;
+      background: linear-gradient(to bottom, transparent, $light-hover, transparent);
+    }
+  }
 }
 
 .lancamento-list {

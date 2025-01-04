@@ -8,7 +8,6 @@ html, body {
 }
 body { margin: 0; font-family: "Roboto", serif; }
 
-
 .error-snackbar {
   @include mat.snack-bar-overrides((
     container-color: #f8e1e4,

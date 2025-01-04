@@ -9,6 +9,7 @@ import {LancamentoService} from '../../service/lancamento.service';
 import {LancamentoOutput, Totalizador} from "../../../../shared/model/lancamento/model/lancamento.model";
 import {ApiService} from "../../../../services/api.service";
 import {ToastrService} from "../../../../shared/services/toastr.service";
+import {MatProgressSpinner} from "@angular/material/progress-spinner";
 
 @Component({
     selector: 'app-lancamento-list',
@@ -19,6 +20,7 @@ import {ToastrService} from "../../../../shared/services/toastr.service";
         LancamentoItemComponent,
         LancamentoFilterComponent,
         FormLancamentoComponent,
+        MatProgressSpinner
     ],
     templateUrl: './lancamento-list.component.html',
     styleUrl: './lancamento-list.component.scss'
@@ -26,7 +28,6 @@ import {ToastrService} from "../../../../shared/services/toastr.service";
 export class LancamentoListComponent implements OnInit {
   lancamentos: LancamentoOutput[] = [];
   loading: boolean = true;
-  error: string | null = null;
 
   protected showCreateModalLancamento = false;
   protected showEditModalLancamento = false;
@@ -49,6 +50,7 @@ export class LancamentoListComponent implements OnInit {
   }
 
   loadData(): void {
+    this.loading = true;
     this._api.getLancamento({}).subscribe((data) => {
       this.lancamentos = data;
       this.loading = false;
@@ -57,19 +59,11 @@ export class LancamentoListComponent implements OnInit {
     this._api.getTotalizadorTransacoes({}).subscribe((response) => {
       this.totalizador = response;
     });
-  }
-
-  onCancel() {
-    this.showCreateModalLancamento = false;
-    this.router.navigate(['lancamentos/view']);
+    this.loading = false;
   }
 
   viewDetails(id: string): void {
     this.router.navigate(['lancamentos/details', id]);
-  }
-
-  reloadPage() {
-    window.location.reload();
   }
 
   editLancamento(lancamento: LancamentoOutput): void {

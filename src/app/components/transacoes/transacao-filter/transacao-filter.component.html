@@ -1,0 +1,76 @@
+<div class="container">
+  <div class="filters">
+    <mat-form-field appearance="outline">
+      <mat-label>Categoria</mat-label>
+      <mat-select [(value)]="filtros.categorias" multiple>
+        <mat-option value="">Todas</mat-option>
+        <mat-option *ngFor="let categoria of categorias" [value]="categoria">
+          {{ categoria }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Tipo de Lançamento</mat-label>
+      <mat-select [(value)]="filtros.tipo">
+        <mat-option value="">Todos</mat-option>
+        <mat-option *ngFor="let tipo of tiposLancamento" [value]="tipo">
+          {{ tipo }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Forma de Pagamento</mat-label>
+      <mat-select [(value)]="filtros.pagamento">
+        <mat-option value="">Todas</mat-option>
+        <mat-option *ngFor="let pagamento of tiposPagamento" [value]="pagamento">
+          {{ pagamento }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Status</mat-label>
+      <mat-select [(value)]="filtros.status" multiple>
+        <mat-option value="">Todos</mat-option>
+        <mat-option *ngFor="let status of statusTransacao" [value]="status">
+          {{ status }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Conta</mat-label>
+      <mat-select [(value)]="filtros.contasSelecionadas" multiple>
+        <mat-option [value]="contaVazia">Todas</mat-option>
+        <mat-option *ngFor="let conta of contas" [value]="conta">
+          {{ conta.banco }} - {{ conta.nome }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Data de</mat-label>
+      <input matInput [matDatepicker]="pickerInicio" [(ngModel)]="filtros.dtInicio">
+      <mat-datepicker-toggle matSuffix [for]="pickerInicio"></mat-datepicker-toggle>
+      <mat-datepicker #pickerInicio></mat-datepicker>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Até</mat-label>
+      <input matInput [matDatepicker]="pickerFim" [(ngModel)]="filtros.dtFim">
+      <mat-datepicker-toggle matSuffix [for]="pickerFim"></mat-datepicker-toggle>
+      <mat-datepicker #pickerFim></mat-datepicker>
+    </mat-form-field>
+  </div>
+
+  <div class="actions">
+    <button class="btn-pesquisar" (click)="onCriar()">
+      Novo Lançamento
+    </button>
+    <button class="btn-pesquisar" (click)="onApply()">
+      Pesquisar
+    </button>
+  </div>
+</div>

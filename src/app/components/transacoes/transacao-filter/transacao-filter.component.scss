@@ -1,19 +1,19 @@
-@import '../../../../shared/variable.scss';
+@import '../../../shared/variable.scss';
 
 .container {
   padding: 20px;
 }
 
 .filters {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-    padding: 16px;
-    background-color: $bg-positive;
-    border: 1px solid #ddd;
-    border-radius: 6px 6px 0 0;
-    align-items: center;
-    justify-content: space-between;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  padding: 16px;
+  background-color: $bg-positive;
+  border: 1px solid #ddd;
+  border-radius: 6px 6px 0 0;
+  align-items: center;
+  justify-content: space-between;
 }
 
 .actions {
@@ -49,8 +49,7 @@
 }
 
 @media (max-width: 768px) {
-    .filters {
-        flex-direction: column;
-    }
+  .filters {
+    flex-direction: column;
+  }
 }
-

@@ -52,46 +52,46 @@
     gap: 1.5rem;
     margin-top: 2.5rem;
     padding-top: 1.5rem;
-    border-top: 0.5px solid $blue-light;
+    border-top: 0.5px solid $blue;
   }
 
-  .btn {
-    display: flex;
-    align-items: center;
-    padding: 0.75rem 1.5rem;
-    border-radius: 8px;
-    font-weight: 500;
-    cursor: pointer;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  button {
+    border-radius: 6px;
+  }
 
-    i {
-      margin-right: 0.5rem;
-    }
+  .btn-salvar {
+
+    background-color: $btn-positive;
+    color: $text-btn-positive;
 
     &:disabled {
-      opacity: 0.6;
-      cursor: not-allowed;
+      background-color: $btn-disabled-positive;
+      color: $text-btn-disabled-positive;
+      border: none;
     }
-  }
-
-  .btn-primary {
-    background-color: $blue-dark;
-    color: $gray;
-    border: none;
-
-    &:hover:not(:disabled) {
-      background-color: darken($medium-blue, 10%);
-    }
-  }
-
-  .btn-secondary {
-    background-color: transparent;
-    color: $blue-light;
-    border: 1px solid $blue;
 
     &:hover {
-      background-color: $blue;
-      color: $blue-dark;
+      background-color: $btn-hover-positive;
+    }
+
+    &:active {
+      transform: scale(0.95);
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    }
+  }
+
+  .btn-cancelar {
+    background-color: $btn-danger-positive;
+    color: $text-btn-danger-positive;
+    transition: background-color 0.3s ease, transform 0.1s ease, box-shadow 0.1s ease;
+
+    &:hover {
+      background-color: $btn-danger-hover-positive;
+    }
+
+    &:active {
+      transform: scale(0.95);
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     }
   }
 }

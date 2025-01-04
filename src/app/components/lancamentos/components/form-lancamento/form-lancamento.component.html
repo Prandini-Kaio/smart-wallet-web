@@ -185,12 +185,12 @@
 
     <!-- Ações -->
     <div class="form-actions">
-      <button mat-raised-button color="warn" type="button" (click)="onCancel()">
+      <button mat-raised-button class="btn-cancelar" type="button" (click)="onCancel()">
         Cancelar
       </button>
       <button
         mat-raised-button
-        color="primary"
+        class="btn-salvar"
         type="submit"
         [disabled]="form.invalid"
       >

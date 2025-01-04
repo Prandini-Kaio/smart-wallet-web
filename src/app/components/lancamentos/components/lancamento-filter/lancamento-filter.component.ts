@@ -41,7 +41,7 @@ interface Filter {
 export class LancamentoFilterComponent implements OnInit {
 
   @Output() apply = new EventEmitter<any>();
-  @Output() toggle = new EventEmitter<boolean>();
+  @Output() create = new EventEmitter<any>();
 
   constructor(private _api: ApiService) { }
 
@@ -77,6 +77,10 @@ export class LancamentoFilterComponent implements OnInit {
   ngOnInit(): void {
     this.getContas();
     this.getCategorias();
+  }
+
+  onCriar() {
+    this.create.emit(null);
   }
 
   onApply() {

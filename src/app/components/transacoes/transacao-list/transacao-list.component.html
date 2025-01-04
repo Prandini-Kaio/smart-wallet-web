@@ -1,0 +1,30 @@
+<div class="container">
+
+  <app-transacao-filter (apply)="applyFilters($event)"></app-transacao-filter>
+
+  <div class="container-list">
+
+    <div *ngIf="loading" class="loading-spinner">
+      <mat-spinner diameter="40"></mat-spinner>
+    </div>
+
+    <div *ngIf="!loading" class="list-container">
+      <div class="list-header">
+        <span class="col-info">Descrição</span>
+        <span class="col-info">Status</span>
+        <span class="col-info">Vencimento</span>
+        <span class="col-info">Valor</span>
+        <span class="col-actions">Ações</span>
+      </div>
+
+      <app-transacao-item
+        *ngFor="let transacao of transacoes" [transacao]="transacao"
+        (edit)="editTransacao($event)"
+        (pay)="payTransacao($event)"
+      ></app-transacao-item>
+
+    </div>
+
+  </div>
+
+</div>

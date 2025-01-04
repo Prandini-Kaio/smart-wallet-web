@@ -6,23 +6,29 @@
         <span class="lancamento-title">{{ lancamento.descricao }}</span>
     </div>
 
-    <!-- Valor e Data criacao -->
-    <div class="lancamento-details">
-        <span class="lancamento-value">{{ lancamento.valor | currency: 'BRL' }}<span class="lancamento-date">/{{
-                lancamento.parcelas }}</span></span>
-        <span class="lancamento-date">{{ lancamento.dtCriacao }}</span>
-    </div>
+  <!-- Banco e nome -->
+  <div class="lancamento-details">
+    <span class="txt-primary">{{ lancamento.dtCriacao }}</span>
+  </div>
 
     <!-- Banco e nome -->
     <div class="lancamento-details">
-        <span class="lancamento-value">{{ lancamento.conta.banco }}</span>
-        <span class="lancamento-date">{{ lancamento.conta.nome }}</span>
+        <span class="txt-primary">{{ lancamento.conta.banco }}</span>
+        <span class="txt-secondary">{{ lancamento.conta.nome }}</span>
     </div>
 
     <!-- Tipos pagamento e lancamento -->
     <div class="lancamento-details">
-        <span class="lancamento-value">{{ lancamento.tipoLancamento }}</span>
-        <span class="lancamento-date">{{ lancamento.tipoPagamento }}</span>
+        <span class="txt-primary">{{ lancamento.tipoLancamento }}</span>
+        <span class="txt-secondary">{{ lancamento.tipoPagamento }}</span>
+    </div>
+
+    <!-- Valor -->
+    <div class="lancamento-details">
+      <span class="txt-valor">
+          {{ lancamento.valor | currency: 'BRL' }}
+        <span class="txt-secondary">/{{ lancamento.parcelas }}</span>
+      </span>
     </div>
 
     <!-- Botao de acao -->
