@@ -21,21 +21,20 @@ interface OrderStatus {
 }
 
 @Component({
-  selector: 'app-home',
-  standalone: true,
-  imports: [
-    CommonModule,
-    OrcamentoChartComponent,
-    MatFormFieldModule,
-    MatSelectModule,
-    MatInputModule,
-    MatDatepickerModule,
-    MatNativeDateModule,
-    MatButtonModule,
-    MatIconModule,
-],
-  styleUrl: 'home.component.scss',
-  templateUrl: 'home.component.html'
+    selector: 'app-home',
+    imports: [
+        CommonModule,
+        OrcamentoChartComponent,
+        MatFormFieldModule,
+        MatSelectModule,
+        MatInputModule,
+        MatDatepickerModule,
+        MatNativeDateModule,
+        MatButtonModule,
+        MatIconModule,
+    ],
+    styleUrl: 'home.component.scss',
+    templateUrl: 'home.component.html'
 })
 export class HomeComponent implements OnInit{
   saldoParcial = 0;

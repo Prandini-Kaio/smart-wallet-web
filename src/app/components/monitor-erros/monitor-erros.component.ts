@@ -4,11 +4,10 @@ import {ErrorLog} from '../../shared/model/monitor-erros/model/monitor-erros.mod
 import {CommonModule} from '@angular/common';
 
 @Component({
-  selector: 'app-monitor-erros',
-  standalone: true,
-  imports: [CommonModule],
-  templateUrl: './monitor-erros.component.html',
-  styleUrl: './monitor-erros.component.scss'
+    selector: 'app-monitor-erros',
+    imports: [CommonModule],
+    templateUrl: './monitor-erros.component.html',
+    styleUrl: './monitor-erros.component.scss'
 })
 export class MonitorErrosComponent{
   errors: ErrorLog[] = [];

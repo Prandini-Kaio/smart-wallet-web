@@ -1,209 +1,26 @@
-// Custom Theming for Angular Material
-// For more information: https://material.angular.io/guide/theming
-@use "@angular/material" as mat;
-// Plus imports for other components in your app.
-
-// Include the common styles for Angular Material. We include this here so that you only
-// have to load a single css file for Angular Material in your app.
-// Be sure that you only ever include this mixin once!
-@include mat.core();
-
-// Define the palettes for your theme using the Material Design palettes available in palette.scss
-// (imported above). For each palette, you can optionally specify a default, lighter, and darker
-// hue. Available color palettes: https://material.io/design/color/
-$smart-wallet-web-primary: mat.define-palette(mat.$indigo-palette);
-$smart-wallet-web-accent: mat.define-palette(
-  mat.$pink-palette,
-  A200,
-  A100,
-  A400
-);
-
-// The warn palette is optional (defaults to red).
-$smart-wallet-web-warn: mat.define-palette(mat.$red-palette);
-
-// Create the theme object. A theme consists of configurations for individual
-// theming systems such as "color" or "typography".
-$smart-wallet-web-theme: mat.define-light-theme(
-  (
-    color: (
-      primary: $smart-wallet-web-primary,
-      accent: $smart-wallet-web-accent,
-      warn: $smart-wallet-web-warn,
-    ),
-    typography: mat.define-typography-config(),
-    density: 0,
-  )
-);
-
-// Include theme styles for core and each component used in your app.
-// Alternatively, you can import and @include the theme mixins for each component
-// that you are using.
-@include mat.all-component-themes($smart-wallet-web-theme);
-
-/* You can add global styles to this file, and also import other style files */
-
-html,
-body {
-  height: 100%;
-}
-
-body {
-  margin: 0;
-  font-family: Roboto, "Helvetica Neue", sans-serif;
-}
-
-/* TODO(mdc-migration): The following rule targets internal classes of chips that may no longer apply for the MDC version. */
-.mat-mdc-chip.mat-mdc-standard-chip.mat-chip-selected.mat-accent {
-  background-color: #ff9800;
-  color: white;
-}
-
-//** levar para lib
-
-.mat-mdc-option {
-  font-size: 14px;
-  line-height: unset !important;
-}
-
-/* TODO(mdc-migration): The following rule targets internal classes of option that may no longer apply for the MDC version. */
-.mat-option-text.mat-option-text {
-  white-space: normal !important;
-}
-
-.has-mat-hint {
-  .mat-mdc-form-field-subscript-wrapper,
-  .mdc-line-ripple {
-    display: block;
-  }
-}
-
-.scrollable-table {
-  --expanded: 240px;
-  overflow-x: scroll;
-  max-width: calc(100vw - var(--expanded) - 25px);
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-  flex-wrap: wrap;
-  background: #fff;
-
-  ::ng-deep .mat-form-field-wrapper {
-    padding-bottom: 0px !important;
-  }
-
-  &--expanded {
-    max-width: calc(100vw - 60px - 55px);
-  }
-
-  .paginator-container {
-    width: 100vw;
-  }
-
-  table {
-    min-width: 100vw;
-  }
-}
-
-.scroll {
-  overflow-y: scroll !important;
-  height: 360px !important;
-}
-
-.has-mat-hint.mat-form-field-appearance-fill {
-  position: relative;
-
-  .mat-mdc-form-field-subscript-wrapper {
-    position: absolute;
-    z-index: 999;
-    top: 36px !important;
-
-    .mat-mdc-form-field-hint {
-      position: absolute;
-      right: 10px;
-      top: -10px;
-    }
-  }
-}
-
-.disabled-input {
-  .mat-mdc-form-field {
-    &-flex {
-      background: none;
-    }
-
-    input {
-      &:disabled {
-        color: #000 !important;
-      }
-    }
-  }
-
-  .mat-mdc-select-disabled {
-    .mat-mdc-select {
-      &-value {
-        color: rgba(0, 0, 0, 0.87) !important;
-      }
-
-      &-arrow-wrapper {
-        display: none;
-      }
-
-      &-value-text {
-        font-size: 16px;
-      }
-    }
-  }
-}
-
-.mdc-text-field--filled,
-.mdc-text-field--outlined {
-  &.mdc-text-field--disabled {
-    .mdc-text-field__input {
-      color: #000 !important;
-    }
-
-    .mdc-floating-label,
-    .mdc-floating-label--float-above {
-      color: rgba(0, 0, 0, 0.6) !important;
-    }
-  }
-}
-
-.mat-mdc-slide-toggle .mdc-switch--disabled + label {
-  color: rgba(0, 0, 0, 0.6) !important;
-}
-
-.mdc-dialog__title {
-  margin: 0 !important;
-  padding-bottom: 0 !important;
-
-  hr {
-    margin-block-end: 0 !important;
-  }
-}
-
-.cdk-overlay-backdrop.cdk-overlay-backdrop-showing {
-  z-index: 1000 !important;
-}
-html,
-body {
-  height: 100%;
-}
-body {
-  margin: 0;
-  font-family: Roboto, "Helvetica Neue", sans-serif;
-}
-
-@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap");
-body {
-  font-family: "Roboto", sans-serif; /* Define Roboto como fonte padrão */
-}
-
-
+@use '@angular/material' as mat;
 @import './app/shared/variable.scss';
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
 
-$danger-positive: #f8d7da;
-$text-danger-positive: #842029;
+html, body {
+  height: 100%;
+  background-color: $shadow;
+}
+body { margin: 0; font-family: "Roboto", serif; }
 
-@include mat.snack-bar-color($danger-positive, $text-danger-positive);
+
+.error-snackbar {
+  @include mat.snack-bar-overrides((
+    container-color: #f8e1e4,
+    supporting-text-color: #8f363b,
+    button-color: #8f363b
+  ));
+}
+
+.success-snackbar {
+  @include mat.snack-bar-overrides((
+    container-color: #2ecc71,
+    supporting-text-color: $text-light,
+    button-color: $text-light
+  ));
+}

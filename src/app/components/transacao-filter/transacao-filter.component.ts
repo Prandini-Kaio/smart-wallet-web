@@ -23,21 +23,20 @@ interface Filter {
 }
 
 @Component({
-  selector: 'app-transacao-filter',
-  standalone: true,
-  imports: [
-    CommonModule,
-    FormsModule,
-    MatFormFieldModule,
-    MatSelectModule,
-    MatInputModule,
-    MatDatepickerModule,
-    MatNativeDateModule,
-    MatButtonModule,
-    MatIconModule,
-  ],
-  templateUrl: './transacao-filter.component.html',
-  styleUrl: './transacao-filter.component.scss'
+    selector: 'app-transacao-filter',
+    imports: [
+        CommonModule,
+        FormsModule,
+        MatFormFieldModule,
+        MatSelectModule,
+        MatInputModule,
+        MatDatepickerModule,
+        MatNativeDateModule,
+        MatButtonModule,
+        MatIconModule,
+    ],
+    templateUrl: './transacao-filter.component.html',
+    styleUrl: './transacao-filter.component.scss'
 })
 export class TransacaoFilterComponent {
   @Input() show!: boolean;

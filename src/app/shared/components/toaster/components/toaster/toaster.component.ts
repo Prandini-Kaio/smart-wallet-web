@@ -6,13 +6,12 @@ import {MatInputModule} from "@angular/material/input";
 import {MatButtonModule} from "@angular/material/button";
 
 @Component({
-  selector: 'app-toaster',
-  standalone: true,
-  imports: [
-    MatFormFieldModule, FormsModule, MatInputModule, MatButtonModule
-  ],
-  templateUrl: './toaster.component.html',
-  styleUrl: './toaster.component.scss'
+    selector: 'app-toaster',
+    imports: [
+        MatFormFieldModule, FormsModule, MatInputModule, MatButtonModule
+    ],
+    templateUrl: './toaster.component.html',
+    styleUrl: './toaster.component.scss'
 })
 export class ToasterComponent {
   private snackbar = inject(MatSnackBar);

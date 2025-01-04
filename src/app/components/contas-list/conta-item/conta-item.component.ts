@@ -3,13 +3,12 @@ import { ContaOutput } from '../../../shared/model/conta/conta.model';
 import { CommonModule } from '@angular/common';
 
 @Component({
-  selector: 'app-conta-item',
-  standalone: true,
-  imports: [
-    CommonModule
-  ],
-  templateUrl: './conta-item.component.html',
-  styleUrl: './conta-item.component.scss'
+    selector: 'app-conta-item',
+    imports: [
+        CommonModule
+    ],
+    templateUrl: './conta-item.component.html',
+    styleUrl: './conta-item.component.scss'
 })
 export class ContaItemComponent {
   @Input() conta!: ContaOutput;

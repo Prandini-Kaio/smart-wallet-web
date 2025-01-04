@@ -1,0 +1,31 @@
+@import '../../variable.scss';
+
+.container {
+  background-color: $header-positive;
+  box-shadow: 0 4px 4px rgba(0, 0, 0, 0.3);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-height: 8%;
+}
+
+.textos {
+  flex-direction: column;
+  padding-left: 25px;
+  text-align: left;
+  margin-top: 12px;
+
+  .title {
+    color: $text-positive;
+    font-size: 12px;
+    font-weight: bold;
+    margin-bottom: 2px;
+  }
+
+  .subtitle{
+    color: $blue-dark;
+    font-size: 22px;
+    font-weight: 400;
+    margin-top: 0;
+  }
+}

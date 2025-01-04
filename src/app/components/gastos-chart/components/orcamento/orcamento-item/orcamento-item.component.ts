@@ -3,13 +3,12 @@ import { Orcamento } from '../../../../../shared/model/orcamento/orcamento.model
 import { CommonModule } from '@angular/common';
 
 @Component({
-  selector: 'app-orcamento-item',
-  standalone: true,
-  imports: [
-    CommonModule
-  ],
-  templateUrl: './orcamento-item.component.html',
-  styleUrl: './orcamento-item.component.scss',
+    selector: 'app-orcamento-item',
+    imports: [
+        CommonModule
+    ],
+    templateUrl: './orcamento-item.component.html',
+    styleUrl: './orcamento-item.component.scss'
 })
 export class OrcamentoItemComponent {
   @Input() orcamento!: Orcamento;

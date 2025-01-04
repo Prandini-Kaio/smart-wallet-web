@@ -25,6 +25,6 @@ export const appConfig: ApplicationConfig = {
       ApiService,
       MatSnackBarModule
     ),
-    { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true }
+    { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true }, provideAnimationsAsync()
   ]
 };

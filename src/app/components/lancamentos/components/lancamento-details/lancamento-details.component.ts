@@ -1,21 +1,20 @@
-import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { ApiService } from '../../../../services/api.service';
-import { Transacao } from '../../../../shared/model/lancamento/model/lancamento.model';
-import { LancamentoHeaderComponent } from "../lancamento-header/lancamento-header.component";
-import { TransactionCardComponent } from "../../../transaction-card/transaction-card.component";
+import {CommonModule} from '@angular/common';
+import {Component, OnInit} from '@angular/core';
+import {ActivatedRoute, Router} from '@angular/router';
+import {ApiService} from '../../../../services/api.service';
+import {Transacao} from '../../../../shared/model/lancamento/model/lancamento.model';
+import {LancamentoHeaderComponent} from "../lancamento-header/lancamento-header.component";
+import {TransactionCardComponent} from "../../../transaction-card/transaction-card.component";
 
 @Component({
-  selector: 'app-lancamento-details',
-  standalone: true,
-  imports: [
-    CommonModule,
-    TransactionCardComponent,
-    LancamentoHeaderComponent
-  ],
-  templateUrl: './lancamento-details.component.html',
-  styleUrl: './lancamento-details.component.scss'
+    selector: 'app-lancamento-details',
+    imports: [
+        CommonModule,
+        TransactionCardComponent,
+        LancamentoHeaderComponent
+    ],
+    templateUrl: './lancamento-details.component.html',
+    styleUrl: './lancamento-details.component.scss'
 })
 export class LancamentoDetailsComponent implements OnInit {
   transacoes: Transacao[] = [];

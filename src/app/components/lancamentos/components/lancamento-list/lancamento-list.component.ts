@@ -2,27 +2,26 @@ import {CommonModule} from '@angular/common';
 import {Component, OnInit} from '@angular/core';
 import {FormsModule, ReactiveFormsModule,} from '@angular/forms';
 import {Router} from '@angular/router';
-import {ApiService} from '../../services/api.service';
-import {LancamentoOutput, Totalizador,} from '../../shared/model/lancamento/model/lancamento.model';
-import {LancamentoFilterComponent} from './components/lancamento-filter/lancamento-filter.component';
-import {LancamentoItemComponent} from './components/lancamento-item/lancamento-item.component';
-import {FormLancamentoComponent} from './components/form-lancamento/form-lancamento.component';
-import {LancamentoService} from './service/lancamento.service';
-import {ToastrService} from "../../shared/services/toastr.service";
+import {LancamentoFilterComponent} from '../lancamento-filter/lancamento-filter.component';
+import {LancamentoItemComponent} from '../lancamento-item/lancamento-item.component';
+import {FormLancamentoComponent} from '../form-lancamento/form-lancamento.component';
+import {LancamentoService} from '../../service/lancamento.service';
+import {LancamentoOutput, Totalizador} from "../../../../shared/model/lancamento/model/lancamento.model";
+import {ApiService} from "../../../../services/api.service";
+import {ToastrService} from "../../../../shared/services/toastr.service";
 
 @Component({
-  selector: 'app-lancamento-list',
-  standalone: true,
-  imports: [
-    CommonModule,
-    FormsModule,
-    ReactiveFormsModule,
-    LancamentoItemComponent,
-    LancamentoFilterComponent,
-    FormLancamentoComponent,
-  ],
-  templateUrl: './lancamento-list.component.html',
-  styleUrl: './lancamento-list.component.scss',
+    selector: 'app-lancamento-list',
+    imports: [
+        CommonModule,
+        FormsModule,
+        ReactiveFormsModule,
+        LancamentoItemComponent,
+        LancamentoFilterComponent,
+        FormLancamentoComponent,
+    ],
+    templateUrl: './lancamento-list.component.html',
+    styleUrl: './lancamento-list.component.scss'
 })
 export class LancamentoListComponent implements OnInit {
   lancamentos: LancamentoOutput[] = [];

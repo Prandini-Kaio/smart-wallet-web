@@ -10,15 +10,14 @@ import {ToastrService} from "../../../../../shared/services/toastr.service";
 
 
 @Component({
-  selector: 'app-orcamento-chart',
-  standalone: true,
-  imports: [
-    CommonModule,
-    OrcamentoItemComponent,
-    OrcamentoFormComponent
-],
-  templateUrl: './orcamento-chart.component.html',
-  styleUrl: './orcamento-chart.component.scss'
+    selector: 'app-orcamento-chart',
+    imports: [
+        CommonModule,
+        OrcamentoItemComponent,
+        OrcamentoFormComponent
+    ],
+    templateUrl: './orcamento-chart.component.html',
+    styleUrl: './orcamento-chart.component.scss'
 })
 export class OrcamentoChartComponent {
   @Input() orcamentos: Orcamento[] = []

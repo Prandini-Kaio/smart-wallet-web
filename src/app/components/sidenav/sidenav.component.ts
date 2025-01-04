@@ -13,26 +13,25 @@ interface NavItem {
 }
 
 @Component({
-  selector: 'app-sidenav',
-  templateUrl: './sidenav.component.html',
-  styleUrls:[
-    './sidenav.component.scss'
-  ],
-  standalone: true,
-  imports: [CommonModule, RouterModule],
-  animations: [
-    trigger('sidenavAnimation', [
-      state('open', style({
-        width: '250px',
-      })),
-      state('closed', style({
-        width: '60px',
-      })),
-      transition('open <=> closed', [
-        animate('0.3s ease-in-out')
-      ]),
-    ]),
-  ]
+    selector: 'app-sidenav',
+    templateUrl: './sidenav.component.html',
+    styleUrls: [
+        './sidenav.component.scss'
+    ],
+    imports: [CommonModule, RouterModule],
+    animations: [
+        trigger('sidenavAnimation', [
+            state('open', style({
+                width: '250px',
+            })),
+            state('closed', style({
+                width: '60px',
+            })),
+            transition('open <=> closed', [
+                animate('0.3s ease-in-out')
+            ]),
+        ]),
+    ]
 })
 export class SidenavComponent implements OnInit {
   isClosed = true;

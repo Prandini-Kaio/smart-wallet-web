@@ -3,13 +3,12 @@ import { LancamentoOutput } from '../../../../shared/model/lancamento/model/lanc
 import { CommonModule } from '@angular/common';
 
 @Component({
-  selector: 'app-lancamento-item',
-  standalone: true,
-  imports: [
-    CommonModule
-  ],
-  templateUrl: './lancamento-item.component.html',
-  styleUrl: './lancamento-item.component.scss'
+    selector: 'app-lancamento-item',
+    imports: [
+        CommonModule
+    ],
+    templateUrl: './lancamento-item.component.html',
+    styleUrl: './lancamento-item.component.scss'
 })
 export class LancamentoItemComponent {
   @Input() lancamento!: LancamentoOutput;

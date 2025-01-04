@@ -1,20 +1,17 @@
-import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
-import { ChartType, GoogleChartsModule } from 'angular-google-charts';
-import { ApiService } from '../../services/api.service';
-import { Lancamento, Totalizador } from '../../shared/model/lancamento/model/lancamento.model';
-import { Observable, forkJoin } from 'rxjs';
-import { group } from 'node:console';
-import { OrcamentoChartComponent } from "./components/orcamento/orcamento-chart/orcamento-chart.component";
-import { ToastrService } from 'ngx-toastr';
-import { Orcamento } from '../../shared/model/orcamento/orcamento.model';
+import {CommonModule} from '@angular/common';
+import {Component, OnInit} from '@angular/core';
+import {ChartType, GoogleChartsModule} from 'angular-google-charts';
+import {ApiService} from '../../services/api.service';
+import {Lancamento, Totalizador} from '../../shared/model/lancamento/model/lancamento.model';
+import {forkJoin} from 'rxjs';
+import {OrcamentoChartComponent} from "./components/orcamento/orcamento-chart/orcamento-chart.component";
+import {Orcamento} from '../../shared/model/orcamento/orcamento.model';
 
 @Component({
-  selector: 'app-gastos-chart',
-  standalone: true,
-  imports: [CommonModule, GoogleChartsModule, OrcamentoChartComponent],
-  templateUrl: './gastos-chart.component.html',
-  styleUrls: ['./gastos-chart.component.scss'],
+    selector: 'app-gastos-chart',
+    imports: [CommonModule, GoogleChartsModule, OrcamentoChartComponent],
+    templateUrl: './gastos-chart.component.html',
+    styleUrls: ['./gastos-chart.component.scss']
 })
 export class GastosChartComponent implements OnInit {
 

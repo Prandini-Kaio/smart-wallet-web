@@ -12,22 +12,21 @@ import { MatSelectModule } from '@angular/material/select';
 import { ApiService } from '../../../services/api.service';
 
 @Component({
-  selector: 'app-conta-form',
-  standalone: true,
-  imports: [
-    CommonModule,
-    FormsModule,
-    ReactiveFormsModule,
-    MatFormFieldModule,
-    MatSelectModule,
-    MatInputModule,
-    MatDatepickerModule,
-    MatNativeDateModule,
-    MatButtonModule,
-    MatIconModule,
-  ],
-  templateUrl: './conta-form.component.html',
-  styleUrl: './conta-form.component.scss'
+    selector: 'app-conta-form',
+    imports: [
+        CommonModule,
+        FormsModule,
+        ReactiveFormsModule,
+        MatFormFieldModule,
+        MatSelectModule,
+        MatInputModule,
+        MatDatepickerModule,
+        MatNativeDateModule,
+        MatButtonModule,
+        MatIconModule,
+    ],
+    templateUrl: './conta-form.component.html',
+    styleUrl: './conta-form.component.scss'
 })
 export class EditModalComponent implements OnInit {
 

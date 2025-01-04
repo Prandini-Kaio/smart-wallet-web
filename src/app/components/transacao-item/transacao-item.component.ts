@@ -3,11 +3,10 @@ import {LancamentoOutput, TransacaoOutput} from '../../shared/model/lancamento/m
 import {CommonModule} from '@angular/common';
 
 @Component({
-  selector: 'app-transacao-item',
-  standalone: true,
-  imports: [CommonModule],
-  templateUrl: './transacao-item.component.html',
-  styleUrl: './transacao-item.component.scss'
+    selector: 'app-transacao-item',
+    imports: [CommonModule],
+    templateUrl: './transacao-item.component.html',
+    styleUrl: './transacao-item.component.scss'
 })
 export class TransacaoItemComponent{
   @Input() transacao!: TransacaoOutput;

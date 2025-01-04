@@ -1,44 +1,58 @@
-import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
-import { FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { ApiService } from '../../services/api.service';
-import { ContaOutput } from '../../shared/model/conta/conta.model';
-import { EditModalComponent } from "./conta-form/conta-form.component";
-import { ContaItemComponent } from "./conta-item/conta-item.component";
+import {CommonModule} from '@angular/common';
+import {ChangeDetectorRef, Component, OnInit} from '@angular/core';
+import {FormGroup, FormsModule, ReactiveFormsModule} from '@angular/forms';
+import {ApiService} from '../../services/api.service';
+import {ContaOutput} from '../../shared/model/conta/conta.model';
+import {EditModalComponent} from "./conta-form/conta-form.component";
+import {ContaItemComponent} from "./conta-item/conta-item.component";
 import {ToastrService} from "../../shared/services/toastr.service";
+import {PageHeaderComponent} from "../../shared/components/page-header/page-header.component";
+import {MatFormFieldModule} from "@angular/material/form-field";
+import {MatSelectModule} from "@angular/material/select";
+import {MatInputModule} from "@angular/material/input";
+import {MatDatepickerModule} from "@angular/material/datepicker";
+import {MatNativeDateModule} from "@angular/material/core";
+import {MatButtonModule} from "@angular/material/button";
+import {MatIconModule} from "@angular/material/icon";
+import {MatProgressSpinner} from "@angular/material/progress-spinner";
 
 
 @Component({
-  selector: 'app-contas-list',
-  standalone: true,
-  imports: [
-    CommonModule,
-    FormsModule,
-    ReactiveFormsModule,
-    ContaItemComponent,
-    EditModalComponent
-],
-  templateUrl: './contas-list.component.html',
-  styleUrl: './contas-list.component.scss'
+    selector: 'app-contas-list',
+    imports: [
+        CommonModule,
+        FormsModule,
+        ReactiveFormsModule,
+        ContaItemComponent,
+        EditModalComponent,
+        PageHeaderComponent,
+        MatFormFieldModule,
+        MatSelectModule,
+        MatInputModule,
+        MatDatepickerModule,
+        MatNativeDateModule,
+        MatButtonModule,
+        MatIconModule,
+        MatProgressSpinner
+    ],
+    templateUrl: './contas-list.component.html',
+    styleUrl: './contas-list.component.scss'
 })
-export class ContasListComponent {
+export class ContasListComponent implements OnInit {
 
   public contaSelecionada: ContaOutput | undefined = undefined;
   public isEdit: boolean = false;
 
   contas: ContaOutput[] = [];
-  loading: boolean = false;
+  loading: boolean = true;
   error: string | null = null;
 
-  selectedAccount: ContaOutput | null = null;
-  totalBalance: number = 0;
   showModal: boolean = false;
 
-  constructor(private readonly _api: ApiService, private toaster: ToastrService) { }
+  constructor(private readonly _api: ApiService, private toaster: ToastrService, private cdr: ChangeDetectorRef) { }
 
   ngOnInit(): void {
-
-    this.contas = this.getAccounts();
+    this.getAccounts();
   }
 
   onSubmit(form: FormGroup): void {
@@ -55,14 +69,14 @@ export class ContasListComponent {
 
       if(this.isEdit){
         this._api.updateConta(conta).subscribe(
-          (response) => {
+          () => {
             this.closeModal();
             this.toaster.success("Conta atualizada com sucesso!", 3000);
           }
         );
       }else{
         this._api.createConta(conta).subscribe(
-          (response) => {
+          () => {
             this.closeModal();
             this.toaster.success("Conta criada com sucesso!", 3000);
           }
@@ -73,34 +87,20 @@ export class ContasListComponent {
     // this.reloadPage();
   }
 
-  getAccounts(): ContaOutput[] {
+  getAccounts() {
+    this.loading = true;
     this._api.getAllContas().subscribe(
       (data) => {
-        return this.contas = data;
-      },
-      (error) => {
-        console.error('Erro carregando lancamentos:', error);
+        this.contas = data;
+        this.cdr.detectChanges();
       }
     );
-
-    return [];
+    this.loading = false;
   }
 
   edit(conta: ContaOutput) {
     this.contaSelecionada = conta;
     this.isEdit = true;
-    this.showModal = true;
-  }
-
-  calculateTotalBalance(): void {
-    this.totalBalance = this.contas.reduce((sum, conta) => sum + conta.saldoParcial, 0);
-  }
-
-  selectAccount(conta: ContaOutput): void {
-    this.selectedAccount = conta;
-  }
-
-  addConta(): void {
     this.showModal = true;
   }
 
@@ -119,7 +119,7 @@ export class ContasListComponent {
       id: obj.id
     }
 
-    this._api.deleteConta(data).subscribe((data) => {
+    this._api.deleteConta(data).subscribe(() => {
       this.toaster.success("Conta deletada com sucesso!", 3000)
     });
   }

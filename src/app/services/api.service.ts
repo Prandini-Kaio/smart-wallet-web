@@ -1,11 +1,11 @@
-import { HttpClient, HttpParams } from '@angular/common/http';
-import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
-import { environment } from '../../environments/environment.development';
-import { ContaOutput, TipoContaOutput } from '../shared/model/conta/conta.model';
-import { ErrorLog } from '../shared/model/monitor-erros/model/monitor-erros.model';
-import { LancamentoOutput, TransacaoOutput } from '../shared/model/lancamento/model/lancamento.model';
-import { Orcamento } from '../shared/model/orcamento/orcamento.model';
+import {HttpClient, HttpParams} from '@angular/common/http';
+import {Injectable} from '@angular/core';
+import {Observable} from 'rxjs';
+import {environment} from '../../environments/environment.development';
+import {ContaOutput, TipoContaOutput} from '../shared/model/conta/conta.model';
+import {ErrorLog} from '../shared/model/monitor-erros/model/monitor-erros.model';
+import {LancamentoOutput, TransacaoOutput} from '../shared/model/lancamento/model/lancamento.model';
+import {Orcamento} from '../shared/model/orcamento/orcamento.model';
 
 @Injectable({
   providedIn: 'root',

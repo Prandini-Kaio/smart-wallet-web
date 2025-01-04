@@ -5,7 +5,7 @@ import {map} from 'rxjs/operators';
 import {ApiService} from '../../services/api.service';
 import {ContaOutput} from '../../shared/model/conta/conta.model';
 import {LancamentoOutput, SaldoProjetado, TransacaoOutput,} from '../../shared/model/lancamento/model/lancamento.model';
-import {FormLancamentoComponent} from '../lancamento-list/components/form-lancamento/form-lancamento.component';
+import {FormLancamentoComponent} from '../lancamentos/components/form-lancamento/form-lancamento.component';
 import {TransacaoFilterComponent} from '../transacao-filter/transacao-filter.component';
 import {ToastrService} from "../../shared/services/toastr.service";
 
@@ -22,11 +22,10 @@ interface Params {
 }
 
 @Component({
-  selector: 'app-simular',
-  standalone: true,
-  imports: [CommonModule, FormLancamentoComponent, TransacaoFilterComponent],
-  templateUrl: './simular.component.html',
-  styleUrl: './simular.component.scss',
+    selector: 'app-simular',
+    imports: [CommonModule, FormLancamentoComponent, TransacaoFilterComponent],
+    templateUrl: './simular.component.html',
+    styleUrl: './simular.component.scss'
 })
 export class SimularComponent implements OnInit {
   constructor(

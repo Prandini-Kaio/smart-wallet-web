@@ -3,16 +3,15 @@ import {TransacaoItemComponent} from "../transacao-item/transacao-item.component
 import {CommonModule} from '@angular/common';
 import {LancamentoOutput, Totalizador, TransacaoOutput} from '../../shared/model/lancamento/model/lancamento.model';
 import {ApiService} from '../../services/api.service';
-import {LancamentoFilterComponent} from "../lancamento-list/components/lancamento-filter/lancamento-filter.component";
+import {LancamentoFilterComponent} from "../lancamentos/components/lancamento-filter/lancamento-filter.component";
 import {TransacaoFilterComponent} from "../transacao-filter/transacao-filter.component";
 import {ToastrService} from "../../shared/services/toastr.service";
 
 @Component({
-  selector: 'app-transacao-list',
-  standalone: true,
-  imports: [CommonModule, TransacaoItemComponent, LancamentoFilterComponent, TransacaoFilterComponent],
-  templateUrl: './transacao-list.component.html',
-  styleUrl: './transacao-list.component.scss'
+    selector: 'app-transacao-list',
+    imports: [CommonModule, TransacaoItemComponent, LancamentoFilterComponent, TransacaoFilterComponent],
+    templateUrl: './transacao-list.component.html',
+    styleUrl: './transacao-list.component.scss'
 })
 export class TransacaoListComponent implements OnInit{
   @Input() lancamento!: LancamentoOutput;

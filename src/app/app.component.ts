@@ -3,27 +3,24 @@ import {HttpClientModule} from '@angular/common/http';
 import {Component} from '@angular/core';
 import {FormsModule} from '@angular/forms';
 import {Router, RouterModule, RouterOutlet} from '@angular/router';
-import {GoogleChartsModule} from 'angular-google-charts';
 import {ToastrModule} from 'ngx-toastr';
 import {SidenavComponent} from './components/sidenav/sidenav.component';
 import {MatSnackBarModule} from "@angular/material/snack-bar";
 
 @Component({
-  selector: 'app-root',
-  imports: [
-    RouterModule,
-    RouterOutlet,
-    SidenavComponent,
-    FormsModule,
-    CommonModule,
-    GoogleChartsModule,
-    ToastrModule,
-    HttpClientModule,
-    MatSnackBarModule
-],
-  providers: [],
-  templateUrl: './app.component.html',
-  standalone: true
+    selector: 'app-root',
+    imports: [
+        RouterModule,
+        RouterOutlet,
+        SidenavComponent,
+        FormsModule,
+        CommonModule,
+        ToastrModule,
+        HttpClientModule,
+        MatSnackBarModule
+    ],
+    providers: [],
+    templateUrl: './app.component.html'
 })
 export class AppComponent {
   sidenavItems = [

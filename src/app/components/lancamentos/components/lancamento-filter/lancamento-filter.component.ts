@@ -1,15 +1,15 @@
-import { CommonModule, formatDate } from '@angular/common';
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { MatButtonModule } from '@angular/material/button';
-import { MatNativeDateModule } from '@angular/material/core'; // Ou MatMomentDateModule, se preferir usar Moment.js
-import { MatDatepickerModule } from '@angular/material/datepicker';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatIconModule } from '@angular/material/icon'; // Para ícones, caso necessário
-import { MatInputModule } from '@angular/material/input';
-import { MatSelectModule } from '@angular/material/select';
-import { ApiService } from '../../../../services/api.service';
-import { ContaOutput } from '../../../../shared/model/conta/conta.model';
+import {CommonModule, formatDate} from '@angular/common';
+import {Component, EventEmitter, OnInit, Output} from '@angular/core';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import {MatButtonModule} from '@angular/material/button';
+import {MatNativeDateModule} from '@angular/material/core'; // Ou MatMomentDateModule, se preferir usar Moment.js
+import {MatDatepickerModule} from '@angular/material/datepicker';
+import {MatFormFieldModule} from '@angular/material/form-field';
+import {MatIconModule} from '@angular/material/icon';
+import {MatInputModule} from '@angular/material/input';
+import {MatSelectModule} from '@angular/material/select';
+import {ApiService} from '../../../../services/api.service';
+import {ContaOutput} from '../../../../shared/model/conta/conta.model';
 
 interface Filter {
   categorias: string[],
@@ -22,22 +22,21 @@ interface Filter {
 }
 
 @Component({
-  selector: 'app-lancamento-filter',
-  standalone: true,
-  imports: [
-    CommonModule,
-    FormsModule,
-    ReactiveFormsModule,
-    MatFormFieldModule,
-    MatSelectModule,
-    MatInputModule,
-    MatDatepickerModule,
-    MatNativeDateModule,
-    MatButtonModule,
-    MatIconModule,
-  ],
-  templateUrl: './lancamento-filter.component.html',
-  styleUrl: './lancamento-filter.component.scss'
+    selector: 'app-lancamento-filter',
+    imports: [
+        CommonModule,
+        FormsModule,
+        ReactiveFormsModule,
+        MatFormFieldModule,
+        MatSelectModule,
+        MatInputModule,
+        MatDatepickerModule,
+        MatNativeDateModule,
+        MatButtonModule,
+        MatIconModule,
+    ],
+    templateUrl: './lancamento-filter.component.html',
+    styleUrl: './lancamento-filter.component.scss'
 })
 export class LancamentoFilterComponent implements OnInit {
 

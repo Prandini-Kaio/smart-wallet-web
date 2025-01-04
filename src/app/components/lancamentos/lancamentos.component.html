@@ -1,0 +1,12 @@
+<app-page-header [navName]="'Lançamento'" [title]="'Relatórios'"></app-page-header>
+
+<div class="container">
+  <mat-tab-group mat-stretch-tabs="false" mat-align-tabs="start">
+    <mat-tab label="Lançamentos">
+      <app-lancamento-list></app-lancamento-list>
+    </mat-tab>
+    <mat-tab label="Transações">
+      <app-transacao-list></app-transacao-list>
+    </mat-tab>
+  </mat-tab-group>
+</div>

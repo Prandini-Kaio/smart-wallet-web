@@ -17,22 +17,21 @@ interface Mes {
 }
 
 @Component({
-  selector: 'app-orcamento-form',
-  standalone: true,
-  imports: [
-    CommonModule,
-    FormsModule,
-    ReactiveFormsModule,
-    MatFormFieldModule,
-    MatSelectModule,
-    MatInputModule,
-    MatDatepickerModule,
-    MatNativeDateModule,
-    MatButtonModule,
-    MatIconModule,
-  ],
-  templateUrl: './orcamento-form.component.html',
-  styleUrl: './orcamento-form.component.scss'
+    selector: 'app-orcamento-form',
+    imports: [
+        CommonModule,
+        FormsModule,
+        ReactiveFormsModule,
+        MatFormFieldModule,
+        MatSelectModule,
+        MatInputModule,
+        MatDatepickerModule,
+        MatNativeDateModule,
+        MatButtonModule,
+        MatIconModule,
+    ],
+    templateUrl: './orcamento-form.component.html',
+    styleUrl: './orcamento-form.component.scss'
 })
 export class OrcamentoFormComponent implements OnInit{
   @Output() submit = new EventEmitter<FormGroup>();

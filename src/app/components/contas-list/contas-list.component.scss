@@ -1,124 +1,115 @@
+@use '@angular/material' as mat;
 @import '../../shared/variable.scss';
 
 .container {
+  margin: 20px;
+  background-color: $bg-positive;
+  border: 1px solid $border-default-positive;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  overflow-x: hidden;
+}
+
+.header{
+  border: 1px solid $border-default-positive;
+  margin: 20px;
+
+  .header-filter {
+    display: flex;
+    background-color: $bg-positive;
+    padding: 20px;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .header-actions {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    background-color: $header-positive;
+    border: 1px solid $border-default-positive;
+    border-radius: 0 0 6px 6px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+
+    button {
+      margin: 10px;
+    }
+
+    .create-btn {
+      display: flex;
+      align-items: center;
+      padding: 15px 25px;
+      font-size: 16px;
+      color: $text-light;
+      background-color: $blue-dark;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background-color 0.3s ease, transform 0.1s ease, box-shadow 0.1s ease;
+
+      &:hover {
+        background-color: $blue;
+      }
+
+      &:active {
+        background-color: #004085;
+        transform: scale(0.95);
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      }
+    }
+  }
+}
+
+.contas-list {
+  background-color: $blue-dark;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  padding: 20px;
-  margin: auto;
-  background-color: $background-color;
-  border-radius: 8px;
-  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
-  overflow-x: auto;
-}
-
-
-.header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
   width: 100%;
-  padding: 12px;
-  font-weight: bold;
-  border-radius: 4px;
+
+  .contas-header {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+    align-items: center;
+    padding: 12px;
+    text-align: left;
+    position: relative;
+  }
+
+  .contas-header {
+    color: $text-light;
+    padding: 20px;
+    border: 1px double $border-default-positive;
+    font-weight: bold;
+
+    .col-info{
+      border-right: 1px solid $border-default-positive;
+    }
+  }
+
+  .contas-header > * {
+    padding: 0 10px;
+
+    &:not(:last-child)::after {
+      content: '';
+      position: absolute;
+      top: 10%;
+      right: 0;
+      height: 80%;
+      width: 1px;
+      background: linear-gradient(to bottom, transparent, $light-hover, transparent);
+    }
+  }
 }
 
-.list-title {
-  font-size: 28px;
-  font-weight: bold;
-  color: $text-title;
-}
-
-.create-btn {
+.spinner {
   display: flex;
+  justify-content: center;
   align-items: center;
-  padding: 10px 15px;
-  font-size: 16px;
-  color: $text-light;
-  background-color: $text-button;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: background-color 0.3s;
-}
-
-.create-btn i {
-  margin-right: 8px;
-}
-
-.create-btn:hover {
-  background-color: $text-button-hover;
-}
-
-.loading-spinner,
-.error-message,
-.no-results {
-  text-align: center;
-  font-size: 16px;
-  color: $text-muted;
-  margin: 20px 0;
-}
-
-.loading-spinner i,
-.error-message i {
-  margin-right: 8px;
-}
-
-.error-message {
-  color: $text-red;
+  margin-top: 20px;
 }
 
 .no-results {
   font-size: 16px;
   color: $text-muted;
   margin-top: 20px;
-}
-
-.contas-list {
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-}
-
-.contas-header {
-  display: grid;
-  grid-template-columns: repeat(5, 1fr);
-  gap: 12px;
-  align-items: center;
-  padding: 12px;
-  text-align: left;
-  position: relative;
-}
-
-.contas-header {
-  background-color: $blue;
-  color: $text-light;
-  font-weight: bold;
-  border-radius: 4px 4px 0 0;
-}
-
-.contas-header > * {
-  padding: 0 10px;
-
-  &:not(:last-child)::after {
-    content: '';
-    position: absolute;
-    top: 10%;
-    right: 0;
-    height: 80%;
-    width: 1px;
-    background: linear-gradient(to bottom, transparent, $light-hover, transparent);
-  }
-}
-
-.conta-info {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
-.error-message {
-  color: $text-red;
-  font-size: 12px;
-  margin-top: 5px;
 }
