@@ -40,10 +40,8 @@ export class SidenavComponent implements OnInit {
   navItems: NavItem[] = [
     { title: 'Home', icon: 'fa-home', path: '/home' },
     { title: 'Contas', icon: 'fa-piggy-bank', path: '/contas/view' },
-    {
-      title: 'Lançamentos', icon: 'fa-money-bill-transfer', path: '/lancamentos',
-    },
-
+    { title: 'Lançamentos', icon: 'fa-money-bill-transfer', path: '/lancamentos' },
+    { title: 'Fluxo de caixa', icon: 'fa-chart-simple', path: '/fluxo-caixa' },
     { title: 'Monitor de erros', icon: 'fa-bug', path: '/monitor-erros' },
   ];
 

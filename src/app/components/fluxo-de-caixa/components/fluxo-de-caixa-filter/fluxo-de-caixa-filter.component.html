@@ -1,0 +1,29 @@
+<div class="container">
+  <div class="filters">
+
+    <mat-form-field appearance="outline">
+      <mat-label>Conta</mat-label>
+      <mat-select multiple [(value)]="contasSelecionadas" [formGroup]="filtro">
+        <mat-option >Todas</mat-option>
+        <mat-option *ngFor="let conta of contas" [value]="conta">
+          {{ conta.banco }} - {{ conta.nome }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Selecione um período</mat-label>
+      <mat-date-range-input [formGroup]="filtro" [rangePicker]="picker">
+        <input matStartDate formControlName="dtInicio" placeholder="Data inicio">
+        <input matEndDate formControlName="dtFim" placeholder="Data fim">
+      </mat-date-range-input>
+      <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-date-range-picker #picker></mat-date-range-picker>
+    </mat-form-field>
+  </div>
+  <div class="actions">
+    <button class="btn-pesquisar" (click)="onApply()">
+      Pesquisar
+    </button>
+  </div>
+</div>

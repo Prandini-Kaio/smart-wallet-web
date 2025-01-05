@@ -6,7 +6,7 @@ import {provideClientHydration} from '@angular/platform-browser';
 import {provideAnimationsAsync} from '@angular/platform-browser/animations/async';
 import {provideAnimations} from '@angular/platform-browser/animations';
 import {HTTP_INTERCEPTORS, provideHttpClient, withInterceptorsFromDi} from '@angular/common/http';
-import {provideNativeDateAdapter} from '@angular/material/core';
+import {MAT_DATE_LOCALE, provideNativeDateAdapter} from '@angular/material/core';
 import {ToastrService} from "./shared/services/toastr.service";
 import {ErrorInterceptor} from "./shared/error-interceptor.interceptor";
 import {ApiService} from "./services/api.service";
@@ -25,6 +25,8 @@ export const appConfig: ApplicationConfig = {
       ApiService,
       MatSnackBarModule
     ),
-    { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true }, provideAnimationsAsync()
+    provideAnimationsAsync(),
+    { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
+    { provide: MAT_DATE_LOCALE, useValue: 'pt-BR' }
   ]
 };

@@ -56,18 +56,6 @@ export class FormLancamentoComponent implements OnInit, OnDestroy {
     this.lancamentoService.clear();
   }
 
-  getContas() {
-    this.api.getContas('').subscribe((response) => {
-      this.contas = response;
-    });
-  }
-
-  getCategorias() {
-    this.api.getCategoria().subscribe((response) => {
-      this.categorias = response;
-    });
-  }
-
   loadForm() {
     const today = new Date().toISOString().split('T')[0];
 
@@ -160,11 +148,7 @@ export class FormLancamentoComponent implements OnInit, OnDestroy {
 
       const lancamento = {
         id: this.form.get('id')?.value,
-        conta: {
-          nome: contaSelecionada?.nome,
-          banco: contaSelecionada?.banco,
-          tipoConta: contaSelecionada?.tipoConta,
-        },
+        contaId: this.form.get('conta')?.value,
         status: this.form.get('status')?.value,
         valor: this.form.get('valor')?.value,
         tipoLancamento: this.form.get('tipoLancamento')?.value,

@@ -1,0 +1,14 @@
+<app-page-header [navName]="'Fluxo de caixa'" [title]="'Fluxo de caixa'"></app-page-header>
+
+<div class="container">
+
+  <mat-tab-group mat-stretch-tabs="false" mat-align-tabs="start">
+    <mat-tab label="Projetado">
+      <app-fluxo-de-caixa-filter (apply)="onApply($event)"></app-fluxo-de-caixa-filter>
+      <app-fluxo-caixa-totalizadores [fluxoCaixa]="output"></app-fluxo-caixa-totalizadores>
+    </mat-tab>
+    <mat-tab label="Transações">
+
+    </mat-tab>
+  </mat-tab-group>
+</div>

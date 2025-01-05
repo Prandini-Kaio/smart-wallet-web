@@ -34,4 +34,8 @@ export const routes: Routes = [
       path: 'lancamentos',
       loadComponent: () => import('./components/lancamentos/lancamentos.component').then(m => m.LancamentosComponent)
     },
+  {
+    path: 'fluxo-caixa',
+    loadComponent: () => import('./components/fluxo-de-caixa/fluxo-de-caixa.component').then(m => m.FluxoDeCaixaComponent)
+  },
 ];

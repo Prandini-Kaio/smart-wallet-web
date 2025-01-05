@@ -1,0 +1,63 @@
+@import '../../../../shared/variable.scss';
+
+.container {
+  margin-left: 20px;
+  margin-right: 20px;
+}
+.main-content {
+  background-color: $bg-positive;
+  border: 1px solid $border-default-positive;
+}
+
+.totalizadores {
+  display: flex;
+  justify-content: space-between;
+  padding: 5px;
+}
+
+.totalizador {
+  display: flex;
+  margin: 20px;
+  border: 1px solid $border-default-positive;
+  width: 1000px;
+  justify-content: space-between;
+  align-items: center;
+
+  .saldo {
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    gap: 15px;
+
+    .txt-valor {
+      font-size: 18px;
+      color: $text-blue;
+    }
+
+    .txt-secondary {
+      font-size: 14px;
+      color: $text-positive;
+    }
+  }
+
+  .icon{
+    font-size: 20px;
+    margin-right: 20px;
+    background-color: $blue-dark;
+    border-radius: 50px;
+    color: $text-light;
+
+    i {
+      padding: 15px;
+    }
+  }
+
+
+}
+
+.spinner {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 20px
+}
