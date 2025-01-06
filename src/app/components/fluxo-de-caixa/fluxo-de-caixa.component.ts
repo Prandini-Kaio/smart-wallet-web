@@ -8,14 +8,14 @@ import {FluxoCaixaOutput} from "./components/model/fluxo-de-caixa.model";
 import {ToastrService} from "../../shared/services/toastr.service";
 import {ApiService} from "../../services/api.service";
 import {MatTabsModule} from "@angular/material/tabs";
+import {FluxoCaixaListComponent} from "./components/fluxo-caixa-list/fluxo-caixa-list.component";
 
 @Component({
   selector: 'app-fluxo-de-caixa',
   imports: [
     PageHeaderComponent,
     MatTabsModule,
-    FluxoDeCaixaFilterComponent,
-    FluxoCaixaTotalizadoresComponent
+    FluxoCaixaListComponent
   ],
   templateUrl: './fluxo-de-caixa.component.html',
   styleUrl: './fluxo-de-caixa.component.scss'

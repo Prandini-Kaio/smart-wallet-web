@@ -1,0 +1,39 @@
+<div class="container">
+  <div class="main-content">
+    <div *ngIf="loading" class="spinner">
+      <mat-spinner diameter="40"></mat-spinner>
+    </div>
+
+    <div *ngIf="!loading" class="totalizadores">
+      <div class="totalizador">
+        <div class="saldo">
+          <span class="txt-secondary">ENTRADAS</span>
+          <span class="txt-valor">{{ resumoFinanceiro?.entradas | currency: 'BRL' }}</span>
+        </div>
+        <div class="icon">
+          <i class="fas fa-coins"></i>
+        </div>
+      </div>
+
+      <div class="totalizador">
+        <div class="saldo">
+          <span class="txt-secondary">SAIDAS</span>
+          <span class="txt-valor">{{ resumoFinanceiro?.saidas | currency: 'BRL' }}</span>
+        </div>
+        <div class="icon">
+          <i class="fas fa-money-bill-trend-up"></i>
+        </div>
+      </div>
+
+      <div class="totalizador">
+        <div class="saldo">
+          <span class="txt-secondary">SALDO PROJETADO</span>
+          <span class="txt-valor">{{ resumoFinanceiro?.saldoProjetado | currency: 'BRL' }}</span>
+        </div>
+        <div class="icon">
+          <i class="fas fa-money-bill-trend-up"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

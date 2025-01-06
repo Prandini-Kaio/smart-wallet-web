@@ -31,6 +31,13 @@ export interface LancamentoOutput {
     expanded?: boolean;
 }
 
+export interface ResumoFinanceiroOutput {
+  conta: ContaOutput,
+  entradas: number,
+  saidas: number,
+  mes: string
+}
+
 export interface SaldoProjetado {
     mes: string,
     entradas: number,
@@ -43,7 +50,7 @@ export interface TransacaoOutput {
     valor: number,
     status: string,
     tipo: string,
-    tipoPagamento: string, 
+    tipoPagamento: string,
     dtVencimento: string,
     dtPagamento: string,
     descricao: string;

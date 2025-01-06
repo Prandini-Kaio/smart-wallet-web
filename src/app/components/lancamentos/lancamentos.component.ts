@@ -3,6 +3,7 @@ import {PageHeaderComponent} from "../../shared/components/page-header/page-head
 import {MatTabsModule} from "@angular/material/tabs";
 import { LancamentoListComponent } from "./components/lancamento-list/lancamento-list.component";
 import {TransacaoListComponent} from "../transacoes/transacao-list/transacao-list.component";
+import {ResumoFinanceiroComponent} from "./components/resumo-financeiro/resumo-financeiro.component";
 
 @Component({
   selector: 'app-lancamentos',
@@ -10,7 +11,8 @@ import {TransacaoListComponent} from "../transacoes/transacao-list/transacao-lis
     PageHeaderComponent,
     MatTabsModule,
     LancamentoListComponent,
-    TransacaoListComponent
+    TransacaoListComponent,
+    ResumoFinanceiroComponent
   ],
   templateUrl: './lancamentos.component.html',
   styleUrl: './lancamentos.component.scss'

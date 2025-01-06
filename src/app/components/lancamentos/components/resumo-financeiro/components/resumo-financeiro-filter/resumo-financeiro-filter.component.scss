@@ -1,0 +1,55 @@
+@import '../../../../../../shared/variable.scss';
+
+.container {
+  padding: 20px;
+}
+
+.filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  padding: 16px;
+  background-color: $bg-positive;
+  border: 1px solid #ddd;
+  border-radius: 6px 6px 0 0;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.actions {
+  display: flex;
+  justify-content: space-between;
+  background-color: $header-positive;
+  border: 1px solid $border-default-positive;
+  border-radius: 0 0 6px 6px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+
+  .btn-pesquisar {
+    background-color: $btn-positive;
+    color: $text-btn-positive;
+    font-weight: bold;
+    font-size: 14px;
+    padding: 15px 25px;
+    margin: 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.1s ease, box-shadow 0.1s ease;
+
+    &:hover {
+      background-color: $btn-hover-positive;
+    }
+
+    &:active {
+      background-color: $btn-hover-positive;
+      transform: scale(0.95);
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .filters {
+    flex-direction: column;
+  }
+}

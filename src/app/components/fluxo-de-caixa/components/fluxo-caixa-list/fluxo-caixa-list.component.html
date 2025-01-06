@@ -1,0 +1,27 @@
+<div class="container">
+  <app-fluxo-de-caixa-filter (apply)="onApply($event)"></app-fluxo-de-caixa-filter>
+  <app-fluxo-caixa-totalizadores [fluxoCaixa]="output"></app-fluxo-caixa-totalizadores>
+
+  <div class="list">
+
+    <div *ngIf="loading" class="loading-spinner">
+      <mat-spinner diameter="40"></mat-spinner>
+    </div>
+
+    <div class="list-container" *ngIf="!loading">
+
+      <div class="list-header">
+        <span class="col-info">Conta</span>
+        <span class="col-info">Descricao</span>
+        <span class="col-info">Categoria</span>
+        <span class="col-info">Status</span>
+        <span class="col-info">Data vencimento</span>
+        <span class="col-info">Entradas</span>
+        <span class="col-info">Saidas</span>
+      </div>
+
+      <app-fluxo-caixa-item *ngFor="let lancamento of output?.lancamentos" [lancamento]="lancamento"></app-fluxo-caixa-item>
+    </div>
+
+  </div>
+</div>

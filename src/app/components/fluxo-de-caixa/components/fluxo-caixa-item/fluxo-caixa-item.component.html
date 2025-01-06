@@ -1,0 +1,29 @@
+<div class="container">
+  <div class="details">
+    <span class="txt-title">{{lancamento?.conta?.banco}} - {{lancamento?.conta?.nome}}</span>
+  </div>
+
+  <div class="details">
+    <span class="txt-title">{{lancamento?.descricao}}</span>
+  </div>
+
+  <div class="details">
+    <span class="txt-title">{{lancamento?.categoria}}</span>
+  </div>
+
+  <div class="details">
+    <span class="txt-title">{{lancamento?.status}}</span>
+  </div>
+
+  <div class="details">
+    <span class="txt-title">{{lancamento?.dtVencimento}}</span>
+  </div>
+
+  <div class="details">
+    <span class="txt-valor">{{lancamento?.entradas | currency: 'BRL'}}</span>
+  </div>
+
+  <div class="details">
+    <span class="txt-valor">{{lancamento?.saidas | currency: 'BRL'}}</span>
+  </div>
+</div>

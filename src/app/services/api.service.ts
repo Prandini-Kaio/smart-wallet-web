@@ -93,6 +93,18 @@ export class ApiService {
     return this.http.get(`${this.apiUrl}/fluxo-caixa/projetado`, { params });
   }
 
+  getResumoFinanceiro(paramsObj: any): Observable<any>{
+    let params = new HttpParams();
+
+    for(const key in paramsObj){
+      if(paramsObj.hasOwnProperty(key)){
+        params = params.append(key, paramsObj[key]);
+      }
+    }
+
+    return this.http.get(`${this.apiUrl}/lancamento/resumo`, { params });
+  }
+
   getContas(paramObj: any): Observable<ContaOutput[]> {
     let params = new HttpParams();
 
