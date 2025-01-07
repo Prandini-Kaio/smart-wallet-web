@@ -32,7 +32,7 @@ export class ResumoFinanceiroListComponent implements OnInit{
 
   constructor(private readonly api: ApiService, private toastr: ToastrService) {}
 
-  displayedColumns: string[] = ['Conta', 'Entradas', 'Saidas'];
+  public displayedColumns: string[] = ['Conta', 'Entradas', 'Saidas'];
 
   public resumos: ResumoFinanceiroOutput[] = [];
   public loading = false;
