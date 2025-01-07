@@ -1,18 +1,17 @@
-import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core';
-import {ApiService} from "../../../../../../services/api.service";
-import {ToastrService} from "../../../../../../shared/services/toastr.service";
-import {CommonModule} from "@angular/common";
-import {TransacaoFilterComponent} from "../../../../../transacoes/transacao-filter/transacao-filter.component";
+import { CommonModule, formatDate } from "@angular/common";
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { MatProgressSpinner } from "@angular/material/progress-spinner";
+import { MatTableModule } from "@angular/material/table";
+import { MatTabChangeEvent, MatTabsModule } from "@angular/material/tabs";
+import { ApiService } from "../../../../../../services/api.service";
+import { ResumoFinanceiroOutput } from "../../../../../../shared/model/lancamento/model/lancamento.model";
+import { ToastrService } from "../../../../../../shared/services/toastr.service";
+import { ResumoFinanceiroFilterComponent } from "../resumo-financeiro-filter/resumo-financeiro-filter.component";
+import { ResumoFinanceiroItemComponent } from "../resumo-financeiro-item/resumo-financeiro-item.component";
 import {
   ResumoFinanceiroTotalizadorComponent,
   TotalizadorResumoFinanceiroOutput
 } from "../resumo-financeiro-totalizador/resumo-financeiro-totalizador.component";
-import {MatProgressSpinner} from "@angular/material/progress-spinner";
-import {ResumoFinanceiroItemComponent} from "../resumo-financeiro-item/resumo-financeiro-item.component";
-import {ResumoFinanceiroOutput} from "../../../../../../shared/model/lancamento/model/lancamento.model";
-import {MatTabChangeEvent, MatTabsModule} from "@angular/material/tabs";
-import {MatTableModule} from "@angular/material/table";
-import {ResumoFinanceiroFilterComponent} from "../resumo-financeiro-filter/resumo-financeiro-filter.component";
 
 @Component({
   selector: 'app-resumo-financeiro-list',
@@ -27,7 +26,7 @@ import {ResumoFinanceiroFilterComponent} from "../resumo-financeiro-filter/resum
   ],
   templateUrl: './resumo-financeiro-list.component.html',
   styleUrl: './resumo-financeiro-list.component.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.Default
 })
 export class ResumoFinanceiroListComponent implements OnInit{
 
@@ -50,6 +49,7 @@ export class ResumoFinanceiroListComponent implements OnInit{
     this.api.getResumoFinanceiro(params).subscribe((res) => {
       this.resumos = res;
       this.resumosToTotalizador();
+      this.loading = false;
     });
   }
 
@@ -73,6 +73,9 @@ export class ResumoFinanceiroListComponent implements OnInit{
 
   onTabChange(event: MatTabChangeEvent) {
 
+    this.resumos = [];
+    this.loading = true;
+
     const monthMapping: { [key: string]: number } = {
       'Janeiro': 0,
       'Fevereiro': 1,
@@ -94,10 +97,9 @@ export class ResumoFinanceiroListComponent implements OnInit{
     const date = new Date(currentYear, monthNumber, 1);
 
     const params = {
-      mes: date.toISOString().split('T')[0]
+      mes: formatDate(date.toISOString().split('T')[0], 'MMMM', 'en-Us')
     }
 
     this.onApply(params);
-    this.toastr.success(date.toISOString().split('T')[0], 5000)
   }
 }

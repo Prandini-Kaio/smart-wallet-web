@@ -17,30 +17,32 @@
     flex-direction: column;
     width: 100%;
 
-    .list-header {
-      display: grid;
-      grid-template-columns: repeat(13, 1fr);
-      gap: 12px;
-      align-items: center;
-      padding: 12px;
-      text-align: left;
-      position: relative;
-
-      color: $text-light;
-      padding: 20px;
-      border: 1px double $border-default-positive;
-      font-weight: bold;
-
-      .col-info {
-        border-right: 1px solid $border-default-positive;
-      }
-    }
+    
   }
+}
+
+.list-header {
+  color: $text-light;
+  border: 1px solid $border-default-positive;
+  font-weight: bold;
+}
+
+.col-valor {
+  font-weight: bold;
+  color: $text-blue;
+}
+
+.txt-entradas {
+  color: $text-green;
+}
+
+.txt-saidas {
+  color: $text-red;
 }
 
 .loading-spinner {
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-top: 20px;
+  margin: 20px;
 }

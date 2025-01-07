@@ -10,6 +10,7 @@ import {MatNativeDateModule} from "@angular/material/core";
 import {MatButtonModule} from "@angular/material/button";
 import {MatIconModule} from "@angular/material/icon";
 import {ContaOutput} from "../../../../../../shared/model/conta/conta.model";
+import { filter } from 'rxjs';
 
 interface Filter {
   categorias: string[],
@@ -89,8 +90,10 @@ export class ResumoFinanceiroFilterComponent {
       pagamento: this.filtros.pagamento,
       status: this.filtros.status.map(s => s.normalize().toUpperCase().replace(' ', '_')).join(', '),
       contaIds: contaIds,
-      mes: formatDate(this.filtros.mes, 'yyyy-MM-dd', 'en-US'),
+      mes: formatDate(this.filtros.mes, 'MMMM', 'en-US'),
     };
+
+    console.log(filters);
 
     this.apply.emit(filters);
   }
