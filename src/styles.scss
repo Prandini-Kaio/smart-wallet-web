@@ -23,3 +23,32 @@ body { margin: 0; font-family: "Roboto", serif; }
     button-color: $text-light
   ));
 }
+
+.mat-mdc-header {
+
+}
+
+.mat-mdc-row {
+  background-color: $bg-positive !important;
+  color: $text-positive !important;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1) !important;
+
+  &:not(:last-child) {
+    border-bottom: 1px solid $gray !important;
+  }
+
+  &:hover {
+    background-color: $shadow !important;
+  }
+}
+
+.mat-mdc-cell {
+  border-left: 1px solid rgba(0, 0, 0, 0.05) !important;
+}
+
+@include mat.table-overrides((
+  background-color: $blue-dark,
+  header-headline-color: $text-light,
+  row-item-outline-color: $bg-positive,
+  row-item-label-text-color: $text-light,
+));
