@@ -1,5 +1,5 @@
 import {CommonModule, formatDate} from '@angular/common';
-import {Component, EventEmitter, OnInit, Output} from '@angular/core';
+import {ChangeDetectionStrategy, Component, EventEmitter, OnInit, Output} from '@angular/core';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {MatButtonModule} from '@angular/material/button';
 import {MatNativeDateModule} from '@angular/material/core'; // Ou MatMomentDateModule, se preferir usar Moment.js
@@ -36,7 +36,8 @@ interface Filter {
         MatIconModule,
     ],
     templateUrl: './lancamento-filter.component.html',
-    styleUrl: './lancamento-filter.component.scss'
+    styleUrl: './lancamento-filter.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class LancamentoFilterComponent implements OnInit {
 

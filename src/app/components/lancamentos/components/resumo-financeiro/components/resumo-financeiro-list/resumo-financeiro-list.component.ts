@@ -40,13 +40,18 @@ export class ResumoFinanceiroListComponent implements OnInit{
 
   protected totalizador: TotalizadorResumoFinanceiroOutput | null = null;
 
+  private param: { [key: string]: any } = {};
+
   ngOnInit() {
+    this.param['mes'] = 'January'
   }
 
   onApply(params: any) {
     this.loading = true;
 
-    this.api.getResumoFinanceiro(params).subscribe((res) => {
+    const updtparams = { ...this.param, params}
+
+    this.api.getResumoFinanceiro(updtparams).subscribe((res) => {
       this.resumos = res;
       this.resumosToTotalizador();
       this.loading = false;
@@ -96,10 +101,8 @@ export class ResumoFinanceiroListComponent implements OnInit{
     const currentYear = new Date().getFullYear();
     const date = new Date(currentYear, monthNumber, 1);
 
-    const params = {
-      mes: formatDate(date.toISOString().split('T')[0], 'MMMM', 'en-Us')
-    }
+    this.param['mes'] = formatDate(date.toISOString().split('T')[0], 'MMMM', 'en-US');
 
-    this.onApply(params);
+    this.onApply(this.param);
   }
 }

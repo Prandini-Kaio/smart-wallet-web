@@ -75,6 +75,7 @@ export class ResumoFinanceiroFilterComponent {
   ngOnInit(): void {
     this.getContas();
     this.getCategorias();
+    this.onApply();
   }
 
   onApply() {
