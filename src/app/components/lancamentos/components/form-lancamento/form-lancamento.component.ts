@@ -1,4 +1,4 @@
-import {CommonModule} from '@angular/common';
+import {CommonModule, formatDate} from '@angular/common';
 import {Component, EventEmitter, Input, OnDestroy, OnInit, Output,} from '@angular/core';
 import {FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators,} from '@angular/forms';
 import {MatInputModule} from '@angular/material/input';
@@ -74,10 +74,10 @@ export class FormLancamentoComponent implements OnInit, OnDestroy {
         .toISOString()
         .split('T')[0];
 
-      console.log(data);
+      console.log(lancamento?.conta)
       this.form = new FormGroup({
         id: new FormControl(lancamento.id),
-        conta: new FormControl(lancamento.conta, Validators.required),
+        conta: new FormControl(lancamento.conta.id, Validators.required),
         valor: new FormControl(lancamento.valor, Validators.required),
         tipoLancamento: new FormControl(
           lancamento.tipoLancamento
@@ -99,13 +99,10 @@ export class FormLancamentoComponent implements OnInit, OnDestroy {
         ),
         parcelas: new FormControl(lancamento.parcelas, Validators.required),
         descricao: new FormControl(lancamento.descricao, Validators.required),
-        dtCriacao: new FormControl(
-          format(
-            parse(lancamento.dtCriacao, 'dd/MM/yyyy HH:mm:ss', new Date()),
-            'yyyy-MM-dd'
-          ),
-          Validators.required
-        ),
+        dtCriacao: new FormControl(format(
+          parse(lancamento.dtCriacao, 'dd/MM/yyyy HH:mm:ss', new Date()),
+          'yyyy-MM-dd'
+        ), Validators.required),
         status: new FormControl(lancamento.status.replace(" ", "_").toUpperCase()),
       });
     } else {
@@ -135,6 +132,10 @@ export class FormLancamentoComponent implements OnInit, OnDestroy {
   montarEnvio(): any {
     if (this.form.valid) {
       const dtCriacaoValue = new Date(this.form.get('dtCriacao')?.value);
+
+      console.log("CRIACAO")
+      console.log(dtCriacaoValue)
+
       const currentDateTime = new Date();
       dtCriacaoValue.setHours(
         currentDateTime.getHours(),
@@ -150,6 +151,10 @@ export class FormLancamentoComponent implements OnInit, OnDestroy {
         ? new Date(contaSelecionada.dtVencimento).getDay()
         : '';
 
+
+        console.log("CRIACAO 2")
+        console.log(dtCriacaoValue.toISOString())
+
       const lancamento = {
         id: this.form.get('id')?.value,
         contaId: this.form.get('conta')?.value,
@@ -160,7 +165,7 @@ export class FormLancamentoComponent implements OnInit, OnDestroy {
         categoriaLancamento: this.form.get('categoriaLancamento')?.value,
         parcelas: this.form.get('parcelas')?.value,
         descricao: this.form.get('descricao')?.value,
-        dtCriacao: dtCriacaoValue.toISOString(),
+        dtCriacao: formatDate(dtCriacaoValue, 'yyyy-MM-ddTHH:mm:ss', 'en-Us'),
       };
 
       return lancamento;

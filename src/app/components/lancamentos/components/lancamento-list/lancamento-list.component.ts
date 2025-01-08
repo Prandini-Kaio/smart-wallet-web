@@ -55,13 +55,11 @@ export class LancamentoListComponent implements OnInit {
   }
 
   editLancamento(lancamento: LancamentoOutput): void {
-    console.log(lancamento);
     this.lancamentoService.setLancamento(lancamento);
     this.showEditModalLancamento = true;
   }
 
   copy(lancamento: LancamentoOutput): void {
-    console.log(lancamento);
     this.lancamentoService.setLancamento(lancamento);
     this.createModal();
   }

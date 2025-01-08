@@ -2,7 +2,7 @@
   <div class="filters">
     <mat-form-field appearance="outline">
       <mat-label>Categoria</mat-label>
-      <mat-select [(value)]="filtros.categorias" multiple>
+      <mat-select [formGroup]="filtro" [(value)]="categoriasSelecionadas" multiple>
         <mat-option value="">Todas</mat-option>
         <mat-option *ngFor="let categoria of categorias" [value]="categoria">
           {{ categoria }}
@@ -10,9 +10,9 @@
       </mat-select>
     </mat-form-field>
 
-    <mat-form-field appearance="outline">
+    <mat-form-field appearance="outline" [formGroup]="filtro">
       <mat-label>Tipo de Lançamento</mat-label>
-      <mat-select [(value)]="filtros.tipo">
+      <mat-select formControlName="tipo">
         <mat-option value="">Todos</mat-option>
         <mat-option *ngFor="let tipo of tiposLancamento" [value]="tipo">
           {{ tipo }}
@@ -20,9 +20,9 @@
       </mat-select>
     </mat-form-field>
 
-    <mat-form-field appearance="outline">
+    <mat-form-field appearance="outline" [formGroup]="filtro">
       <mat-label>Forma de Pagamento</mat-label>
-      <mat-select [(value)]="filtros.pagamento">
+      <mat-select formControlName="pagamento">
         <mat-option value="">Todas</mat-option>
         <mat-option *ngFor="let pagamento of tiposPagamento" [value]="pagamento">
           {{ pagamento }}
@@ -32,7 +32,7 @@
 
     <mat-form-field appearance="outline">
       <mat-label>Status</mat-label>
-      <mat-select [(value)]="filtros.status" multiple>
+      <mat-select [formGroup]="filtro" [(value)]="statusSelecionados" multiple>
         <mat-option value="">Todos</mat-option>
         <mat-option *ngFor="let status of statusTransacao" [value]="status">
           {{ status }}
@@ -42,7 +42,7 @@
 
     <mat-form-field appearance="outline">
       <mat-label>Conta</mat-label>
-      <mat-select [(value)]="filtros.contasSelecionadas" multiple>
+      <mat-select [(value)]="contasSelecionadas" [formGroup]="filtro" multiple>
         <mat-option [value]="contaVazia">Todas</mat-option>
         <mat-option *ngFor="let conta of contas" [value]="conta">
           {{ conta.banco }} - {{ conta.nome }}
@@ -51,17 +51,13 @@
     </mat-form-field>
 
     <mat-form-field appearance="outline">
-      <mat-label>Data de</mat-label>
-      <input matInput [matDatepicker]="pickerInicio" [(ngModel)]="filtros.dtInicio">
-      <mat-datepicker-toggle matSuffix [for]="pickerInicio"></mat-datepicker-toggle>
-      <mat-datepicker #pickerInicio></mat-datepicker>
-    </mat-form-field>
-
-    <mat-form-field appearance="outline">
-      <mat-label>Até</mat-label>
-      <input matInput [matDatepicker]="pickerFim" [(ngModel)]="filtros.dtFim">
-      <mat-datepicker-toggle matSuffix [for]="pickerFim"></mat-datepicker-toggle>
-      <mat-datepicker #pickerFim></mat-datepicker>
+      <mat-label>Selecione um período</mat-label>
+      <mat-date-range-input [formGroup]="filtro" [rangePicker]="picker">
+        <input matStartDate formControlName="dtInicio" placeholder="Data inicio">
+        <input matEndDate formControlName="dtFim" placeholder="Data fim">
+      </mat-date-range-input>
+      <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-date-range-picker #picker></mat-date-range-picker>
     </mat-form-field>
   </div>
 

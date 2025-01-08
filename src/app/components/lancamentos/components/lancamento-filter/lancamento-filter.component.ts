@@ -1,6 +1,6 @@
 import {CommonModule, formatDate} from '@angular/common';
 import {ChangeDetectionStrategy, Component, EventEmitter, OnInit, Output} from '@angular/core';
-import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import {FormControl, FormGroup, FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {MatButtonModule} from '@angular/material/button';
 import {MatNativeDateModule} from '@angular/material/core'; // Ou MatMomentDateModule, se preferir usar Moment.js
 import {MatDatepickerModule} from '@angular/material/datepicker';
@@ -46,8 +46,13 @@ export class LancamentoFilterComponent implements OnInit {
 
   constructor(private _api: ApiService) { }
 
+  public filtro: FormGroup = new FormGroup({
+    dtInicio: new FormControl<Date | null>(null),
+    dtFim: new FormControl<Date | null>(null),
+  });
 
-  contaVazia = {
+
+  protected contaVazia = {
     id: 0,
     banco: '',
     nome: '',
@@ -58,26 +63,22 @@ export class LancamentoFilterComponent implements OnInit {
     color: '',
   }
 
-  categorias: Array<string> = [];
-  contas: Array<any> = [];
-  tiposLancamento = ['ENTRADA', 'SAIDA'];
-  tiposPagamento = ['DEBITO', 'CREDITO'];
-  statusLancamento = ['Em Aberto', 'Quitado', 'Cancelado'];
-  filtros: Filter = {
-    categorias: [''],
-    tipo: '',
-    pagamento: '',
-    status: [''],
-    contasSelecionadas: [
-      this.contaVazia
-    ],
-    dtInicio: this.getInicioMesPassado(),
-    dtFim: this.getFimMesPassado()
-  }
+  public contas: Array<any> = [];
+  public contasSelecionadas: any[] = [this.contaVazia];
+
+  public categorias: Array<string> = [];
+  public categoriasSelecionadas: string[] = [''];
+
+  public statusLancamento: string[] = ['Em Aberto', 'Quitado', 'Cancelado'];
+  public statusSelecionados: string[] = [''];
+
+  public tiposLancamento = ['ENTRADA', 'SAIDA'];
+  public tiposPagamento = ['DEBITO', 'CREDITO'];
 
   ngOnInit(): void {
     this.getContas();
     this.getCategorias();
+    this.initFilters();
     this.onApply();
   }
 
@@ -85,24 +86,32 @@ export class LancamentoFilterComponent implements OnInit {
     this.create.emit(null);
   }
 
+  initFilters() {
+    this.filtro = new FormGroup({
+      categoria: new FormControl(''),
+      tipo: new FormControl(''),
+      pagamento: new FormControl(''),
+      status: new FormControl(''),
+      contaIds: new FormControl(''),
+      dtInicio: new FormControl(this.getInicioMesPassado()),
+      dtFim: new FormControl(this.getFimMesPassado()),
+    });
+  }
+
   onApply() {
     let contaIds = '';
 
-    if (this.filtros.contasSelecionadas)
-      contaIds = this.filtros.contasSelecionadas.filter(c => c && Number(c.id) !== 0).map(c => c.id).join(', ');
+    const params = {
+      categorias: this.categoriasSelecionadas.join(', '),
+      tipo: this.filtro.get('tipo')?.value,
+      pagamento: this.filtro.get('pagamento')?.value,
+      status: this.statusSelecionados.map(c => c.replaceAll(' ', '_').toUpperCase()).join(', '),
+      contaIds: this.contasSelecionadas.filter(c => c && Number(c.id) !== 0).map(c => c.id).join(', '),
+      dtInicio: formatDate(this.filtro.get('dtInicio')?.value, 'yyyy-MM-ddT00:00:00', 'en-US'),
+      dtFim: formatDate(this.filtro.get('dtFim')?.value, 'yyyy-MM-ddT23:59:59', 'en-US'),
+    }
 
-
-    const filters = {
-      categoria: this.filtros.categorias.join(', '),
-      tipo: this.filtros.tipo,
-      pagamento: this.filtros.pagamento,
-      status: this.filtros.status.map(s => s.normalize().toUpperCase().replace(' ', '_')).join(', '),
-      contaIds: contaIds,
-      dtInicio: formatDate(this.filtros.dtInicio, 'yyyy-MM-ddT00:00:00', 'en-US'),
-      dtFim: formatDate(this.filtros.dtFim, 'yyyy-MM-ddT23:59:59', 'en-US')
-    };
-
-    this.apply.emit(filters);
+    this.apply.emit(params);
   }
 
   getContas() {
