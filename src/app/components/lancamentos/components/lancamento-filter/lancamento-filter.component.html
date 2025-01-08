@@ -56,14 +56,7 @@
         <input matInput [matDatepicker]="pickerInicio" [(ngModel)]="filtros.dtInicio">
         <mat-datepicker-toggle matSuffix [for]="pickerInicio"></mat-datepicker-toggle>
         <mat-datepicker #pickerInicio></mat-datepicker>
-      </mat-form-field>
-
-      <mat-form-field appearance="outline">
-        <mat-label>Até</mat-label>
-        <input matInput [matDatepicker]="pickerFim" [(ngModel)]="filtros.dtFim">
-        <mat-datepicker-toggle matSuffix [for]="pickerFim"></mat-datepicker-toggle>
-        <mat-datepicker #pickerFim></mat-datepicker>
-      </mat-form-field>
+      </mat-form-field>  
   </div>
 
   <div class="actions">

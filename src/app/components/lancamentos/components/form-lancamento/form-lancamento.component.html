@@ -148,17 +148,9 @@
     <!-- Data de Criação -->
     <mat-form-field appearance="outline" class="form-group">
       <mat-label>Data de Criação</mat-label>
-      <input matInput id="dtCriacao" formControlName="dtCriacao" type="date" />
-      <mat-error
-        *ngIf="
-          form.get('dtCriacao')?.invalid &&
-          (form.get('dtCriacao')?.dirty || form.get('dtCriacao')?.touched)
-        "
-      >
-        <span *ngIf="form.get('dtCriacao')?.hasError('required')"
-          >Campo obrigatório</span
-        >
-      </mat-error>
+      <input matInput [matDatepicker]="picker" id="dtCriacao" formControlName="dtCriacao" />
+      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker #picker></mat-datepicker>
     </mat-form-field>
 
     <!-- Valor -->

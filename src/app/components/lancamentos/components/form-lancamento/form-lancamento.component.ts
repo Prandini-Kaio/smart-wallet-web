@@ -9,6 +9,8 @@ import {ContaOutput} from '../../../../shared/model/conta/conta.model';
 import {ApiService} from '../../../../services/api.service';
 import {format, parse} from 'date-fns';
 import {LancamentoService} from '../../service/lancamento.service';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
 
 @Component({
     selector: 'app-form-lancamento',
@@ -20,6 +22,8 @@ import {LancamentoService} from '../../service/lancamento.service';
         MatSelectModule,
         MatButtonModule,
         MatFormFieldModule,
+        MatDatepickerModule,
+        MatNativeDateModule
     ],
     templateUrl: './form-lancamento.component.html',
     styleUrl: './form-lancamento.component.scss'
