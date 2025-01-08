@@ -31,11 +31,41 @@
       border: 1px double $border-default-positive;
       font-weight: bold;
 
-      .col-info {
-        border-right: 1px solid $border-default-positive;
-      }
+      
     }
   }
+}
+
+
+.col-info {
+  font-weight: bold;
+  color: $title-positive;
+}
+
+.col-sub-info {
+  font-weight: bold;
+  color: $text-positive;
+  font-size: 12px;
+}
+
+.col-details {
+  font-weight: bold;
+  color: $text-blue;
+}
+
+
+.col-valor {
+  font-weight: bold;
+  color: $text-blue;
+}
+
+
+.txt-entradas {
+  color: $text-green;
+}
+
+.txt-saidas {
+  color: $text-red;
 }
 
 .loading-spinner {

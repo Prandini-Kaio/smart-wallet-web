@@ -105,4 +105,8 @@ export class ResumoFinanceiroListComponent implements OnInit{
 
     this.onApply(this.param);
   }
+
+  format(date: string): string {
+    return formatDate(date, 'dd/mm/yyyy', 'pr-Br')
+  }
 }

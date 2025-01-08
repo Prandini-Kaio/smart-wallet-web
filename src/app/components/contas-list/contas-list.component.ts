@@ -44,7 +44,7 @@ export class ContasListComponent implements OnInit {
   public isEdit: boolean = false;
 
   contas: ContaOutput[] = [];
-  loading: boolean = true;
+  public loading = false;
   error: string | null = null;
 
   showModal: boolean = false;
@@ -93,9 +93,9 @@ export class ContasListComponent implements OnInit {
       (data) => {
         this.contas = data;
         this.cdr.detectChanges();
+        this.loading = false;
       }
     );
-    this.loading = false;
   }
 
   edit(conta: ContaOutput) {
