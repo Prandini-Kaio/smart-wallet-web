@@ -16,5 +16,5 @@ COPY . .
 # Expor a porta padrão do Angular (4200)
 EXPOSE 4200
 
-# Comando para rodar o Angular em modo de desenvolvimento
-CMD ["npm", "run", "start"]
+# Comando para rodar o Angular com --host 0.0.0.0
+CMD ["npm", "run", "start", "--", "--host", "0.0.0.0"]
