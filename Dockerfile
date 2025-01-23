@@ -13,7 +13,7 @@ RUN npm run build --prod
 
 FROM nginx:alpine
 
-COPY --from=build /app/dist/smartwallet /usr/share/nginx/html
+COPY --from=build /app/dist/smart-wallet-web /usr/share/nginx/html
 
 EXPOSE 4200
 
