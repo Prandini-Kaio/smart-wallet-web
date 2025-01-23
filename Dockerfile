@@ -1,20 +1,20 @@
-FROM node:20 AS build
-LABEL authors="prandini"
+# Etapa base para o desenvolvimento
+FROM node:20 AS dev
 
+# Definir o diretório de trabalho no container
 WORKDIR /app
 
+# Copiar os arquivos de dependências
 COPY package*.json ./
 
+# Instalar as dependências
 RUN npm install
 
+# Copiar todo o projeto para o container
 COPY . .
 
-RUN npm run build --prod
-
-FROM nginx:alpine
-
-COPY --from=build /app/dist/smart-wallet-web /usr/share/nginx/html
-
+# Expor a porta padrão do Angular (4200)
 EXPOSE 4200
 
-CMD ["nginx", "-g", "daemon off;"]
+# Comando para rodar o Angular em modo de desenvolvimento
+CMD ["npm", "run", "start"]
