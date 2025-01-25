@@ -16,4 +16,3 @@ services:
     volumes:
       - .:/app
       - /app/node_modules
-    command: ng serve --host 0.0.0.0
