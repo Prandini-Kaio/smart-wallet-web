@@ -45,7 +45,7 @@ export class FluxoCaixaListComponent implements OnInit{
     this.loading = true;
     this.toastr.info('Buscando fluxo caixa', 3000);
 
-    const updtParam = { ...this.param, param };
+    const updtParam = { ...this.param, ...param };
 
     this.api.getFluxoCaixa(updtParam).subscribe((response) => {
       this.output = response;

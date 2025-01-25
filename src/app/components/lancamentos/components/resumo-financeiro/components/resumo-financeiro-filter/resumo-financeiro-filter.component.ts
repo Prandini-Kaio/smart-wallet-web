@@ -85,16 +85,31 @@ export class ResumoFinanceiroFilterComponent {
     if(this.filtros.contasSelecionadas)
       contaIds = this.filtros.contasSelecionadas.filter(c => c.id != 0).map(c => c.id).join(', ');
 
-    const filters = {
-      categorias: this.filtros.categorias.join(', '),
-      tipo: this.filtros.tipo,
-      pagamento: this.filtros.pagamento,
-      status: this.filtros.status.map(s => s.normalize().toUpperCase().replace(' ', '_')).join(', '),
-      contaIds: contaIds,
-      mes: formatDate(this.filtros.mes, 'MMMM', 'en-US'),
-    };
+    const filters: { [key: string]: any } = {};
 
-    console.log(filters);
+    if (this.filtros['categorias'].length > 0 && this.filtros['categorias'][0] !== '') {
+      filters['categorias'] = this.filtros['categorias'].join(', ');
+    }
+
+    if (this.filtros['tipo'] !== '') {
+      filters['tipo'] = this.filtros['tipo'];
+    }
+
+    if (this.filtros['pagamento'] !== '') {
+      filters['pagamento'] = this.filtros['pagamento'];
+    }
+
+    if (this.filtros['status'].length > 0 && this.filtros['status'][0] !== '') {
+      filters['status'] = this.filtros['status'].map(s => s.normalize().toUpperCase().replace(' ', '_')).join(', ');
+    }
+
+    if (contaIds !== '') {
+      filters['contaIds'] = contaIds;
+    }
+
+    if (this.filtros['mes'] !== '') {
+      filters['mes'] = formatDate(this.filtros['mes'], 'MMMM', 'en-US');
+    }
 
     this.apply.emit(filters);
   }

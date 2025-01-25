@@ -80,15 +80,15 @@ export class FluxoDeCaixaFilterComponent {
 
   onApply() {
 
-    const params = {
-      contaIds: this.contasSelecionadas.filter(c => c && Number(c.id) !== 0).map(c => c.id).join(', '),
-      dtInicio: formatDate(this.filtro.get('dtInicio')?.value, 'yyyy-MM-dd', 'en-US'),
-      dtFim: formatDate(this.filtro.get('dtFim')?.value, 'yyyy-MM-dd', 'en-US'),
+    const contaIds = this.contasSelecionadas.filter(c => c && Number(c.id) !== 0).map(c => c.id).join(', ');
+
+    const filters: { [key: string]: any } = {};
+
+    if(contaIds) {
+      filters['conta'] = contaIds;
     }
 
-    console.log(params);
-
-    this.apply.emit(params);
+    this.apply.emit(filters);
   }
 
   onCriar() {

@@ -49,7 +49,7 @@ export class ResumoFinanceiroListComponent implements OnInit{
   onApply(params: any) {
     this.loading = true;
 
-    const updtparams = { ...this.param, params}
+    const updtparams = { ...this.param, ...params}
 
     this.api.getResumoFinanceiro(updtparams).subscribe((res) => {
       this.resumos = res;
