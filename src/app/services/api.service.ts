@@ -6,6 +6,7 @@ import {ContaOutput, TipoContaOutput} from '../shared/model/conta/conta.model';
 import {ErrorLog} from '../shared/model/monitor-erros/model/monitor-erros.model';
 import {LancamentoOutput, TransacaoOutput} from '../shared/model/lancamento/model/lancamento.model';
 import {Orcamento} from '../shared/model/orcamento/orcamento.model';
+import {AssinaturaOutput} from "../shared/model/assinaturas/assinaturas.model";
 
 @Injectable({
   providedIn: 'root',
@@ -30,6 +31,19 @@ export class ApiService {
 
   createOrcamento(input: any): Observable<any> {
     return this.http.post(`${this.apiUrl}/orcamento`, input);
+  }
+
+  getAssinaturas(paramsObj: any): Observable<AssinaturaOutput[]> {
+
+    let params = new HttpParams();
+
+    for(const key in paramsObj){
+      if(paramsObj.hasOwnProperty(key)){
+        params = params.append(key, paramsObj[key]);
+      }
+    }
+
+    return this.http.get<AssinaturaOutput[]>(`${this.apiUrl}/assinatura`, { params });
   }
 
   getLancamento(paramsObj: any): Observable<any> {

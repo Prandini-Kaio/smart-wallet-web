@@ -1,0 +1,30 @@
+@import '../../../../shared/variable.scss';
+
+.container {
+
+}
+
+.list-container {
+  margin: 20px;
+  background-color: $bg-positive;
+  border: 1px solid $border-default-positive;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  overflow-x: hidden;
+}
+
+.col-conta {
+  font-weight: bold;
+  color: $text-blue;
+}
+
+.col-valor {
+  font-weight: bold;
+  color: $text-blue;
+}
+
+.loading-spinner {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+}
