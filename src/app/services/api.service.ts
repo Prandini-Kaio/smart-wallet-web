@@ -33,6 +33,10 @@ export class ApiService {
     return this.http.post(`${this.apiUrl}/orcamento`, input);
   }
 
+  createAssinatura(input: any): Observable<any> {
+    return this.http.post(`${this.apiUrl}/assinatura`, input);
+  }
+
   getAssinaturas(paramsObj: any): Observable<AssinaturaOutput[]> {
 
     let params = new HttpParams();

@@ -1,0 +1,33 @@
+@import '../../../../shared/variable.scss';
+
+.assinatura-form {
+  margin: 0 auto;
+  padding: 20px;
+  background-color: $bg-positive;
+  border-radius: 8px;
+}
+
+.form-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 16px;
+}
+
+.form-row-valor {
+  justify-content: space-around;
+  gap: 30px;
+  margin-bottom: 16px;
+}
+
+.form-field {
+  flex: 1;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+button[mat-raised-button] {
+  margin-top: 16px;
+  width: 150px;
+  border-radius: 5px;
+}

@@ -1,0 +1,79 @@
+<form [formGroup]="assinaturaForm" (ngSubmit)="onSubmit()" class="assinatura-form">
+
+
+  <div class="form-row">
+
+
+    <mat-form-field>
+      <mat-label>Conta</mat-label>
+      <mat-select formControlName="contaId">
+        <mat-option *ngFor="let conta of contas" [value]="conta.id">
+          {{ conta.banco }} - {{ conta.nome }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill" class="form-field">
+      <mat-label>Categoria</mat-label>
+      <mat-select formControlName="categoria">
+        <mat-option *ngFor="let categoria of categorias" [value]="categoria">
+          {{ categoria }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill" class="form-field">
+      <mat-label>Tipo</mat-label>
+      <mat-select formControlName="tipo">
+        <mat-option *ngFor="let tipo of tipos" [value]="tipo">
+          {{ tipo }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill" class="form-field">
+      <mat-label>Pagamento</mat-label>
+      <mat-select formControlName="pagamento">
+        <mat-option *ngFor="let pagamento of pagamentos" [value]="pagamento">
+          {{ pagamento }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+
+  <div class="form-row">
+    <mat-form-field appearance="fill" class="form-field">
+      <mat-label>Data de Início</mat-label>
+      <input matInput [matDatepicker]="picker1" formControlName="dtInicio">
+      <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+      <mat-datepicker #picker1></mat-datepicker>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill" class="form-field">
+      <mat-label>Data de Fim</mat-label>
+      <input matInput [matDatepicker]="picker2" formControlName="dtFim">
+      <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+      <mat-datepicker #picker2></mat-datepicker>
+    </mat-form-field>
+
+    <mat-slide-toggle formControlName="ativa" class="form-field">Ativa</mat-slide-toggle>
+  </div>
+
+  <div class="form-row form-row-valor">
+
+    <mat-form-field appearance="fill" class="form-field">
+      <mat-label>Descrição</mat-label>
+      <input matInput formControlName="descricao">
+    </mat-form-field>
+
+    <mat-form-field appearance="fill" class="form-field">
+      <mat-label>Valor</mat-label>
+      <input matInput formControlName="valor" type="number">
+    </mat-form-field>
+  </div>
+
+  <div class="form-row">
+    <button mat-raised-button color="primary" type="submit" [disabled]="!assinaturaForm.valid">Enviar</button>
+    <button mat-raised-button color="warn" type="button" (click)="onClear()">Limpar</button>
+  </div>
+</form>
