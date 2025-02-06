@@ -1,6 +1,8 @@
+import {ContaOutput} from "../conta/conta.model";
+
 export interface AssinaturaOutput {
   id: number,
-  conta: string,
+  conta: ContaOutput,
   valor: number,
   dtInicio: string,
   dtFim: string,

@@ -11,7 +11,7 @@
 
       <ng-container matColumnDef="Conta">
         <th mat-header-cell *matHeaderCellDef class="list-header"> Conta </th>
-        <td mat-cell *matCellDef="let element" class="col-conta"> <span>{{element.conta?.banco}}</span> <br/><span>{{element.conta}}</span></td>
+        <td mat-cell *matCellDef="let element" class="col-conta"> <span>{{element.conta?.banco}}</span> <br/><span>{{element.conta?.nome}}</span></td>
       </ng-container>
 
       <ng-container matColumnDef="Descricao">
@@ -34,6 +34,8 @@
           <button mat-icon-button (click)="delete(element)">
             <mat-icon>delete</mat-icon>
           </button>
+
+          <mat-slide-toggle [checked]="element.ativa" (change)="onChangeAtivo(element)" class="form-field"/>
         </td>
       </ng-container>
 

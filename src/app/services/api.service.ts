@@ -164,6 +164,10 @@ export class ApiService {
     return this.http.put<LancamentoOutput>(`${this.apiUrl}/lancamento`, params);
   }
 
+  updateAssinatura(input: any) {
+    return this.http.put<LancamentoOutput>(`${this.apiUrl}/assinatura`, input);
+  }
+
   payTransacao(paramObj: any): Observable<TransacaoOutput> {
     let params = new HttpParams();
 
@@ -200,5 +204,18 @@ export class ApiService {
     }
 
     return this.http.delete(`${this.apiUrl}/conta`, { params });
+  }
+
+  deleteAssinatura(paramObj: any): Observable<any> {
+
+    let params = new HttpParams();
+
+    for(const key in paramObj){
+      if(paramObj.hasOwnProperty(key)){
+        params = params.append(key, paramObj[key]);
+      }
+    }
+
+    return this.http.delete(`${this.apiUrl}/assinatura`, { params });
   }
 }
