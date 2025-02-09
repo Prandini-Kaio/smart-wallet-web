@@ -10,6 +10,11 @@ import {MatInputModule} from '@angular/material/input';
 import {MatSelectModule} from '@angular/material/select';
 import {ApiService} from '../../../../services/api.service';
 import {ContaOutput} from '../../../../shared/model/conta/conta.model';
+import {
+  StatusLancamento,
+  TipoLancamento,
+  TipoPagamento
+} from "../../../../shared/model/lancamento/model/lancamento.model";
 
 interface Filter {
   categorias: string[],
@@ -64,16 +69,18 @@ export class LancamentoFilterComponent implements OnInit {
   }
 
   public contas: Array<any> = [];
-  public contasSelecionadas: any[] = [this.contaVazia];
+
+  public contasDestinoSelecionadas: any[] = [this.contaVazia];
+  public contasOrigemSelecionadas: any[] = [this.contaVazia];
 
   public categorias: Array<string> = [];
   public categoriasSelecionadas: string[] = [''];
 
-  public statusLancamento: string[] = ['Em Aberto', 'Quitado', 'Cancelado'];
+  public statusLancamento: string[] = Object.values(StatusLancamento)
   public statusSelecionados: string[] = [''];
 
-  public tiposLancamento = ['ENTRADA', 'SAIDA'];
-  public tiposPagamento = ['DEBITO', 'CREDITO'];
+  public tiposLancamento = Object.values(TipoLancamento)
+  public tiposPagamento = Object.values(TipoPagamento)
 
   ngOnInit(): void {
     this.getContas();
@@ -106,7 +113,8 @@ export class LancamentoFilterComponent implements OnInit {
       tipo: this.filtro.get('tipo')?.value,
       pagamento: this.filtro.get('pagamento')?.value,
       status: this.statusSelecionados.map(c => c.replaceAll(' ', '_').toUpperCase()).join(', '),
-      contaIds: this.contasSelecionadas.filter(c => c && Number(c.id) !== 0).map(c => c.id).join(', '),
+      contaDestinoIds: this.contasDestinoSelecionadas.filter(c => c && Number(c.id) !== 0).map(c => c.id).join(', '),
+      contaOrigemIds: this.contasOrigemSelecionadas.filter(c => c && Number(c.id) !== 0).map(c => c.id).join(', '),
       dtInicio: formatDate(this.filtro.get('dtInicio')?.value, 'yyyy-MM-ddT00:00:00', 'en-US'),
       dtFim: formatDate(this.filtro.get('dtFim')?.value, 'yyyy-MM-ddT23:59:59', 'en-US'),
     }

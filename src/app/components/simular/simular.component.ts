@@ -49,11 +49,6 @@ export class SimularComponent implements OnInit {
   };
 
   public transacoes: TransacaoOutput[] = [];
-
-  //
-  //
-  //
-
   public lancamentos: LancamentoOutput[] = [];
   public saldoProjetados: SaldoProjetado[] = [];
 

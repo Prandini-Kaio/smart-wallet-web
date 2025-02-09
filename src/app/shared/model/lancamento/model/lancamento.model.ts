@@ -21,7 +21,8 @@ export interface LancamentoOutput {
     categoriaLancamento: string;
     tipoLancamento: string;
     tipoPagamento: string;
-    conta: ContaOutput;
+    contaDestino: ContaOutput;
+    contaOrigem: ContaOutput;
     banco: string;
     dtCriacao: string;
     parcelas: number;
@@ -29,6 +30,23 @@ export interface LancamentoOutput {
     icone: string;
     transacoes: TransacaoOutput[];
     expanded?: boolean;
+}
+
+export enum TipoLancamento {
+    SAIDA = 'SAIDA',
+    ENTRADA = 'ENTRADA',
+    TRANSFERENCIA = 'TRANSFERENCIA'
+}
+
+export enum TipoPagamento {
+  SAIDA = 'CREDITO',
+  ENTRADA = 'DEBITO',
+}
+
+export enum StatusLancamento {
+  EM_ABERTO = 'Em Aberto',
+  QUITADO = 'Quitado',
+  CANCELADO = 'Cancelado'
 }
 
 export interface ResumoFinanceiroOutput {

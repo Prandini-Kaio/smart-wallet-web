@@ -28,7 +28,7 @@
       <div class="item-container">
         <div class="item-conta">
           <span class="conta-value"
-            >{{ item.conta.banco }} - {{ item.conta.nome }}</span
+            >{{ item.contaDestino.banco }} - {{ item.contaDestino.nome }}</span
           >
         </div>
 
@@ -81,7 +81,7 @@
           {{ item.mes }}
         </div>
       </div>
-    
+
       <div class="list-saldos">
         <div class="col-info" *ngFor="let item of saldoProjetados">
           {{ item.saldo | currency: "BRL" }}

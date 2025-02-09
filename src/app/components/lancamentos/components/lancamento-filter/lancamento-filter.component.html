@@ -42,8 +42,18 @@
     </mat-form-field>
 
     <mat-form-field appearance="outline">
-      <mat-label>Conta</mat-label>
-      <mat-select [(value)]="contasSelecionadas" [formGroup]="filtro" multiple>
+      <mat-label>Conta Destino</mat-label>
+      <mat-select [(value)]="contasDestinoSelecionadas" [formGroup]="filtro" multiple>
+        <mat-option [value]="contaVazia">Todas</mat-option>
+        <mat-option *ngFor="let conta of contas" [value]="conta">
+          {{ conta.banco }} - {{ conta.nome }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Conta Origem</mat-label>
+      <mat-select [(value)]="contasOrigemSelecionadas" [formGroup]="filtro" multiple>
         <mat-option [value]="contaVazia">Todas</mat-option>
         <mat-option *ngFor="let conta of contas" [value]="conta">
           {{ conta.banco }} - {{ conta.nome }}

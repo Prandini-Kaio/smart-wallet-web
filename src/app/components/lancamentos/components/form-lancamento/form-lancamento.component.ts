@@ -11,6 +11,7 @@ import {format, parse} from 'date-fns';
 import {LancamentoService} from '../../service/lancamento.service';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
+import {TipoLancamento} from "../../../../shared/model/lancamento/model/lancamento.model";
 
 @Component({
     selector: 'app-form-lancamento',
@@ -37,6 +38,7 @@ export class FormLancamentoComponent implements OnInit, OnDestroy {
 
   protected contas: Array<ContaOutput> = [];
   protected categorias: Array<string> = [];
+  protected tipoLancamento: Array<string> = Object.values(TipoLancamento);
   protected selectedConta: ContaOutput | null = null;
 
   constructor(
@@ -74,10 +76,10 @@ export class FormLancamentoComponent implements OnInit, OnDestroy {
         .toISOString()
         .split('T')[0];
 
-      console.log(lancamento?.conta)
       this.form = new FormGroup({
         id: new FormControl(lancamento.id),
-        conta: new FormControl(lancamento.conta.id, Validators.required),
+        contaDestino: new FormControl(lancamento.contaDestino.id, Validators.required),
+        contaOrigem: new FormControl(lancamento.contaOrigem.id, Validators.required),
         valor: new FormControl(lancamento.valor, Validators.required),
         tipoLancamento: new FormControl(
           lancamento.tipoLancamento
@@ -107,7 +109,8 @@ export class FormLancamentoComponent implements OnInit, OnDestroy {
       });
     } else {
       this.form = new FormGroup({
-        conta: new FormControl('', Validators.required),
+        contaDestino: new FormControl('', Validators.required),
+        contaOrigem: new FormControl(''),
         valor: new FormControl('', Validators.required),
         tipoLancamento: new FormControl('', Validators.required),
         tipoPagamento: new FormControl('', Validators.required),
@@ -133,9 +136,6 @@ export class FormLancamentoComponent implements OnInit, OnDestroy {
     if (this.form.valid) {
       const dtCriacaoValue = new Date(this.form.get('dtCriacao')?.value);
 
-      console.log("CRIACAO")
-      console.log(dtCriacaoValue)
-
       const currentDateTime = new Date();
       dtCriacaoValue.setHours(
         currentDateTime.getHours(),
@@ -143,12 +143,16 @@ export class FormLancamentoComponent implements OnInit, OnDestroy {
         currentDateTime.getSeconds()
       );
 
-      const contaSelecionada = this.contas.find(
-        (c) => c.id === this.form.get('conta')?.value
+      const contaDestinoSelecionada = this.contas.find(
+        (c) => c.id === this.form.get('contaDestino')?.value
       );
 
-      const diaVencimento = contaSelecionada?.dtVencimento
-        ? new Date(contaSelecionada.dtVencimento).getDay()
+      const contaOrigemSelecionada = this.contas.find(
+        (c) => c.id === this.form.get('contaOrigem')?.value
+      );
+
+      const diaVencimento = contaDestinoSelecionada?.dtVencimento
+        ? new Date(contaDestinoSelecionada.dtVencimento).getDay()
         : '';
 
 
@@ -157,7 +161,8 @@ export class FormLancamentoComponent implements OnInit, OnDestroy {
 
       const lancamento = {
         id: this.form.get('id')?.value,
-        contaId: this.form.get('conta')?.value,
+        contaDestinoId: this.form.get('contaDestino')?.value,
+        contaOrigemId: this.form.get('contaOrigem')?.value,
         status: this.form.get('status')?.value,
         valor: this.form.get('valor')?.value,
         tipoLancamento: this.form.get('tipoLancamento')?.value,

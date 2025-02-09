@@ -35,10 +35,10 @@
       </mat-error>
     </mat-form-field>
 
-    <!-- Conta -->
+    <!-- Conta Destino-->
     <mat-form-field appearance="outline" class="form-group">
-      <mat-label>Conta</mat-label>
-      <mat-select id="conta" formControlName="conta">
+      <mat-label>Conta Destino</mat-label>
+      <mat-select id="contaDestino" formControlName="contaDestino">
         <mat-option value="">Selecione uma conta</mat-option>
         <mat-option *ngFor="let c of contas" [value]="c.id"
           >{{ c.banco }} - {{ c.nome }}</mat-option
@@ -46,12 +46,33 @@
       </mat-select>
       <mat-error
         *ngIf="
-          form.get('conta')?.invalid &&
-          (form.get('conta')?.dirty || form.get('conta')?.touched)
+          form.get('contaDestino')?.invalid &&
+          (form.get('contaDestino')?.dirty || form.get('contaDestino')?.touched)
         "
       >
-        <span *ngIf="form.get('conta')?.hasError('required')"
+        <span *ngIf="form.get('contaDestino')?.hasError('required')"
           >Campo obrigatório</span
+        >
+      </mat-error>
+    </mat-form-field>
+
+    <!-- Conta Origem-->
+    <mat-form-field appearance="outline" class="form-group">
+      <mat-label>Conta Origem</mat-label>
+      <mat-select id="contaOrigem" formControlName="contaOrigem">
+        <mat-option value="">Selecione uma conta</mat-option>
+        <mat-option *ngFor="let c of contas" [value]="c.id"
+        >{{ c.banco }} - {{ c.nome }}</mat-option
+        >
+      </mat-select>
+      <mat-error
+        *ngIf="
+          form.get('contaOrigem')?.invalid &&
+          (form.get('contaOrigem')?.dirty || form.get('contaOrigem')?.touched)
+        "
+      >
+        <span *ngIf="form.get('contaOrigem')?.hasError('required')"
+        >Campo obrigatório</span
         >
       </mat-error>
     </mat-form-field>
@@ -61,8 +82,7 @@
       <mat-label>Tipo de Lançamento</mat-label>
       <mat-select id="tipoLancamento" formControlName="tipoLancamento">
         <mat-option value="">Selecione o tipo</mat-option>
-        <mat-option value="ENTRADA">Entrada</mat-option>
-        <mat-option value="SAIDA">Saída</mat-option>
+        <mat-option *ngFor="let tipo of tipoLancamento" [value]="tipo">{{ tipo.valueOf() }}</mat-option>
       </mat-select>
       <mat-error
         *ngIf="
