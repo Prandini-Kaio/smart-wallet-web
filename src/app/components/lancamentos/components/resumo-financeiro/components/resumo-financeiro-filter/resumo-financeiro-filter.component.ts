@@ -52,7 +52,8 @@ export class ResumoFinanceiroFilterComponent {
     dtVencimento: '',
     dtFechamento: '',
     tipoConta: '',
-    saldoParcial: 0,
+    saldoDisponivel: 0,
+    saldoPendente: 0,
     color: '',
   }
 

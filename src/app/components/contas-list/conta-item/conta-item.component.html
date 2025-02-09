@@ -12,6 +12,14 @@
         <span class="conta-value">{{ conta.dtVencimento }}</span>
     </div>
 
+    <div class="conta-details">
+      <span class="conta-disponivel">{{ conta.saldoDisponivel | currency: 'BRL' }}</span>
+    </div>
+
+  <div class="conta-details">
+    <span class="conta-pendente">-{{ conta.saldoPendente | currency: 'BRL' }}</span>
+  </div>
+
     <div class="conta-actions">
         <button class="btn btn-link edit-btn" (click)="editar()">
             <i class="fas fa-edit"></i>

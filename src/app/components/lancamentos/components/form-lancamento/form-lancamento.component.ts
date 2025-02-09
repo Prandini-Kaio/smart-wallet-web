@@ -79,7 +79,7 @@ export class FormLancamentoComponent implements OnInit, OnDestroy {
       this.form = new FormGroup({
         id: new FormControl(lancamento.id),
         contaDestino: new FormControl(lancamento.contaDestino.id, Validators.required),
-        contaOrigem: new FormControl(lancamento.contaOrigem.id, Validators.required),
+        contaOrigem: new FormControl(lancamento.contaOrigem?.id),
         valor: new FormControl(lancamento.valor, Validators.required),
         tipoLancamento: new FormControl(
           lancamento.tipoLancamento

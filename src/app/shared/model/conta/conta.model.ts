@@ -5,7 +5,8 @@ export interface ContaOutput {
     dtVencimento: string;
     dtFechamento: string;
     tipoConta: string;
-    saldoParcial: number;
+    saldoDisponivel: number;
+    saldoPendente: number;
     color: string;
 }
 

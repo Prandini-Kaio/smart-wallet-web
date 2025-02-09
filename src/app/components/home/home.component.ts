@@ -76,7 +76,7 @@ export class HomeComponent implements OnInit{
   getSaldoParcial(): number {
     let saldo = 0;
     this.contas.forEach(c => {
-      saldo = saldo + c.saldoParcial;
+      saldo = saldo + c.saldoDisponivel;
     })
     return saldo;
   }

@@ -5,8 +5,17 @@
 
 
     <mat-form-field>
-      <mat-label>Conta</mat-label>
-      <mat-select formControlName="contaId">
+      <mat-label>Conta Destino</mat-label>
+      <mat-select formControlName="contaDestinoId">
+        <mat-option *ngFor="let conta of contas" [value]="conta.id">
+          {{ conta.banco }} - {{ conta.nome }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Conta Origem</mat-label>
+      <mat-select formControlName="contaOrigemId">
         <mat-option *ngFor="let conta of contas" [value]="conta.id">
           {{ conta.banco }} - {{ conta.nome }}
         </mat-option>

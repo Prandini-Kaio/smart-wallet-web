@@ -39,7 +39,8 @@ export class AssinaturasNovoComponent implements OnInit {
 
   constructor(private fb: FormBuilder, private readonly api: ApiService, private readonly toaster: ToastrService) {
     this.assinaturaForm = this.fb.group({
-      contaId: ['', Validators.required],
+      contaDestinoId: ['', Validators.required],
+      contaOrigemId: [''],
       categoria: ['', Validators.required],
       tipo: ['', Validators.required],
       pagamento: ['', Validators.required],
@@ -66,8 +67,6 @@ export class AssinaturasNovoComponent implements OnInit {
     if (this.assinaturaForm.valid) {
 
       const contaSelecionada = this.contas.find(conta => conta.id === this.assinaturaForm.value.contaId);
-
-      console.log(this.assinaturaForm.value)
 
       this.api.createAssinatura(this.assinaturaForm.value).subscribe(() => {
         this.toaster.success("Assinatura criada com sucesso!", 3000);

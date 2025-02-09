@@ -49,7 +49,6 @@ export class AssinaturasListComponent implements OnInit {
     this.api.getAssinaturas({}).subscribe(response => {
       this.assinaturas = response;
       this.loading = false;
-      console.log(response);
     })
   }
 
@@ -70,7 +69,8 @@ export class AssinaturasListComponent implements OnInit {
     const params = {
       id: element.id,
       descricao: element.descricao,
-      contaId: element.conta.id,
+      contaDestinoId: element.contaDestino.id,
+      contaOrigemId: element.contaOrigem?.id,
       valor: element.valor,
       ativa: element.ativa,
       dtInicio: element.dtInicio,

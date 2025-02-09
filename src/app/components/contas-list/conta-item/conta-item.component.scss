@@ -2,7 +2,7 @@
 
 .container {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(6, 1fr);
     gap: 12px;
     align-items: center;
     padding: 12px;
@@ -46,6 +46,16 @@
     gap: 4px;
     font-size: 14px;
     color: $text-muted;
+}
+
+.conta-disponivel{
+    color: $text-green;
+    font-weight: bold;
+}
+
+.conta-pendente {
+    color: $text-red;
+    font-weight: bold;
 }
 
 .conta-value {
