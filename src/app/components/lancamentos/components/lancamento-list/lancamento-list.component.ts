@@ -1,5 +1,5 @@
 import {CommonModule} from '@angular/common';
-import {Component, OnInit} from '@angular/core';
+import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core';
 import {FormsModule, ReactiveFormsModule,} from '@angular/forms';
 import {Router} from '@angular/router';
 import {LancamentoFilterComponent} from '../lancamento-filter/lancamento-filter.component';
@@ -23,7 +23,8 @@ import {MatProgressSpinner} from "@angular/material/progress-spinner";
         MatProgressSpinner
     ],
     templateUrl: './lancamento-list.component.html',
-    styleUrl: './lancamento-list.component.scss'
+    styleUrl: './lancamento-list.component.scss',
+  changeDetection: ChangeDetectionStrategy.Default
 })
 export class LancamentoListComponent implements OnInit {
   lancamentos: LancamentoOutput[] = [];

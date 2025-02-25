@@ -168,7 +168,7 @@ export class ApiService {
     return this.http.put<LancamentoOutput>(`${this.apiUrl}/assinatura`, input);
   }
 
-  payTransacao(paramObj: any): Observable<TransacaoOutput> {
+  pagarTransacao(paramObj: any): Observable<TransacaoOutput> {
     let params = new HttpParams();
 
     for(const key in paramObj){
